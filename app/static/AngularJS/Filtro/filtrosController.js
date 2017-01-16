@@ -9,7 +9,7 @@ registrationModule.controller('filtrosController', function ($scope, $rootScope,
 			location.href = '/';
 			alertFactory.warning('Inicie Sesión')
 		}else{
-			alertFactory.success('Bienvenido'+ $scope.$rootScope.userData.nombreUsuario)
+			alertFactory.success('Bienvenido '+ $rootScope.userData.nombreUsuario)
 		}
 		$rootScope.mostrarMenu = 1;
 	}
