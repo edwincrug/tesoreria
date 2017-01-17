@@ -13,7 +13,7 @@ registrationModule.controller('loginController', function($scope, $rootScope, $l
                 $scope.login = result.data[0];
                 localStorageService.set('userData', $scope.login);
                 alertFactory.warning('Bienvenido a Talleres: ' + result.data[0].nombreUsuario);
-                location.href = '/filtro';
+                location.href = '/conciliacionInicio';
             }else{
                 alertFactory.info('Valide el usuario y/o contraseña');
             }
