@@ -17,6 +17,12 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/filtros.html', //example 1
             controller: 'filtrosController'
         });
+
+         $routeProvider.when('/conciliacion', {
+            templateUrl: 'AngularJS/Templates/conciliacion.html', //example 1
+            controller: 'conciliacionController'
+        });
+
         $routeProvider.otherwise({redirectTo:'/'});
 
         $locationProvider.html5Mode({
