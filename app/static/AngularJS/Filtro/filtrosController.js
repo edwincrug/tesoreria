@@ -5,12 +5,12 @@ registrationModule.controller('filtrosController', function ($scope, $rootScope,
 	
 	
 	$scope.init = function(){
-		if($rootScope.userData == null){
-			location.href = '/';
-			alertFactory.warning('Inicie Sesión')
-		}else{
-			alertFactory.success('Bienvenido '+ $rootScope.userData.nombreUsuario)
-		}
-		$rootScope.mostrarMenu = 1;
+		// if($rootScope.userData == null){
+		// 	location.href = '/';
+		// 	alertFactory.warning('Inicie Sesión')
+		// }else{
+		// 	alertFactory.success('Bienvenido '+ $rootScope.userData.nombreUsuario)
+		// }
+		 $rootScope.mostrarMenu = 1;
 	}
 });
