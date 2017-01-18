@@ -5,6 +5,15 @@ registrationModule.controller('conciliacionController', function ($scope, $rootS
 	
 	
 	$scope.init = function(){
-		$scope.dato = "0000";
+
+		$scope.dato = "llllll";
+
+		$scope.aboContaBanco = [{"fecha":"30/01/2017","tipoPol":"UNI-EGRESOS","noPol":"728","concepto":"3210 - TANIA ANGELICA RAMIREZ PALMA","total":"47000"},
+					   			{"fecha":"30/01/2017","tipoPol":"UNI-EGRESOS","noPol":"728","concepto":"3210 - TANIA ANGELICA RAMIREZ PALMA","total":"47000"},
+					   			{"fecha":"30/01/2017","tipoPol":"UNI-EGRESOS","noPol":"728","concepto":"3210 - TANIA ANGELICA RAMIREZ PALMA","total":"47000"}];
+
+
+
+
 	}
 });
