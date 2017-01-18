@@ -1,0 +1,133 @@
+.ui-jqgrid tr.ui-row-ltr td {
+    border-right-color: inherit;
+    border-right-style: solid;
+    border-right-width: 1px;
+    text-align: left;
+    border-color: #DDDDDD;
+    background-color: inherit;
+}
+
+.sidebar-content .wrapper,
+.wrapper.sidebar-content {
+    padding-right: 230px !important;
+}
+
+.body-small .sidebar-content .wrapper,
+.body-small .wrapper.sidebar-content {
+    padding-right: 20px !important;
+}
+
+.wrapper {
+    padding: 0 20px;
+}
+
+.wrapper-content {
+    padding: 20px 10px 40px;
+}
+
+.wrapper .middle-box {
+    margin-top: 140px;
+}
+
+.skin-2 .wrapper-content {
+    padding: 30px 15px;
+}
+
+.skin-2 .dashoard-1 .wrapper-content {
+    padding: 0 30px 25px 30px;
+}
+
+.sidebar-content .wrapper {
+    padding-right: 0;
+    z-index: 1;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e7eaec !important;
+}
+
+.skin-2 .border-bottom {
+    border-bottom: none !important;
+}
+
+.md-skin .ibox.border-bottom {
+    border-bottom: none !important;
+}
+
+.md-skin .white-bg .navbar-fixed-top,
+.md-skin .white-bg .navbar-static-top {
+    background: #fff !important;
+}
+
+.white-bg .navbar-fixed-top,
+.white-bg .navbar-static-top {
+    background: #fff;
+}
+
+
+/* PANELS */
+
+.page-heading {
+    border-top: 0;
+    padding: 0 10px 20px 10px;
+}
+
+.panel-heading h1,
+.panel-heading h2 {
+    margin-bottom: 5px;
+}
+
+.skin-1 .page-heading {
+    border: none;
+}
+
+.skin-2 .page-heading {
+    border: none;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.skin-3 .page-heading {
+    border: none;
+}
+
+.md-skin .page-heading {
+    border-bottom: none !important;
+    border-top: 0;
+    padding: 0 10px 20px 10px;
+    box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.34), 0 0 6px 0 rgba(0, 0, 0, 0.14);
+}
+
+.md-skin .full-height-layout .page-heading {
+    border-bottom: 1px solid #e7eaec !important;
+}
+
+/* BACKGROUNDS */
+.gray-bg {
+  background-color: #f3f3f4;
+}
+.white-bg {
+  background-color: #ffffff;
+}
+.navy-bg {
+  background-color: #1ab394;
+  color: #ffffff;
+}
+.blue-bg {
+  background-color: #1c84c6;
+  color: #ffffff;
+}
+.lazur-bg {
+  background-color: #23c6c8;
+  color: #ffffff;
+}
+.yellow-bg {
+  background-color: #f8ac59;
+  color: #ffffff;
+}
+.red-bg {
+  background-color: #ed5565;
+  color: #ffffff;
+}
+.black-bg {
+  background-color: #262626;
+}
