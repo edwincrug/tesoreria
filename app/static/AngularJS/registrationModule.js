@@ -10,7 +10,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
 
         /*cheange the routes*/
         $routeProvider.when('/', {
-            templateUrl: 'AngularJS/Templates/login.html', //example 1
+            templateUrl: 'AngularJS/Templates/login.html', //example 1 
             controller: 'loginController'
         });
         $routeProvider.when('/conciliacionInicio', {
@@ -24,6 +24,10 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
         $routeProvider.when('/caja', {
             templateUrl: 'AngularJS/Templates/caja.html', //example 1
             controller: 'cajaController'
+        });
+        $routeProvider.when('/conciliacionDetalleRegistros', {
+            templateUrl: 'AngularJS/Templates/conciliacionDetalleRegistros.html', //example 1
+            controller: 'conciliacionInicioController'
         });
 
         $routeProvider.otherwise({ redirectTo: '/' });
