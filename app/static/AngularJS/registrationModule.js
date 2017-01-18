@@ -15,7 +15,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
         });
         $routeProvider.when('/conciliacionInicio', {
             templateUrl: 'AngularJS/Templates/conciliacionInicio.html', //example 1
-            controller: 'filtrosController'
+            controller: 'conciliacionInicioController'
         });
         $routeProvider.when('/conciliacion', {
             templateUrl: 'AngularJS/Templates/conciliacion.html', //example 1

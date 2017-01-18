@@ -1,6 +1,6 @@
 var filtrosURL = global_settings.urlCORS + 'api/login/';
 
-registrationModule.factory('filtrosRepository', function($http) {
+registrationModule.factory('conciliacionInicioRepository', function($http) {
     return {
 
     	}
