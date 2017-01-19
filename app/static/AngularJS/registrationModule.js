@@ -32,7 +32,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
 
         $routeProvider.when('/controlDepositos', {
             templateUrl: 'AngularJS/Templates/controldepositos.html', //FAL 19012017
-            controller: 'cajaController'
+            controller: 'controlDepositosController'
         });
 
         $routeProvider.otherwise({ redirectTo: '/' });

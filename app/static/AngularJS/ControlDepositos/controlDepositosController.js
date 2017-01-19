@@ -1,4 +1,4 @@
-registrationModule.controller('controlDepositosController', function ($scope, $rootScope, $location, localStorageService, filtrosRepository,alertFactory) {
+registrationModule.controller('controlDepositosController', function ($scope, $rootScope, $location, localStorageService,alertFactory) {
 
 	// ****************** Se guarda la información del usuario en variable userData
 	$rootScope.userData = localStorageService.get('userData');
@@ -10,7 +10,7 @@ registrationModule.controller('controlDepositosController', function ($scope, $r
 	}
 
 	 $scope.calendario = function() {
-        $('#calendar2 .input-group.date').datepicker({
+        $('#calendar .input-group.date').datepicker({
             todayBtn: "linked",
             keyboardNavigation: true,
             forceParse: false,
