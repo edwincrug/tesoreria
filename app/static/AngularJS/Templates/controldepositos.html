@@ -19,7 +19,7 @@
 		                </div>
 		                
 		                <div class="form-group col-md-3" id="calendar">
-                                <label for="fInicio">Fecha Elaboración:</label>
+                                <label for="fInicio">Fecha inicial:</label>
                                 <div class="input-group date">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                     <input type="text" class="form-control" id="fInicioDeposito" ng-model="fInicioDeposito" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
@@ -27,7 +27,7 @@
                             </div>
 
 		                 <div class="form-group col-md-3" id="calendar">
-                                <label for="fInicio">Fecha Elaboración:</label>
+                                <label for="fInicio">Fecha final:</label>
                                 <div class="input-group date">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                     <input type="text" class="form-control" id="fFinDeposito" ng-model="fFinDeposito" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
@@ -40,7 +40,7 @@
 		                </div>
 		            </div>
 		        
-					<div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+					<div ui-grid="gridDepositos" ui-grid-selection class="grid"></div>
 
 				<br/>
 		            <div class="row">
@@ -74,7 +74,7 @@
 		                </div>
 		            </div>
 		        
-					<div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+					<div ui-grid="gridDocumentos" ui-grid-selection class="grid"></div>
 
 
 	        </div>
