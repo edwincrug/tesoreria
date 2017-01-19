@@ -30,6 +30,11 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             controller: 'conciliacionInicioController'
         });
 
+        $routeProvider.when('/controlDepositos', {
+            templateUrl: 'AngularJS/Templates/controldepositos.html', //FAL 19012017
+            controller: 'cajaController'
+        });
+
         $routeProvider.otherwise({ redirectTo: '/' });
 
         $locationProvider.html5Mode({

@@ -1,0 +1,93 @@
+<div ng-init="init()">
+	<div id="page-title">
+	</div>
+       <div class="container" style="margin-left: 5px;">
+            <!-- <div class="panel"> -->
+	        <div class="ibox float-e-margins">
+	            <div class="row">
+	            	<h1>Control de Depositos</h1>
+	            </div>
+	            <div class="panel col-md-12">
+	            <br/>
+		            <div class="row">
+			            
+		                <div class="form-group col-md-3">
+		                    <label class="form-label">Banco:</label>
+		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
+		                        <option value="">Seleccioné Banco</option>
+		                    </select>
+		                </div>
+		                
+		                <div class="form-group col-md-3">
+		                    <label class="form-label">Fecha Inicial:</label>
+		                    <p class="input-group"><input type="text" class="form-control" uib-datepicker-popup ng-model="dtini" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span></p>
+		                </div>
+
+		                 <div class="form-group col-md-3">
+		                    <label class="form-label">Fecha Final:</label>
+		                    <p class="input-group"><input type="text" class="form-control" uib-datepicker-popup ng-model="dtfin" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span></p>
+		                </div>
+
+		                
+		                <div class="col-md-3" style="margin-top: 23px">
+		                 	<button class="btn btn-warning">Buscar</button>
+		                </div>
+		            </div>
+		        <div class="row">
+		            <div>
+		            	<div class="form-group col-md-3">
+		                    <label class="form-label">Clave:</label>
+		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
+		                        <option value="">Seleccioné Clave</option>
+		                    </select>
+		                </div>
+		                <div class="form-group col-md-3">
+		                    <label class="form-label">Cuenta Contable:</label>
+		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
+		                        <option value="">Seleccioné Cuenta Contable</option>
+		                    </select>
+		                </div>
+		                <div class="form-group col-md-3">
+		                    <label class="form-label">Fecha Corte:</label>
+		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
+		                        <option value="">Seleccioné Fecha Corte</option>
+		                    </select>
+		                </div>
+		                 <div class="col-md-3" style="margin-top: 23px">
+		                 	<button class="btn btn-warning">Buscar</button>
+		                </div>
+		            </div>
+		        </div>
+		        <br/>
+		        <br/>
+		        <br/>
+		        <div class="col-sm-12" name="todo">
+                                <table id="tblTimbradoExitoso" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Resumen</th>
+                                            <th>Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                        	<td>Saldo Banco</td>
+                                        	<td>$35989.00</td>
+                                        </tr>
+                                        <tr>
+                                        	<td>Abonos en Contabilidad no considerados en Bancos</td>
+                                        	<td>$0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+	        </div>
+	    </div>
+    </div>
+</div>
