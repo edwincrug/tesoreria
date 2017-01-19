@@ -22,7 +22,7 @@
                                 <label for="fInicio">Fecha Elaboración:</label>
                                 <div class="input-group date">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaElaboracionDepositos2" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
+                                    <input type="text" class="form-control" id="fInicioDeposito" ng-model="fInicioDeposito" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
                                 </div>
                             </div>
 
@@ -30,7 +30,7 @@
                                 <label for="fInicio">Fecha Elaboración:</label>
                                 <div class="input-group date">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    <input type="text" class="form-control" id="fFin" ng-model="esquema.fechaElaboracionDepositos" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
+                                    <input type="text" class="form-control" id="fFinDeposito" ng-model="fFinDeposito" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
                                 </div>
                             </div>
 
@@ -39,54 +39,44 @@
 		                 	<button class="btn btn-warning">Buscar</button>
 		                </div>
 		            </div>
-		        <div class="row">
-		            <div>
-		            	<div class="form-group col-md-3">
-		                    <label class="form-label">Clave:</label>
-		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
-		                        <option value="">Seleccioné Clave</option>
-		                    </select>
-		                </div>
+		        
+					<div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+
+				<br/>
+		            <div class="row">
+			            
 		                <div class="form-group col-md-3">
-		                    <label class="form-label">Cuenta Contable:</label>
+		                    <label class="form-label">Banco:</label>
 		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
-		                        <option value="">Seleccioné Cuenta Contable</option>
+		                        <option value="">Seleccioné Banco</option>
 		                    </select>
 		                </div>
-		                <div class="form-group col-md-3">
-		                    <label class="form-label">Fecha Corte:</label>
-		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
-		                        <option value="">Seleccioné Fecha Corte</option>
-		                    </select>
-		                </div>
-		                 <div class="col-md-3" style="margin-top: 23px">
+		                
+		                <div class="form-group col-md-3" id="calendar">
+                                <label for="fInicio">Fecha Elaboración:</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fInicioDocumento" ng-model="fInicioDocumento" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
+                                </div>
+                            </div>
+
+		                 <div class="form-group col-md-3" id="calendar">
+                                <label for="fInicio">Fecha Elaboración:</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fFinDocumento" ng-model="esquemafFinDocumento" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
+                                </div>
+                            </div>
+
+		                
+		                <div class="col-md-3" style="margin-top: 23px">
 		                 	<button class="btn btn-warning">Buscar</button>
 		                </div>
 		            </div>
-		        </div>
-		        <br/>
-		        <br/>
-		        <br/>
-		        <div class="col-sm-12" name="todo">
-                                <table id="tblTimbradoExitoso" class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Resumen</th>
-                                            <th>Importe</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                        	<td>Saldo Banco</td>
-                                        	<td>$35989.00</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>Abonos en Contabilidad no considerados en Bancos</td>
-                                        	<td>$0</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+		        
+					<div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+
+
 	        </div>
 	    </div>
     </div>

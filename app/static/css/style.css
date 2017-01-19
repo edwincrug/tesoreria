@@ -131,3 +131,7 @@
 .black-bg {
   background-color: #262626;
 }
+.grid {
+  width: 100%;
+  height: 200px;
+}
