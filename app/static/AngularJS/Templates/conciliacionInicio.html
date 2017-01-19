@@ -9,7 +9,7 @@
 		        <div class="row">
 			            <div class="form-group col-md-3">
 		                    <label class="form-label">Empresa:</label>
-		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
+		                    <select class="form-control" ng-model="filtros.idEmpresa" ng-options="empresa.idEmpresa as empresa.descripcion for empresa in empresaUsuario" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
 		                        <option value="">Seleccioné Empresa</option>
 		                    </select>
 		                </div>
@@ -22,13 +22,13 @@
                             </div>
 		                <div class="form-group col-md-3">
 		                    <label class="form-label">Banco:</label>
-		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
+		                    <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.descripcion for banco in bancoEmpresa" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
 		                        <option value="">Seleccioné Banco</option>
 		                    </select>
 		                </div>
 		                <div class="form-group col-md-3">
 		                    <label class="form-label">Cuenta:</label>
-		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
+		                    <select class="form-control" ng-model="filtros.idCuenta" ng-options="bancoCuenta.idBancoCuenta as bancoCuenta.descripcion for bancoCuenta in bancoCuenta" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
 		                        <option value="">Seleccioné Cuenta</option>
 		                    </select>
 		                </div>
@@ -37,13 +37,13 @@
 		            <div>
 		            	<div class="form-group col-md-3">
 		                    <label class="form-label">Clave:</label>
-		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
+		                    <select class="form-control" ng-model="filtros.idClave" ng-options="bancoClave.idClaveBanco as bancoClave.descripcion for bancoClave in bancoClave" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
 		                        <option value="">Seleccioné Clave</option>
 		                    </select>
 		                </div>
 		                <div class="form-group col-md-3">
 		                    <label class="form-label">Cuenta Contable:</label>
-		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
+		                    <select class="form-control" ng-model="filtros.idcuentaContable" ng-options="cuentacontable.idCuentacontable as cuentacontable.descripcion for cuentacontable in cuentacontable" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
 		                        <option value="">Seleccioné Cuenta Contable</option>
 		                    </select>
 		                </div>
