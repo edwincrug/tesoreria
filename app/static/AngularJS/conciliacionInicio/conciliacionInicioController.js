@@ -5,7 +5,7 @@ registrationModule.controller('conciliacionInicioController', function ($scope, 
 	
 	
 	$scope.init = function(){
-		$scope.calendario();
+		//$scope.calendario();
 		 $scope.getEmpresa(1);
 		 $scope.getBancos(1);
 		 $scope.getCuentaBanco(1)
@@ -20,17 +20,17 @@ registrationModule.controller('conciliacionInicioController', function ($scope, 
 		 $rootScope.mostrarMenu = 1;
 	}
 
-	    $scope.calendario = function() {
-        $('#calendar .input-group.date').datepicker({
-            todayBtn: "linked",
-            keyboardNavigation: true,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true,
-            todayHighlight: true,
-            format: "dd/mm/yyyy"
-        });
-    }
+	   //  $scope.calendario = function() {
+    //     $('#calendar .input-group.date').datepicker({
+    //         todayBtn: "linked",
+    //         keyboardNavigation: true,
+    //         forceParse: false,
+    //         calendarWeeks: true,
+    //         autoclose: true,
+    //         todayHighlight: true,
+    //         format: "dd/mm/yyyy"
+    //     });
+    // }
 
     $scope.getEmpresa = function(idEmpresa) {
         filtrosRepository.getEmpresas(idEmpresa).then(function(result) {

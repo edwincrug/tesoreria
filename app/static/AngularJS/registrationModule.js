@@ -10,7 +10,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
 
         /*cheange the routes*/
         $routeProvider.when('/', {
-            templateUrl: 'AngularJS/Templates/login.html', //example 1 
+            templateUrl: 'AngularJS/Templates/login.html', //example 1
             controller: 'loginController'
         });
         $routeProvider.when('/conciliacionInicio', {
@@ -34,8 +34,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/controldepositos.html', //FAL 19012017
             controller: 'controlDepositosController'
         });
-
-        $routeProvider.otherwise({ redirectTo: '/' });
+        $routeProvider.otherwise({redirectTo:'/'});
 
         $locationProvider.html5Mode({
             enabled: true,

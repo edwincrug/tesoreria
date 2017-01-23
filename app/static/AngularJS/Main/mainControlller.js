@@ -3,7 +3,6 @@ registrationModule.controller('mainController', function ($scope, $rootScope, $l
 	$rootScope.userData = localStorageService.get('userData');
 
 	$scope.init = function(){
-		closeNav();
 		$rootScope.mostrarMenu = 1;
 		/*if($rootScope.userData == null){
 			$rootScope.mostrarMenu = 0;
