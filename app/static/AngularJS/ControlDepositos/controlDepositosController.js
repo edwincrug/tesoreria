@@ -50,6 +50,16 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
+     $scope.getBancos = function(empresa,cuenta,fechaIni,fechaFin){
+      filtrosRepository.getDepositos(empresa,cuenta,fechaIni,fechaFin).then(function(result) {
+            if (result.data.length > 0) {
+                //$scope.listAuxiliarContable = result.data;
+                $scope.gridDocumentos.data = result.data;
+            }
+        });
+    }
+
+
     $scope.gridAuxiliar = {
       enableRowSelection: true,
       enableSelectAll: true,
@@ -78,6 +88,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
   //   });
 
   $scope.getAuxiliarContable('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
+
+  $scope.getBancos(5,6,'10/11/2015','31/12/2015');
 
     $scope.info = {};
 
@@ -159,13 +171,13 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
   };
 
-  $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
-    .success(function(data) {
-      $scope.gridDocumentos.data = data;
+  // $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
+  //   .success(function(data) {
+  //     $scope.gridDocumentos.data = data;
 
-      // $interval whilst we wait for the grid to digest the data we just gave it
-      $interval( function() {$scope.gridApi.selection.selectRow($scope.gridDocumentos.data[0]);}, 0, 1);
-    });
+  //     // $interval whilst we wait for the grid to digest the data we just gave it
+  //     $interval( function() {$scope.gridApi.selection.selectRow($scope.gridDocumentos.data[0]);}, 0, 1);
+  //   });
 
 
 });
