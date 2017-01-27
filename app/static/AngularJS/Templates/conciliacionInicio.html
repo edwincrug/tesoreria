@@ -16,12 +16,6 @@
                             <option value="">Seleccioné Empresa</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3" id="calendar">
-                        <label for="fInicio">Fecha Elaboración:</label>
-                        <div class="input-group date">
-                            <label>21/01/2017</label>
-                        </div>
-                    </div>
                     <div class="form-group col-md-3">
                         <label class="form-label">Banco:</label>
                         <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.descripcion for banco in bancoEmpresa" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
@@ -34,29 +28,36 @@
                             <option value="">Seleccioné Cuenta</option>
                         </select>
                     </div>
+                    <div class="col-md-3" style="margin-top: 23px">
+                        <button class="btn btn-warning">Buscar</button>
+                    </div>
                 </div>
+                <br/>
                 <div class="row">
                     <div>
                         <div class="form-group col-md-3">
-                            <label class="form-label">Clave:</label>
-                            <select class="form-control" ng-model="filtros.idClave" ng-options="bancoClave.idClaveBanco as bancoClave.descripcion for bancoClave in bancoClave" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
-                                <option value="">Seleccioné Clave</option>
-                            </select>
+                            <label for="fInicio">Clabe:</label>
+                            <div class="input-group date">
+                                <label>01218000-195334667</label>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="form-label">Cuenta Contable:</label>
-                            <select class="form-control" ng-model="filtros.idcuentaContable" ng-options="cuentacontable.idCuentacontable as cuentacontable.descripcion for cuentacontable in cuentacontable" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
-                                <option value="">Seleccioné Cuenta Contable</option>
-                            </select>
+                            <label for="fInicio">Cuenta Contable:</label>
+                            <div class="input-group date">
+                                <label>1100-0020-0001-0001</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3" id="calendar">
+                            <label for="fInicio">Fecha Elaboración:</label>
+                            <div class="input-group date">
+                                <label>21/01/2017</label>
+                            </div>
                         </div>
                         <div class="form-group col-md-3" id="calendar">
                             <label for="fInicio">Fecha Corte:</label>
                             <div class="input-group date">
                                 <label>21/01/2017</label>
                             </div>
-                        </div>
-                        <div class="col-md-3" style="margin-top: 23px">
-                            <button class="btn btn-warning">Buscar</button>
                         </div>
                     </div>
                 </div>
