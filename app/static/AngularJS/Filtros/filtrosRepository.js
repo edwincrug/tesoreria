@@ -111,21 +111,7 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        getDepositos: function(usuario,contrasena) {
-            return $http({
-                url: filtrosURL + 'depositos/',
-                method: "GET",
-                params: {
-                    usuario:usuario,
-                    contrasena:contrasena
-                },
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-
-            });
-        },
-        getAuxiliar: function(idEmpresa,idBanco,fechaInicial,fechaFinal) {
+        getDepositos:function(idEmpresa,idBanco,fechaInicial,fechaFinal) {
             return $http({
                 url: filtrosURL + 'auxiliar/',
                 method: "GET",
