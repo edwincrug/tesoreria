@@ -20,18 +20,6 @@ registrationModule.controller('conciliacionInicioController', function ($scope, 
 		 $rootScope.mostrarMenu = 1;
 	}
 
-	   //  $scope.calendario = function() {
-    //     $('#calendar .input-group.date').datepicker({
-    //         todayBtn: "linked",
-    //         keyboardNavigation: true,
-    //         forceParse: false,
-    //         calendarWeeks: true,
-    //         autoclose: true,
-    //         todayHighlight: true,
-    //         format: "dd/mm/yyyy"
-    //     });
-    // }
-
     $scope.getEmpresa = function(idUsuario) {
         filtrosRepository.getEmpresas(idUsuario).then(function(result) {
             if (result.data.length > 0) {

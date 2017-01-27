@@ -94,6 +94,22 @@ registrationModule.factory('filtrosRepository', function($http) {
                 }
 
             });
+        },
+        getAuxiliarContable: function(server,database,fechaIni,fechaFin) {
+            return $http({
+                url: filtrosURL + 'auxiliarContable/',
+                method: "GET",
+                params: {
+                    server : server,
+                    database : database,
+                    fechaIni : fechaIni,
+                    fechaFin : fechaFin
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
         }
     }
 });

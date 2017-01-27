@@ -1,34 +1,61 @@
-registrationModule.controller('controlDepositosController', function($scope, $rootScope, $location, localStorageService, alertFactory, $http, $log, $timeout, uiGridConstants) {
+registrationModule.controller('controlDepositosController', function($scope, $rootScope, $location, localStorageService, filtrosRepository,alertFactory, $http, $log, $timeout, uiGridConstants) {
 
     // ****************** Se guarda la información del usuario en variable userData
     $rootScope.userData = localStorageService.get('userData');
-
+    $scope.idUsuario = 15;
 
     $scope.init = function() {
-        // $scope.calendario();
+        $scope.getEmpresa($scope.idUsuario);
         $scope.dato = "0000";
     }
 
-    // $scope.calendario = function() {
-    //       $('#calendar .input-group.date').datepicker({
-    //           todayBtn: "linked",
-    //           keyboardNavigation: true,
-    //           forceParse: false,
-    //           calendarWeeks: true,
-    //           autoclose: true,
-    //           todayHighlight: true,
-    //           format: "dd/mm/yyyy"
-    //       });
-    //   }
+    $scope.getEmpresa = function(idUsuario) {
+        filtrosRepository.getEmpresas(idUsuario).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.empresaUsuario = result.data;
+            }
+        });
+    }
 
+    $scope.getSucursales = function(idUsuario, idEmpresa) {
+        filtrosRepository.getEmpresas(idUsuario,idEmpresa).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.sucursalesUsuario = result.data;
+            }
+        });
+    }
+
+    $scope.getDepartamentos = function(idUsuario,idSucursal) {
+        filtrosRepository.getEmpresas(idUsuario).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.departamentosUsuario = result.data;
+            }
+        });
+    }
+
+    $scope.getBancos = function(idBanco) {
+        filtrosRepository.getBancos(idBanco).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.bancoEmpresa = result.data;
+            }
+        });
+    }
+
+    $scope.getAuxiliarContable = function(server,database,fechaIni,fechaFin){
+      filtrosRepository.getAuxiliarContable(server,database,fechaIni,fechaFin).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.listAuxiliarContable = result.data;
+            }
+        });
+    }
 
     $scope.gridOptions = {
-    enableRowSelection: true,
-    enableSelectAll: true,
-    selectionRowHeaderWidth: 35,
-    rowHeight: 35,
-    showGridFooter:true
-  };
+      enableRowSelection: true,
+      enableSelectAll: true,
+      selectionRowHeaderWidth: 35,
+      rowHeight: 35,
+      showGridFooter:true
+    };
 
   $scope.gridOptions.columnDefs = [
     { name: 'id' },
@@ -105,6 +132,4 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $log.log(msg);
       });
     };
-
-
 });

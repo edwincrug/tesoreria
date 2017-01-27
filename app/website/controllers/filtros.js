@@ -123,4 +123,21 @@ Filtros.prototype.get_cuentacontable = function(req, res, next) {
 };
 
 
+Filtros.prototype.get_auxiliarContable = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'server', value: req.query.server, type: self.model.types.STRING},
+                    { name: 'database', value: req.query.database, type: self.model.types.STRING},
+                    { name: 'fechaIni', value: req.query.fechaIni, type: self.model.types.STRING},
+                    { name: 'fechaFin', value: req.query.fechaFin, type: self.model.types.STRING}];
+
+    this.model.query('SEL_AUXILIAR_CONTABLE_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 module.exports = Filtros;
