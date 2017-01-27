@@ -144,8 +144,10 @@ Filtros.prototype.get_depositos = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'User', value: req.query.usuario, type: self.model.types.STRING },
-                  { name: 'pass', value: req.query.contrasena, type: self.model.types.STRING }];
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
+                  { name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
+                  { name: 'fechaInicial', value: req.query.fechaInicial, type: self.model.types.STRING },
+                  { name: 'fechaFinal', value: req.query.fechaFinal, type: self.model.types.STRING }];
 
     this.model.query('SEL_LAYOUT_TXT_BANCO_PAGO_SP', params, function(error, result) {
         self.view.expositor(res, {
@@ -155,20 +157,5 @@ Filtros.prototype.get_depositos = function(req, res, next) {
     });
 };
 
-
-Filtros.prototype.get_auxiliar = function(req, res, next) {
-
-    var self = this;
-
-    var params = [{ name: 'User', value: req.query.usuario, type: self.model.types.STRING },
-                  { name: 'pass', value: req.query.contrasena, type: self.model.types.STRING }];
-
-    this.model.query('SEL_LAYOUT_TXT_BANCO_PAGO_SP', params, function(error, result) {
-        self.view.expositor(res, {
-            error: error,
-            result: result
-        });
-    });
-};
 
 module.exports = Filtros;

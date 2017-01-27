@@ -125,13 +125,15 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        getAuxiliar: function(usuario,contrasena) {
+        getAuxiliar: function(idEmpresa,idBanco,fechaInicial,fechaFinal) {
             return $http({
                 url: filtrosURL + 'auxiliar/',
                 method: "GET",
                 params: {
-                    usuario:usuario,
-                    contrasena:contrasena
+                    idEmpresa: idEmpresa,
+                    idBanco: idBanco,
+                    fechaInicial: fechaInicial,
+                    fechaFinal: fechaFinal
                 },
                 headers: {
                     'Content-Type': 'application/json'
