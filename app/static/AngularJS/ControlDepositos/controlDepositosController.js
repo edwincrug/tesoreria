@@ -7,9 +7,21 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     $scope.init = function() {
         $scope.getEmpresa($scope.idUsuario);
         $scope.getSucursales(15,4);
+        $scope.calendario();
         $scope.dato = "0000";
         $scope.getDepositosBancos(4,1,'10/11/2015','31/12/2015');
         $scope.getAuxiliarContable('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
+    }
+    $scope.calendario = function() {
+        $('#calendar .input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: true,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+        });
     }
 
     $scope.getEmpresa = function(idUsuario) {

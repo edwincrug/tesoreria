@@ -17,6 +17,20 @@
 		                        <option value="">Seleccioné Sucursal</option>
 		                    </select>
 		                </div>
+		                <div class="form-group col-md-3" id="calendar">
+                                <label for="fInicio">Fecha Inicio:</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3" id="calendar">
+                                <label for="fInicio">Fecha Fin:</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy">
+                                </div>
+                            </div>
             <div class="panel col-md-12">
 	            <br/>
 	            
