@@ -44,12 +44,13 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     $scope.getAuxiliarContable = function(server,database,fechaIni,fechaFin){
       filtrosRepository.getAuxiliarContable(server,database,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
-                $scope.listAuxiliarContable = result.data;
+                //$scope.listAuxiliarContable = result.data;
+                $scope.gridAuxiliar.data = result.data;
             }
         });
     }
 
-    $scope.gridOptions = {
+    $scope.gridAuxiliar = {
       enableRowSelection: true,
       enableSelectAll: true,
       selectionRowHeaderWidth: 35,
@@ -57,24 +58,26 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
       showGridFooter:true
     };
 
-  $scope.gridOptions.columnDefs = [
-    { name: 'id' },
-    { name: 'name'},
-    { name: 'age', displayName: 'Age (not focusable)', allowCellFocus : false },
-    { name: 'address.city' }
+  $scope.gridAuxiliar.columnDefs = [
+    { name: 'NOMBRE_RAZON',displayName: 'Razon Social', width: '20%' },
+    { name: 'NUMERO_CUENTA', displayName: 'Numero de cuenta',width: '20%'},
+    { name: 'FECHA', width: '20%',displayName: 'Fecha' },
+    { name: 'ABONO', width: '40%',displayName: 'Abono'}
   ];
 
-  $scope.gridOptions.multiSelect = true;
+  $scope.gridAuxiliar.multiSelect = true;
 
-  $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
-    .success(function(data) {
-      $scope.gridOptions.data = data;
-      $timeout(function() {
-        if($scope.gridApi.selection.selectRow){
-          $scope.gridApi.selection.selectRow($scope.gridOptions.data[0]);
-        }
-      });
-    });
+  // $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
+  //   .success(function(data) {
+  //     $scope.gridAuxiliar.data = data;
+  //     $timeout(function() {
+  //       if($scope.gridApi.selection.selectRow){
+  //         $scope.gridApi.selection.selectRow($scope.gridAuxiliar.data[0]);
+  //       }
+  //     });
+  //   });
+
+  $scope.getAuxiliarContable('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
 
     $scope.info = {};
 
@@ -95,18 +98,18 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     };
 
     $scope.toggleRow1 = function() {
-      $scope.gridApi.selection.toggleRowSelection($scope.gridOptions.data[0]);
+      $scope.gridApi.selection.toggleRowSelection($scope.gridAuxiliar.data[0]);
     };
 
     $scope.toggleFullRowSelection = function() {
-      $scope.gridOptions.enableFullRowSelection = !$scope.gridOptions.enableFullRowSelection;
+      $scope.gridAuxiliar.enableFullRowSelection = !$scope.gridAuxiliar.enableFullRowSelection;
       $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
     };
 
     $scope.setSelectable = function() {
       $scope.gridApi.selection.clearSelectedRows();
 
-      $scope.gridOptions.isRowSelectable = function(row){
+      $scope.gridAuxiliar.isRowSelectable = function(row){
         if(row.entity.age > 30){
           return false;
         } else {
@@ -115,11 +118,11 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
       };
       $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
 
-      $scope.gridOptions.data[0].age = 31;
+      $scope.gridAuxiliar.data[0].age = 31;
       $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
     };
 
-    $scope.gridOptions.onRegisterApi = function(gridApi){
+    $scope.gridAuxiliar.onRegisterApi = function(gridApi){
       //set gridApi on scope
       $scope.gridApi = gridApi;
       gridApi.selection.on.rowSelectionChanged($scope,function(row){
@@ -132,4 +135,37 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $log.log(msg);
       });
     };
+
+
+     $scope.gridDocumentos = { enableRowSelection: true, enableRowHeaderSelection: false };
+
+  $scope.gridDocumentos.columnDefs = [
+    { name: 'id' },
+    { name: 'name'},
+    { name: 'age', displayName: 'Age (not focusable)', allowCellFocus : false },
+    { name: 'address.city' }
+  ];
+
+  $scope.gridDocumentos.multiSelect = false;
+  $scope.gridDocumentos.modifierKeysToMultiSelect = false;
+  $scope.gridDocumentos.noUnselect = true;
+  $scope.gridDocumentos.onRegisterApi = function( gridApi ) {
+    $scope.gridApi = gridApi;
+  };
+
+  $scope.toggleRowSelection = function() {
+    $scope.gridApi.selection.clearSelectedRows();
+    $scope.gridDocumentos.enableRowSelection = !$scope.gridDocumentos.enableRowSelection;
+    $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
+  };
+
+  $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
+    .success(function(data) {
+      $scope.gridDocumentos.data = data;
+
+      // $interval whilst we wait for the grid to digest the data we just gave it
+      $interval( function() {$scope.gridApi.selection.selectRow($scope.gridDocumentos.data[0]);}, 0, 1);
+    });
+
+
 });
