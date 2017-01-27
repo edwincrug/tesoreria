@@ -63,7 +63,11 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         // INICIA Genera el pdf 
         //**************************************************************************************************
     $scope.generarReporte = function() {
-            var infReporte = {
+        $('#loading').modal('show');
+            var infReporte = '';
+            var jsonData = '';
+            var ruta = '';
+            infReporte = {
                 "titulo": "CONCILIACIÓN BANCARIA",
                 "titulo2": "BANCOS",
                 "titulo3": "FA04",
@@ -287,7 +291,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
                 }]
             }
 
-            var jsonData = {
+            jsonData = {
                 "template": {
                     "name": "tesoreria_rpt"
                 },
@@ -295,12 +299,18 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
             }
             conciliacionInicioRepository.getReportePdf(jsonData).then(function(fileName) {
                 setTimeout(function() {
-                    window.open("http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + fileName.data);
+                    $("#objReportePdf").remove();                    
+                    //window.open("http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + fileName.data);
+                    ruta = fileName.data;
                     console.log(fileName.data);
-                    $('#loadModal').modal('hide');
+                    $("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
+                    $('#loading').modal('hide');
+                    $('#reproteModalPdf').modal('show');
                 }, 5000);
 
             });
+
+
         }
         //**************************************************************************************************
         // TERMINA Genera el pdf 
