@@ -59,7 +59,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     };
 
   $scope.gridAuxiliar.columnDefs = [
-    { name: 'NOMBRE_RAZON',displayName: 'Razon Social', width: '20%' },
+    { name: 'CONCEPTO',displayName: 'Concepto', width: '20%' },
     { name: 'NUMERO_CUENTA', displayName: 'Numero de cuenta',width: '20%'},
     { name: 'FECHA', width: '20%',displayName: 'Fecha' },
     { name: 'ABONO', width: '40%',displayName: 'Abono'}
