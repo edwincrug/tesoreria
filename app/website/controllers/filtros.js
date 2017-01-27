@@ -140,4 +140,35 @@ Filtros.prototype.get_auxiliarContable = function(req, res, next) {
     });
 };
 
+Filtros.prototype.get_depositos = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'User', value: req.query.usuario, type: self.model.types.STRING },
+                  { name: 'pass', value: req.query.contrasena, type: self.model.types.STRING }];
+
+    this.model.query('SEL_LAYOUT_TXT_BANCO_PAGO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+Filtros.prototype.get_auxiliar = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'User', value: req.query.usuario, type: self.model.types.STRING },
+                  { name: 'pass', value: req.query.contrasena, type: self.model.types.STRING }];
+
+    this.model.query('SEL_LAYOUT_TXT_BANCO_PAGO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 module.exports = Filtros;
