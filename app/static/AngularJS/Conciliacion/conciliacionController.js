@@ -5,6 +5,7 @@ registrationModule.controller('conciliacionController', function ($scope, $rootS
 	
 	
 	$scope.init = function(){
+		$scope.calendario();
 
 		$scope.dato = "llllll";
 
@@ -22,4 +23,15 @@ registrationModule.controller('conciliacionController', function ($scope, $rootS
 					   			{"fecha":"21/01/2017","tipoPol":"UNI-EGRESOS","noPol":"914","concepto":"5392 - MONICA LOPEZ LEON","total":"23000"}];
 
 	}
+	$scope.calendario = function() {
+        $('#calendar .input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: true,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+        });
+    }
 });
