@@ -6,7 +6,7 @@ registrationModule.controller('conciliacionInicioController', function ($scope, 
 	
 	$scope.init = function(){
 		//$scope.calendario();
-		 $scope.getEmpresa(1);
+		 $scope.getEmpresa(15);
 		 $scope.getBancos(1);
 		 $scope.getCuentaBanco(1)
 		$scope.getClaveBanco(1)
@@ -32,8 +32,8 @@ registrationModule.controller('conciliacionInicioController', function ($scope, 
     //     });
     // }
 
-    $scope.getEmpresa = function(idEmpresa) {
-        filtrosRepository.getEmpresas(idEmpresa).then(function(result) {
+    $scope.getEmpresa = function(idUsuario) {
+        filtrosRepository.getEmpresas(idUsuario).then(function(result) {
             if (result.data.length > 0) {
                 $scope.empresaUsuario = result.data;
             }

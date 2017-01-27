@@ -24,9 +24,41 @@ Filtros.prototype.get_empresas = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
+    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }];
 
-    this.model.query('SEL_EMPRESA_SP', params, function(error, result) {
+    this.model.query('SEL_EMPRESA_BY_USUARIO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+Filtros.prototype.get_sucursales = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT },
+                { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
+
+    this.model.query('SEL_SUCURSAL_BY_USUARIO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+Filtros.prototype.get_departamentos = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT },
+                { name: 'idSucursal', value: req.query.idSucursal, type: self.model.types.INT }];
+
+    this.model.query('SEL_DEPARTAMENTO_BY_USUARIO_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

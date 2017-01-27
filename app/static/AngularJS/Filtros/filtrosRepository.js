@@ -2,12 +2,40 @@ var filtrosURL = global_settings.urlCORS + 'api/filtros/';
 
 registrationModule.factory('filtrosRepository', function($http) {
     return {
-        getEmpresas: function(idEmpresa) {
+        getEmpresas: function(idUsuario) {
             return $http({
                 url: filtrosURL + 'empresas/',
                 method: "GET",
                 params: {
+                    idUsuario: idUsuario
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        },
+        getSucursales: function(idUsuario, idEmpresa) {
+            return $http({
+                url: filtrosURL + 'sucursales/',
+                method: "GET",
+                params: {
+                    idUsuario: idUsuario,
                     idEmpresa: idEmpresa
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        },
+        getDepartamentos: function(idUsuario, idSucursal) {
+            return $http({
+                url: filtrosURL + 'departamentos/',
+                method: "GET",
+                params: {
+                    idUsuario: idUsuario,
+                    idSucursal: idSucursal
                 },
                 headers: {
                     'Content-Type': 'application/json'
