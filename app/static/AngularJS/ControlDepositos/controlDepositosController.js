@@ -7,6 +7,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     $scope.init = function() {
         $scope.getEmpresa($scope.idUsuario);
         $scope.dato = "0000";
+        $scope.getDepositosBancos(4,1,'10/11/2015','31/12/2015');
+        $scope.getAuxiliarContable('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
     }
 
     $scope.getEmpresa = function(idUsuario) {
@@ -42,7 +44,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     }
 
     $scope.getAuxiliarContable = function(server,database,fechaIni,fechaFin){
-      filtrosRepository.getAuxiliarContable(server,database,fechaIni,fechaFin).then(function(result) {
+      filtrosRepository.getAuxiliar(server,database,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 //$scope.listAuxiliarContable = result.data;
                 $scope.gridAuxiliar.data = result.data;
@@ -50,7 +52,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
-     $scope.getBancos = function(empresa,cuenta,fechaIni,fechaFin){
+     $scope.getDepositosBancos = function(empresa,cuenta,fechaIni,fechaFin){
       filtrosRepository.getDepositos(empresa,cuenta,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 //$scope.listAuxiliarContable = result.data;
@@ -72,25 +74,12 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     { name: 'CONCEPTO',displayName: 'Concepto', width: '20%' },
     { name: 'NUMERO_CUENTA', displayName: 'Numero de cuenta',width: '20%'},
     { name: 'FECHA', width: '20%',displayName: 'Fecha' },
-    { name: 'ABONO', width: '40%',displayName: 'Abono'}
+    { name: 'ABONO', width: '40%',displayName: 'Abono',cellFilter: 'currency'}
   ];
 
   $scope.gridAuxiliar.multiSelect = true;
 
-  // $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
-  //   .success(function(data) {
-  //     $scope.gridAuxiliar.data = data;
-  //     $timeout(function() {
-  //       if($scope.gridApi.selection.selectRow){
-  //         $scope.gridApi.selection.selectRow($scope.gridAuxiliar.data[0]);
-  //       }
-  //     });
-  //   });
-
-  $scope.getAuxiliarContable('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
-
-  $scope.getBancos(5,6,'10/11/2015','31/12/2015');
-
+  
     $scope.info = {};
 
     $scope.toggleMultiSelect = function() {
@@ -149,13 +138,13 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     };
 
 
-     $scope.gridDocumentos = { enableRowSelection: true, enableRowHeaderSelection: false };
+  $scope.gridDocumentos = { enableRowSelection: true, enableRowHeaderSelection: false };
 
   $scope.gridDocumentos.columnDefs = [
-    { name: 'id' },
-    { name: 'name'},
-    { name: 'age', displayName: 'Age (not focusable)', allowCellFocus : false },
-    { name: 'address.city' }
+    { name: 'banco',displayName: 'Banco', width: '20%' },
+    { name: 'concepto',displayName: 'Concepto', width: '20%'},
+    { name: 'importe',displayName: 'Importe', width: '20%' },
+    { name: 'fechaOperacion' ,displayName: 'Fecha', width: '20%'}
   ];
 
   $scope.gridDocumentos.multiSelect = false;
@@ -171,13 +160,6 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
   };
 
-  // $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
-  //   .success(function(data) {
-  //     $scope.gridDocumentos.data = data;
-
-  //     // $interval whilst we wait for the grid to digest the data we just gave it
-  //     $interval( function() {$scope.gridApi.selection.selectRow($scope.gridDocumentos.data[0]);}, 0, 1);
-  //   });
-
+ 
 
 });

@@ -95,7 +95,7 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        getAuxiliarContable: function(server,database,fechaIni,fechaFin) {
+        getAuxiliar: function(server,database,fechaIni,fechaFin) {
             return $http({
                 url: filtrosURL + 'auxiliarContable/',
                 method: "GET",
@@ -113,7 +113,7 @@ registrationModule.factory('filtrosRepository', function($http) {
         },
         getDepositos:function(idEmpresa,idBanco,fechaInicial,fechaFinal) {
             return $http({
-                url: filtrosURL + 'auxiliar/',
+                url: filtrosURL + 'depositos/',
                 method: "GET",
                 params: {
                     idEmpresa: idEmpresa,
