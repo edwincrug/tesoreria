@@ -2,7 +2,13 @@ registrationModule.controller('conciliacionController', function ($scope, $rootS
 
 	// ****************** Se guarda la información del usuario en variable userData
 	$rootScope.userData = localStorageService.get('userData');
-	
+
+	// $scope.panels = [
+ //        { name: 'Abonos Contables', active: true, className: 'active' },
+ //        { name: 'Abonos Bancarios', active: false, className: '' },
+ //        { name: 'Cargo Contable', active: false, className: '' },
+ //        { name: 'Cargo Bancario', active: false, className: '' }
+ //    ];
 	
 	$scope.init = function(){
 		$scope.calendario();
@@ -34,4 +40,15 @@ registrationModule.controller('conciliacionController', function ($scope, $rootS
             format: "dd/mm/yyyy"
         });
     }
+
+    //   $scope.setActiveClass = function(currentTab) {
+    //   	console.log(currentTab)
+    //     for (var i = 0; i < $scope.panels.length; i++) {
+    //         $scope.panels[i].active = false;
+    //         $scope.panels[i].className = "";
+    //     }
+    //     currentTab.active = true;
+    //     currentTab.className = "active";
+    //     console.log(currentTab)
+    // };
 });
