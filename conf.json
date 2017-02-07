@@ -5,4 +5,5 @@
     "SQL_server": "192.168.20.9",
     "SQL_database": "tesoreria",
     "SQL_connectionTimeout": 60000
+    
 } 
