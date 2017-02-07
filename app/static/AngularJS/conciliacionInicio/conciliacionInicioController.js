@@ -2,7 +2,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
 
     // ****************** Se guarda la información del usuario en variable userData
     $rootScope.userData = localStorageService.get('userData');
-
+    $scope.nodoPadre= [];
 
     $scope.init = function() {
         //$scope.calendario();
@@ -11,6 +11,8 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         $scope.getCuentaBanco(1)
         $scope.getClaveBanco(1)
         $scope.getCuentacontable(1)
+        $scope.getDepositosBancos(4,1,'10/11/2015','31/12/2015');
+        $scope.getAuxiliarContable('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
             // if($rootScope.userData == null){
             //  location.href = '/';
             //  alertFactory.warning('Inicie Sesión')
@@ -58,7 +60,38 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
                     $scope.cuentacontable = result.data;
                 }
             });
-        }
+    }
+
+    $scope.getAuxiliarContable = function(server,database,fechaIni,fechaFin){
+        $('#tblAuxiliar').DataTable().destroy();
+      filtrosRepository.getAuxiliar(server,database,fechaIni,fechaFin).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.auxiliarContable = result.data;
+                setTimeout(function() {
+                            $scope.setTablePaging('tblAuxiliar');
+                            $("#tblAuxiliar_filter").removeClass("dataTables_info").addClass("hide-div");
+                        }, 2500);
+            }
+        });
+    }
+
+    $scope.getDepositosBancos = function(empresa,cuenta,fechaIni,fechaFin){
+        $('#tblDepositos').DataTable().destroy();
+      filtrosRepository.getDepositos(empresa,cuenta,fechaIni,fechaFin).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.depositosBancos = result.data;
+                setTimeout(function() {
+                            $scope.setTablePaging('tblDepositos');
+                            //$("#tblDepositos_filter").removeClass("dataTables_info").addClass("hide-div");
+                        }, 2500);
+
+            }
+        });
+    }
+
+    $scope.datosss = function(obj){
+        console.log(obj)
+    }
         //**************************************************************************************************
         // INICIA Genera el pdf 
         //**************************************************************************************************
@@ -309,11 +342,23 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
                 }, 5000);
 
             });
-
-
-        }
+    }
         //**************************************************************************************************
         // TERMINA Genera el pdf 
         //**************************************************************************************************    
 
+     $scope.setTablePaging = function(idTable) {
+        $('#' + idTable).DataTable({
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [{
+                // customize: function(win) {
+                //     $(win.document.body).addClass('white-bg');
+                //     $(win.document.body).css('font-size', '10px');
+                //     $(win.document.body).find('table')
+                //         .addClass('compact')
+                //         .css('font-size', 'inherit');
+                    // }
+                }]
+        });
+    };
 });
