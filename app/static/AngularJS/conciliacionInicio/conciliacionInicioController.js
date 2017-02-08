@@ -1,8 +1,8 @@
-registrationModule.controller('conciliacionInicioController', function($scope, $rootScope, $location, localStorageService, filtrosRepository, conciliacionInicioRepository, alertFactory) {
+registrationModule.controller('conciliacionInicioController', function($scope, $rootScope, $location, $timeout, $log, localStorageService, filtrosRepository, conciliacionInicioRepository, alertFactory, uiGridConstants) {
 
     // ****************** Se guarda la información del usuario en variable userData
     $rootScope.userData = localStorageService.get('userData');
-    $scope.nodoPadre= [];
+    $scope.nodoPadre = [];
 
     $scope.init = function() {
         //$scope.calendario();
@@ -11,14 +11,14 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         $scope.getCuentaBanco(1)
         $scope.getClaveBanco(1)
         $scope.getCuentacontable(1)
-        $scope.getDepositosBancos(4,1,'10/11/2015','31/12/2015');
-        $scope.getAuxiliarContable('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
-            // if($rootScope.userData == null){
-            //  location.href = '/';
-            //  alertFactory.warning('Inicie Sesión')
-            // }else{
-            //  alertFactory.success('Bienvenido '+ $rootScope.userData.nombreUsuario)
-            // }
+        $scope.getDepositosBancos(4, 1, '10/11/2015', '31/12/2015');
+        $scope.getAuxiliarContable('192.168.20.9', 'GAZM_ZARAGOZA', '10/11/2015', '31/12/2015');
+        // if($rootScope.userData == null){
+        //  location.href = '/';
+        //  alertFactory.warning('Inicie Sesión')
+        // }else{
+        //  alertFactory.success('Bienvenido '+ $rootScope.userData.nombreUsuario)
+        // }
         $rootScope.mostrarMenu = 1;
     }
 
@@ -55,48 +55,44 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     }
 
     $scope.getCuentacontable = function(idCuentacontable) {
-            filtrosRepository.getCuentacontable(idCuentacontable).then(function(result) {
-                if (result.data.length > 0) {
-                    $scope.cuentacontable = result.data;
-                }
-            });
+        filtrosRepository.getCuentacontable(idCuentacontable).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.cuentacontable = result.data;
+            }
+        });
     }
 
-    $scope.getAuxiliarContable = function(server,database,fechaIni,fechaFin){
+    $scope.getAuxiliarContable = function(server, database, fechaIni, fechaFin) {
         $('#tblAuxiliar').DataTable().destroy();
-      filtrosRepository.getAuxiliar(server,database,fechaIni,fechaFin).then(function(result) {
+        filtrosRepository.getAuxiliar(server, database, fechaIni, fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 $scope.auxiliarContable = result.data;
-                setTimeout(function() {
-                            $scope.setTablePaging('tblAuxiliar');
-                            $("#tblAuxiliar_filter").removeClass("dataTables_info").addClass("hide-div");
-                        }, 2500);
+                console.log($scope.auxiliarContable,'Auxiliar');
+                $scope.gridAuxiliarContable.data = result.data;
+                
             }
         });
     }
 
-    $scope.getDepositosBancos = function(empresa,cuenta,fechaIni,fechaFin){
+    $scope.getDepositosBancos = function(empresa, cuenta, fechaIni, fechaFin) {
         $('#tblDepositos').DataTable().destroy();
-      filtrosRepository.getDepositos(empresa,cuenta,fechaIni,fechaFin).then(function(result) {
+        filtrosRepository.getDepositos(empresa, cuenta, fechaIni, fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 $scope.depositosBancos = result.data;
-                setTimeout(function() {
-                            $scope.setTablePaging('tblDepositos');
-                            //$("#tblDepositos_filter").removeClass("dataTables_info").addClass("hide-div");
-                        }, 2500);
-
+                console.log($scope.depositosBancos,'Banco')
+                $scope.gridDepositosBancos.data = result.data;
             }
         });
     }
 
-    $scope.datosss = function(obj){
-        console.log(obj)
-    }
+    $scope.datosss = function(obj) {
+            console.log(obj)
+        }
         //**************************************************************************************************
         // INICIA Genera el pdf 
         //**************************************************************************************************
     $scope.generarReporte = function() {
-        $('#loading').modal('show');
+            $('#loading').modal('show');
             var infReporte = '';
             var jsonData = '';
             var ruta = '';
@@ -332,7 +328,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
             }
             conciliacionInicioRepository.getReportePdf(jsonData).then(function(fileName) {
                 setTimeout(function() {
-                    $("#objReportePdf").remove();                    
+                    $("#objReportePdf").remove();
                     //window.open("http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + fileName.data);
                     ruta = fileName.data;
                     console.log(fileName.data);
@@ -342,12 +338,12 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
                 }, 5000);
 
             });
-    }
+        }
         //**************************************************************************************************
         // TERMINA Genera el pdf 
         //**************************************************************************************************    
 
-     $scope.setTablePaging = function(idTable) {
+    $scope.setTablePaging = function(idTable) {
         $('#' + idTable).DataTable({
             dom: '<"html5buttons"B>lTfgitp',
             buttons: [{
@@ -357,8 +353,129 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
                 //     $(win.document.body).find('table')
                 //         .addClass('compact')
                 //         .css('font-size', 'inherit');
-                    // }
-                }]
+                // }
+            }]
         });
     };
+    //****************************************************************************************************
+    // INICIA la configuración del GRID AUXILIAR CONTABLE
+    //****************************************************************************************************
+    $scope.gridAuxiliarContable = {
+        enableRowSelection: true,
+        enableSelectAll: true,
+        selectionRowHeaderWidth: 35,
+        rowHeight: 35,
+        showGridFooter: true
+    };
+
+    $scope.gridAuxiliarContable.columnDefs = [
+        { name: 'FECHA', displayName: 'Fecha', width: '20%' },
+        { name: 'TIPO', displayName: 'Tipo Pol', width: '40%' },
+        { name: 'POLIZA', displayName: 'No Pol', width: '12%' },
+        { name: 'CONCEPTO', displayName: 'Concepto', width: '20%' },
+        { name: 'CARGO', displayName: 'Cargo', width: '20%', cellFilter: 'currency' },
+        { name: 'ABONO', displayName: 'Abono', width: '20%', cellFilter: 'currency' }
+    ];
+
+    $scope.gridAuxiliarContable.multiSelect = true;
+    //****************************************************************************************************
+    // TERMINA la configuración del GRID AUXILIAR CONTABLE
+    //****************************************************************************************************
+    //****************************************************************************************************
+    // INICIO la configuración del GRID BANCOS
+    //****************************************************************************************************
+    $scope.gridDepositosBancos = {
+        enableRowSelection: true,
+        enableSelectAll: true,
+        selectionRowHeaderWidth: 35,
+        rowHeight: 35,
+        showGridFooter: true
+    };
+
+    $scope.gridDepositosBancos.columnDefs = [
+        { name: 'banco', displayName: 'Banco', width: '20%' },
+        { name: 'referencia', displayName: 'Referencia', width: '20%' },
+        { name: 'concepto', displayName: 'Concepto', width: '40%' },
+        { name: 'esCargo', displayName: 'Cargo', width: '20%', cellFilter: 'currency' },
+        { name: 'importe', displayName: 'Abono', width: '20%', cellFilter: 'currency' }
+    ];
+
+    $scope.gridDepositosBancos.multiSelect = true;
+    //****************************************************************************************************
+    // TERMINA la configuración del GRID BANCOS
+    //****************************************************************************************************
+    //****************************************************************************************************
+    // INICIA guarda los grid elegidos de auxiliar y banco
+    //****************************************************************************************************
+    $scope.GuardarGrid = function(auxiliar, banco) {
+        console.log($scope.gridAuxiliarContable.selection, 'Soy el auxiliar')
+    }
+    $scope.gridAuxiliarContable.onRegisterApi = function(gridApi) {
+        //set gridApi on scope
+        $scope.gridApi = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+            var msg = 'row selected ' + row.isSelected;
+            console.log(msg, 'Estoy en rowSelectionChanged');
+        });
+
+        gridApi.selection.on.rowSelectionChangedBatch($scope, function(rows) {
+            var msg = 'rows changed ' + rows.length;
+            console.log(msg, 'Estoy en rowSelectionChangedBatch');
+        });
+    };
+
+    //Lo que me robe  
+
+
+
+    // $scope.toggleMultiSelect = function() {
+    //     $scope.gridApi.selection.setMultiSelect(!$scope.gridApi.grid.options.multiSelect);
+    // };
+
+    // $scope.toggleModifierKeysToMultiSelect = function() {
+    //     $scope.gridApi.selection.setModifierKeysToMultiSelect(!$scope.gridApi.grid.options.modifierKeysToMultiSelect);
+    // };
+
+    // $scope.selectAll = function() {
+    //     $scope.gridApi.selection.selectAllRows();
+    // };
+
+    // $scope.clearAll = function() {
+    //     $scope.gridApi.selection.clearSelectedRows();
+    // };
+
+    // $scope.toggleRow1 = function() {
+    //     $scope.gridApi.selection.toggleRowSelection($scope.gridAuxiliarContable.data[0]);
+    // };
+
+    // $scope.toggleFullRowSelection = function() {
+    //     $scope.gridAuxiliarContable.enableFullRowSelection = !$scope.gridAuxiliarContable.enableFullRowSelection;
+    //     $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
+    // };
+
+    // $scope.setSelectable = function() {
+    //     $scope.gridApi.selection.clearSelectedRows();
+
+    //     $scope.gridAuxiliarContable.isRowSelectable = function(row) {
+    //         if (row.entity.age > 30) {
+    //             return false;
+    //         } else {
+    //             return true;
+    //         }
+    //     };
+    //     $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
+
+    //     $scope.gridAuxiliarContable.data[0].age = 31;
+    //     $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
+    // };
+
+    
+
+    //????????????????????????????????????????????????
+
+
+
+    //****************************************************************************************************
+    // TERMINA guarda los grid elegidos de auxiliar y banco
+    //****************************************************************************************************
 });
