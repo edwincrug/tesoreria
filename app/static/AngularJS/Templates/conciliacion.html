@@ -284,12 +284,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="row in aboContaBanco">
-                                            <td>{{row.fecha}}</td>
-                                            <td>{{row.tipoPol}}</td>
-                                            <td>{{row.noPol}}</td>
-                                            <td>{{row.concepto}}</td>
-                                            <td style="text-align: right;">{{row.total | currency}}</td>
+                                        <tr ng-repeat="row in abonosContables">
+                                            <td>{{row.FECHA}}</td>
+                                            <td>{{row.TIPO}}</td>
+                                            <td>{{row.POLIZA}}</td>
+                                            <td>{{row.CONCEPTO}}</td>
+                                            <td style="text-align: right;">{{row.SALDO_ACTUAL | currency}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -337,7 +337,7 @@
                         </div>
                         <div id="demo-tabs-box-3" class="tab-pane fade">
                             <h3>Cargo Contable no Bancario</h3>
-                            <br/>                            
+                            <br/>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -349,19 +349,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="row in cargBancoConta">
-                                        <td>{{row.fecha}}</td>
-                                        <td>{{row.tipoPol}}</td>
-                                        <td>{{row.noPol}}</td>
-                                        <td>{{row.concepto}}</td>
-                                        <td style="text-align: right;">{{row.total | currency}}</td>
+                                    <tr ng-repeat="row in cargosContables">
+                                        <td>{{row.FECHA}}</td>
+                                        <td>{{row.TIPO}}</td>
+                                        <td>{{row.POLIZA}}</td>
+                                        <td>{{row.CONCEPTO}}</td>
+                                        <td style="text-align: right;">{{row.SALDO_ACTUAL | currency}}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div id="demo-tabs-box-4" class="tab-pane fade">
                             <h3>Cargo Bancario no Contable</h3>
-                            <br/>                            
+                            <br/>
                             <table class="table">
                                 <thead>
                                     <tr>

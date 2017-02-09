@@ -41,8 +41,8 @@ Conciliacion.prototype.get_cargoContable = function(req, res, next) {
     var self = this;
 
     var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
-                  { name: 'fechaInicial', value: req.query.fInicial, type: self.model.types.STRING },
-                  { name: 'fechaFinal', value: req.query.fFinal, type: self.model.types.STRING }];
+                  { name: 'fInicial', value: req.query.fInicial, type: self.model.types.STRING },
+                  { name: 'fFinal', value: req.query.fFinal, type: self.model.types.STRING }];
 
     this.model.query('SEL_CARGO_CONTABLE_SP', params, function(error, result) {
         self.view.expositor(res, {

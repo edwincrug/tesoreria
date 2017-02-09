@@ -1,4 +1,4 @@
-registrationModule.controller('conciliacionController', function ($scope, $rootScope, $location, localStorageService,alertFactory) {
+registrationModule.controller('conciliacionController', function ($scope, $rootScope, $location, localStorageService,alertFactory,conciliacionRepository) {
 
 	// ****************** Se guarda la información del usuario en variable userData
 	$rootScope.userData = localStorageService.get('userData');
@@ -20,15 +20,15 @@ registrationModule.controller('conciliacionController', function ($scope, $rootS
         $scope.totalCargoContaBanco = 0;
         $scope.totalCargoBancoConta = 0;
 
+		$scope.abonosContables = [];
+	    $scope.cargosContables = [];
 
-		$scope.aboContaBanco = [{"fecha":"13/01/2017","tipoPol":"UNI-EGRESOS","noPol":"728","concepto":"3210 - TANIA ANGELICA RAMIREZ PALMA","total":"47000"},
-					   			{"fecha":"07/01/2017","tipoPol":"UNI-EGRESOS","noPol":"821","concepto":"8298 - LAURA CASTILLO ALVARADO","total":"800"},
-					   			{"fecha":"21/01/2017","tipoPol":"UNI-EGRESOS","noPol":"914","concepto":"5392 - MONICA LOPEZ LEON","total":"2300"}];
-
-	    $scope.cargBancoConta = [{"fecha":"13/01/2017","tipoPol":"UNI-EGRESOS","noPol":"728","concepto":"3210 - TANIA ANGELICA RAMIREZ PALMA","total":"47000"},					   			
-					   			{"fecha":"21/01/2017","tipoPol":"UNI-EGRESOS","noPol":"914","concepto":"5392 - MONICA LOPEZ LEON","total":"23000"}];
+        $scope.getAbonoContable(0,0,0);
+        $scope.getCargoContable(0,0,0);
 
 	}
+
+
 	$scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
             todayBtn: "linked",
@@ -38,6 +38,22 @@ registrationModule.controller('conciliacionController', function ($scope, $rootS
             autoclose: true,
             todayHighlight: true,
             format: "dd/mm/yyyy"
+        });
+    }
+
+    $scope.getAbonoContable = function(idEmpresa, fInicial, fFinal) {
+        conciliacionRepository.getAbonoContable(idEmpresa, fInicial, fFinal).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.abonosContables = result.data;
+            }
+        });
+    }
+
+    $scope.getCargoContable = function(idEmpresa, fInicial, fFinal) {
+        conciliacionRepository.getCargoContable(idEmpresa, fInicial, fFinal).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.cargosContables = result.data;
+            }
         });
     }
 
