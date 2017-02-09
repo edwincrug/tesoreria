@@ -18,8 +18,8 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         $scope.getCuentaBanco(1)
         $scope.getClaveBanco(1)
         $scope.getCuentacontable(1)
-        $scope.getDepositosBancos(4, 1, '10/11/2015', '31/12/2015');
-        $scope.getAuxiliarContable('192.168.20.9', 'GAZM_ZARAGOZA', '10/11/2015', '31/12/2015');
+        $scope.getDepositosBancos(1);
+        $scope.getAuxiliarContable(4,'1100-0070-0001-0005');
         // if($rootScope.userData == null){
         //  location.href = '/';
         //  alertFactory.warning('Inicie Sesión')
@@ -69,9 +69,9 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         });
     }
 
-    $scope.getAuxiliarContable = function(server, database, fechaIni, fechaFin) {
+    $scope.getAuxiliarContable = function(idEmpresa, numero_cuenta) {
         $('#tblAuxiliar').DataTable().destroy();
-        filtrosRepository.getAuxiliar(server, database, fechaIni, fechaFin).then(function(result) {
+        filtrosRepository.getAuxiliar(idEmpresa, numero_cuenta).then(function(result) {
             if (result.data.length > 0) {
                 $scope.auxiliarContable = result.data;
                 console.log($scope.auxiliarContable, 'Auxiliar');
@@ -81,9 +81,9 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         });
     }
 
-    $scope.getDepositosBancos = function(empresa, cuenta, fechaIni, fechaFin) {
+    $scope.getDepositosBancos = function(idBanco) {
         $('#tblDepositos').DataTable().destroy();
-        filtrosRepository.getDepositos(empresa, cuenta, fechaIni, fechaFin).then(function(result) {
+        filtrosRepository.getDepositos(idBanco).then(function(result) {
             if (result.data.length > 0) {
                 $scope.depositosBancos = result.data;
                 console.log($scope.depositosBancos, 'Banco')

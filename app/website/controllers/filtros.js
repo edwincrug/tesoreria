@@ -123,16 +123,47 @@ Filtros.prototype.get_cuentacontable = function(req, res, next) {
 };
 
 
+Filtros.prototype.get_addAuxiliarContable = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },                   
+                    { name: 'fechaIni', value: req.query.fechaIni, type: self.model.types.STRING},
+                    { name: 'fechaFin', value: req.query.fechaFin, type: self.model.types.STRING}];
+
+    this.model.query('INS_AUXILIAR_CONTABLE_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+Filtros.prototype.get_addDepositos = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
+                  { name: 'fechaInicial', value: req.query.fechaInicial, type: self.model.types.STRING },
+                  { name: 'fechaFinal', value: req.query.fechaFinal, type: self.model.types.STRING }];
+
+    this.model.query('INS_CUENTAS_REFERENCIADAS_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
 Filtros.prototype.get_auxiliarContable = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'server', value: req.query.server, type: self.model.types.STRING},
-                    { name: 'database', value: req.query.database, type: self.model.types.STRING},
-                    { name: 'fechaIni', value: req.query.fechaIni, type: self.model.types.STRING},
-                    { name: 'fechaFin', value: req.query.fechaFin, type: self.model.types.STRING}];
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },                   
+                    { name: 'numero_cuenta', value: req.query.numero_cuenta , type: self.model.types.STRING}];
 
-    this.model.query('SEL_AUXILIAR_CONTABLE_SP', params, function(error, result) {
+    this.model.query('SEL_AUXILIAR_CONTABLE_EMPRESA_CUENTA_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
@@ -144,12 +175,9 @@ Filtros.prototype.get_depositos = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
-                  { name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
-                  { name: 'fechaInicial', value: req.query.fechaInicial, type: self.model.types.STRING },
-                  { name: 'fechaFinal', value: req.query.fechaFinal, type: self.model.types.STRING }];
+    var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT }];
 
-    this.model.query('SEL_LAYOUT_TXT_BANCO_PAGO_SP', params, function(error, result) {
+    this.model.query('SEL_DEPOSITOS_REFERENCIADOS_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

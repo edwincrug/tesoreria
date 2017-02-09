@@ -95,13 +95,12 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        getAuxiliar: function(server,database,fechaIni,fechaFin) {
+        AddAuxiliar: function(idEmpresa,fechaIni,fechaFin) {
             return $http({
-                url: filtrosURL + 'auxiliarContable/',
+                url: filtrosURL + 'addAuxiliarContable/',
                 method: "GET",
                 params: {
-                    server : server,
-                    database : database,
+                    idEmpresa : idEmpresa,
                     fechaIni : fechaIni,
                     fechaFin : fechaFin
                 },
@@ -111,15 +110,41 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        getDepositos:function(idEmpresa,idBanco,fechaInicial,fechaFinal) {
+        AddDepositos:function(idBanco,fechaInicial,fechaFinal) {
+            return $http({
+                url: filtrosURL + 'addDepositos/',
+                method: "GET",
+                params: {
+                    idBanco: idBanco,
+                    fechaInicial: fechaInicial,
+                    fechaFinal: fechaFinal
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        },
+        getAuxiliar: function(idEmpresa,numero_cuenta) {
+            return $http({
+                url: filtrosURL + 'auxiliarContable/',
+                method: "GET",
+                params: {
+                    idEmpresa : idEmpresa,
+                    numero_cuenta : numero_cuenta
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        },
+        getDepositos:function(idBanco) {
             return $http({
                 url: filtrosURL + 'depositos/',
                 method: "GET",
                 params: {
-                    idEmpresa: idEmpresa,
-                    idBanco: idBanco,
-                    fechaInicial: fechaInicial,
-                    fechaFinal: fechaFinal
+                    idBanco: idBanco
                 },
                 headers: {
                     'Content-Type': 'application/json'
