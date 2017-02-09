@@ -3,6 +3,13 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     // ****************** Se guarda la información del usuario en variable userData
     $rootScope.userData = localStorageService.get('userData');
     $scope.nodoPadre = [];
+    //*******************Se inician variables
+    // $scope.gridDepositosBancos = '';
+    // $scope.gridAuxiliarContable = '';
+    // $scope.gridAuxiliarContablePunteado = '';
+    // $scope.gridDepositosBancosPunteado = '';
+    $scope.auxiliar = true;
+    $scope.bancos = false;
 
     $scope.init = function() {
         //$scope.calendario();
@@ -67,9 +74,9 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         filtrosRepository.getAuxiliar(server, database, fechaIni, fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 $scope.auxiliarContable = result.data;
-                console.log($scope.auxiliarContable,'Auxiliar');
+                console.log($scope.auxiliarContable, 'Auxiliar');
                 $scope.gridAuxiliarContable.data = result.data;
-                
+
             }
         });
     }
@@ -79,7 +86,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         filtrosRepository.getDepositos(empresa, cuenta, fechaIni, fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 $scope.depositosBancos = result.data;
-                console.log($scope.depositosBancos,'Banco')
+                console.log($scope.depositosBancos, 'Banco')
                 $scope.gridDepositosBancos.data = result.data;
             }
         });
@@ -378,9 +385,23 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     ];
 
     $scope.gridAuxiliarContable.multiSelect = true;
-    //****************************************************************************************************
-    // TERMINA la configuración del GRID AUXILIAR CONTABLE
-    //****************************************************************************************************
+
+    $scope.gridAuxiliarContable.onRegisterApi = function(gridApi) {
+        //set gridApi on scope
+        $scope.gridApiAuxiliar = gridApi;
+        // gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+        //     var msg = 'row selected ' + row.isSelected;
+        //     console.log(msg, 'Estoy en rowSelectionChanged');
+        // }); //Este me dice cuales van siendo seleccionadas
+
+        gridApi.selection.on.rowSelectionChangedBatch($scope, function(rows) {
+            var msg = 'rows changed ' + rows.length;
+            console.log(msg, 'Estoy en rowSelectionChangedBatch', rows);
+            angular.forEach(rows, function(value, key) {
+                $scope.gridAuxiliarContablePunteado.data[key] = value.entity;
+            });
+        });
+    };
     //****************************************************************************************************
     // INICIO la configuración del GRID BANCOS
     //****************************************************************************************************
@@ -401,28 +422,75 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     ];
 
     $scope.gridDepositosBancos.multiSelect = true;
-    //****************************************************************************************************
-    // TERMINA la configuración del GRID BANCOS
-    //****************************************************************************************************
-    //****************************************************************************************************
-    // INICIA guarda los grid elegidos de auxiliar y banco
-    //****************************************************************************************************
-    $scope.GuardarGrid = function(auxiliar, banco) {
-        console.log($scope.gridAuxiliarContable.selection, 'Soy el auxiliar')
-    }
-    $scope.gridAuxiliarContable.onRegisterApi = function(gridApi) {
+
+    $scope.gridDepositosBancos.onRegisterApi = function(gridApi) {
         //set gridApi on scope
-        $scope.gridApi = gridApi;
-        gridApi.selection.on.rowSelectionChanged($scope, function(row) {
-            var msg = 'row selected ' + row.isSelected;
-            console.log(msg, 'Estoy en rowSelectionChanged');
-        });
+        $scope.gridApiBancos = gridApi;
+        // gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+        //     var msg = 'row selected ' + row.isSelected;
+        //     console.log(msg, 'Estoy en rowSelectionChanged');
+        // });//Este me dice cuales van siendo seleccionadas
 
         gridApi.selection.on.rowSelectionChangedBatch($scope, function(rows) {
             var msg = 'rows changed ' + rows.length;
-            console.log(msg, 'Estoy en rowSelectionChangedBatch');
+            console.log(msg, 'Estoy en rowSelectionChangedBatch', rows);
+            angular.forEach(rows, function(value, key) {
+                $scope.gridDepositosBancosPunteado.data[key] = value.entity;
+            });
         });
     };
+    //****************************************************************************************************
+    // INICIA la configuración del GRID AUXILIAR CONTABLE pero con PUNTEO
+    //****************************************************************************************************
+    $scope.gridAuxiliarContablePunteado = {
+        enableRowSelection: true,
+        enableSelectAll: true,
+        selectionRowHeaderWidth: 35,
+        rowHeight: 35,
+        showGridFooter: true
+    };
+
+    $scope.gridAuxiliarContablePunteado.columnDefs = [
+        { name: 'FECHA', displayName: 'Fecha', width: '20%' },
+        { name: 'TIPO', displayName: 'Tipo Pol', width: '40%' },
+        { name: 'POLIZA', displayName: 'No Pol', width: '12%' },
+        { name: 'CONCEPTO', displayName: 'Concepto', width: '20%' },
+        { name: 'CARGO', displayName: 'Cargo', width: '20%', cellFilter: 'currency' },
+        { name: 'ABONO', displayName: 'Abono', width: '20%', cellFilter: 'currency' }
+    ];
+
+    $scope.gridAuxiliarContablePunteado.multiSelect = false;
+    //****************************************************************************************************
+    // INICIO la configuración del GRID BANCOS pero con PUNTEO
+    //****************************************************************************************************
+    $scope.gridDepositosBancosPunteado = {
+        enableRowSelection: true,
+        enableSelectAll: true,
+        selectionRowHeaderWidth: 35,
+        rowHeight: 35,
+        showGridFooter: true
+    };
+
+    $scope.gridDepositosBancosPunteado.columnDefs = [
+        { name: 'banco', displayName: 'Banco', width: '20%' },
+        { name: 'referencia', displayName: 'Referencia', width: '20%' },
+        { name: 'concepto', displayName: 'Concepto', width: '40%' },
+        { name: 'esCargo', displayName: 'Cargo', width: '20%', cellFilter: 'currency' },
+        { name: 'importe', displayName: 'Abono', width: '20%', cellFilter: 'currency' }
+    ];
+
+    $scope.gridDepositosBancosPunteado.multiSelect = false;
+    //****************************************************************************************************
+    // INICIA guarda los grid elegidos de auxiliar y banco
+    //****************************************************************************************************
+    $scope.GuardarGrid = function() {
+            $scope.gridApiBancos.selection.clearSelectedRows();
+            $scope.gridApiAuxiliar.selection.clearSelectedRows();
+        }
+        //****************************************************************************************************
+        // TERMINA guarda los grid elegidos de auxiliar y banco
+        //****************************************************************************************************
+
 
     //Lo que me robe  
 
@@ -469,13 +537,8 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     //     $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
     // };
 
-    
+
 
     //????????????????????????????????????????????????
 
-
-
-    //****************************************************************************************************
-    // TERMINA guarda los grid elegidos de auxiliar y banco
-    //****************************************************************************************************
 });
