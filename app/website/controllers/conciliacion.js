@@ -52,4 +52,36 @@ Conciliacion.prototype.get_cargoContable = function(req, res, next) {
     });
 };
 
+Conciliacion.prototype.get_abonoBancario = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
+                  { name: 'fInicial', value: req.query.fInicial, type: self.model.types.STRING },
+                  { name: 'fFinal', value: req.query.fFinal, type: self.model.types.STRING }];
+
+    this.model.query('SEL_ABONO_BANCARIO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+Conciliacion.prototype.get_cargoBancario = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
+                  { name: 'fInicial', value: req.query.fInicial, type: self.model.types.STRING },
+                  { name: 'fFinal', value: req.query.fFinal, type: self.model.types.STRING }];
+
+    this.model.query('SEL_CARGO_BANCARIO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 module.exports = Conciliacion;

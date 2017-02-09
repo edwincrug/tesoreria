@@ -310,19 +310,19 @@
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
-                                        <th>Tipo Pol</th>
-                                        <th>No Pol</th>
+                                        <th>No. Movimiento</th>
+                                        <th>Referencia</th>
                                         <th>Concepto</th>
                                         <th style="width: 10%; text-align: center;">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="text-align: right;">{{row.total | currency}}</td>
+                                    <tr ng-repeat="row in abonosBancarios">
+                                        <td>{{row.fechaOperacion}}</td>
+                                        <td>{{row.noMovimiento}}</td>
+                                        <td>{{row.referencia}}</td>
+                                        <td>{{row.concepto}}</td>
+                                        <td style="text-align: right;">{{row.saldoOperativo | currency}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -366,19 +366,19 @@
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
-                                        <th>Tipo Pol</th>
-                                        <th>No Pol</th>
+                                        <th>No. Movimiento</th>
+                                        <th>Referencia</th>
                                         <th>Concepto</th>
                                         <th style="width: 10%; text-align: center;">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="row in cargBancoConta">
-                                        <td>{{row.fecha}}</td>
-                                        <td>{{row.tipoPol}}</td>
-                                        <td>{{row.noPol}}</td>
+                                    <tr ng-repeat="row in cargosBancarios">
+                                        <td>{{row.fechaOperacion}}</td>
+                                        <td>{{row.noMovimiento}}</td>
+                                        <td>{{row.referencia}}</td>
                                         <td>{{row.concepto}}</td>
-                                        <td style="text-align: right;">{{row.total | currency}}</td>
+                                        <td style="text-align: right;">{{row.saldoOperativo | currency}}</td>
                                     </tr>
                                 </tbody>
                             </table>

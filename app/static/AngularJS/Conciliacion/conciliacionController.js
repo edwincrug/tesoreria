@@ -22,9 +22,13 @@ registrationModule.controller('conciliacionController', function ($scope, $rootS
 
 		$scope.abonosContables = [];
 	    $scope.cargosContables = [];
+        $scope.abonosBancarios = [];
+        $scope.cargosBancarios = [];
 
         $scope.getAbonoContable(0,0,0);
         $scope.getCargoContable(0,0,0);
+        $scope.getAbonoBancario(0,0,0);
+        $scope.getCargoBancario(0,0,0);
 
 	}
 
@@ -57,6 +61,21 @@ registrationModule.controller('conciliacionController', function ($scope, $rootS
         });
     }
 
+    $scope.getCargoBancario = function(idEmpresa, fInicial, fFinal) {
+        conciliacionRepository.getCargoBancario(idEmpresa, fInicial, fFinal).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.cargosBancarios = result.data;
+            }
+        });
+    }
+
+    $scope.getAbonoBancario = function(idEmpresa, fInicial, fFinal) {
+        conciliacionRepository.getAbonoBancario(idEmpresa, fInicial, fFinal).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.abonosBancarios = result.data;
+            }
+        });
+    }
     //   $scope.setActiveClass = function(currentTab) {
     //   	console.log(currentTab)
     //     for (var i = 0; i < $scope.panels.length; i++) {
