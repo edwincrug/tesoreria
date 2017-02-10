@@ -1,4 +1,4 @@
-var conciliacionInicioURL = global_settings.urlCORS + 'api/login/';
+var conciliacionInicioURL = global_settings.urlCORS + 'api/conciliacionInicio/';
 
 registrationModule.factory('conciliacionInicioRepository', function($http) {
     return {
@@ -8,6 +8,21 @@ registrationModule.factory('conciliacionInicioRepository', function($http) {
                 method: "POST",
                 data: {
                     values: jsondata
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        insertPuntoDeposito: function(banco, auxiliar, descripcion, estatus) {
+            return $http({
+                url: conciliacionInicioURL + 'insertPuntoDeposito/',
+                method: "POST",
+                data: {
+                    idDepositoBanco: banco,
+                    idAuxiliarContable: auxiliar,
+                    descripcion: descripcion,
+                    idEstatus: estatus
                 },
                 headers: {
                     'Content-Type': 'application/json'

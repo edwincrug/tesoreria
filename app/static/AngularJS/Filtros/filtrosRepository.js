@@ -95,14 +95,14 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        AddAuxiliar: function(idEmpresa,fechaIni,fechaFin) {
+        AddAuxiliar: function(idEmpresa, fechaIni, fechaFin) {
             return $http({
                 url: filtrosURL + 'addAuxiliarContable/',
                 method: "GET",
                 params: {
-                    idEmpresa : idEmpresa,
-                    fechaIni : fechaIni,
-                    fechaFin : fechaFin
+                    idEmpresa: idEmpresa,
+                    fechaIni: fechaIni,
+                    fechaFin: fechaFin
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -110,7 +110,7 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        AddDepositos:function(idBanco,fechaInicial,fechaFinal) {
+        AddDepositos: function(idBanco, fechaInicial, fechaFinal) {
             return $http({
                 url: filtrosURL + 'addDepositos/',
                 method: "GET",
@@ -125,13 +125,14 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        getAuxiliar: function(idEmpresa,numero_cuenta) {
+        getAuxiliar: function(idEmpresa, numero_cuenta, idestatus) {
             return $http({
                 url: filtrosURL + 'auxiliarContable/',
                 method: "GET",
                 params: {
-                    idEmpresa : idEmpresa,
-                    numero_cuenta : numero_cuenta
+                    idEmpresa: idEmpresa,
+                    numero_cuenta: numero_cuenta,
+                    idEstatus: idestatus
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -139,12 +140,13 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        getDepositos:function(idBanco) {
+        getDepositos: function(idBanco, idestatus) {
             return $http({
                 url: filtrosURL + 'depositos/',
                 method: "GET",
                 params: {
-                    idBanco: idBanco
+                    idBanco: idBanco,
+                    idEstatus: idestatus
                 },
                 headers: {
                     'Content-Type': 'application/json'
