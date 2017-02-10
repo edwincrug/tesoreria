@@ -283,20 +283,24 @@
                                             <th style="width: 10%; text-align: center;">Total</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr ng-repeat="row in abonosContables">
-                                            <td>{{row.FECHA}}</td>
-                                            <td>{{row.TIPO}}</td>
-                                            <td>{{row.POLIZA}}</td>
-                                            <td>{{row.CONCEPTO}}</td>
-                                            <td style="text-align: right;">{{row.SALDO_ACTUAL | currency}}</td>
-                                        </tr>
-                                    </tbody>
                                 </table>
-                                <div style="padding-left: 85%;">Total: <span style="text-align: right;">{{totalAboContaBanco | currency}}</span> </div>
+                                <div style="width: 100%; height: 450px; overflow-y: scroll;">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr ng-repeat="row in abonosContables">
+                                                <td>{{row.FECHA}}</td>
+                                                <td>{{row.TIPO}}</td>
+                                                <td>{{row.POLIZA}}</td>
+                                                <td>{{row.CONCEPTO}}</td>
+                                                <td style="text-align: right;">{{row.SALDO_ACTUAL | currency}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="padding-left: 85%;">Total: <span style="text-align: right;">{{totalAbonoContable | currency}}</span> </div>
                                 <div class="row col-md-12" style="text-align: right;">
                                     <div class="col-md-4 col-md-offset-8" style="margin-top: 23px;">
-                                        <a class="btn btn-success" href="/conciliacionInicio">Regresar DPI</a>
+                                        <button class="btn btn-success" ng-click="getAbonoContable(0,0,0)" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#modalDPI">Regresar DPI</button>
                                         <a class="btn btn-primary" href="/conciliacionDetalleRegistros">Detalle de registros</a>
                                     </div>
                                     <br/> &nbsp;
@@ -318,18 +322,18 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="row in abonosBancarios">
-                                        <td>{{row.fechaOperacion}}</td>
-                                        <td>{{row.noMovimiento}}</td>
-                                        <td>{{row.referencia}}</td>
-                                        <td>{{row.concepto}}</td>
-                                        <td style="text-align: right;">{{row.saldoOperativo | currency}}</td>
+                                        <td>{{row.FECHA}}</td>
+                                        <td>{{row.TIPO}}</td>
+                                        <td>{{row.POLIZA}}</td>
+                                        <td>{{row.CONCEPTO}}</td>
+                                        <td style="text-align: right;">{{row.SALDO_ACTUAL | currency}}</td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div style="padding-left: 84%;">Total: {{totalAboBancoConta | currency}} </div>
+                            <div style="padding-left: 84%;">Total: {{totalAbonoBancario | currency}} </div>
                             <div class="row col-md-12" style="text-align: right;">
                                 <div class="col-md-4 col-md-offset-8" style="margin-top: 23px;">
-                                    <a class="btn btn-success" href="/conciliacionInicio">Regresar DPI</a>
+                                    <button class="btn btn-success" ng-click="getAbonoBancario(0,0,0)" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#modalDPI">Enviar a DPI</button>
                                     <a class="btn btn-primary" href="/conciliacionDetalleRegistros">Detalle de registros</a>
                                 </div>
                                 <br/> &nbsp;
@@ -358,6 +362,14 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <div style="padding-left: 84%;">Total: {{totalCargoBancario | currency}} </div>
+                            <div class="row col-md-12" style="text-align: right;">
+                                <div class="col-md-4 col-md-offset-8" style="margin-top: 23px;">
+                                    <button class="btn btn-success" ng-click="getAbonoContable(0,0,0)" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#modalDPI">Regresar DPI</button>
+                                    <a class="btn btn-primary" href="/conciliacionDetalleRegistros">Detalle de registros</a>
+                                </div>
+                                <br/> &nbsp;
+                            </div>
                         </div>
                         <div id="demo-tabs-box-4" class="tab-pane fade">
                             <h3>Cargo Bancario no Contable</h3>
@@ -374,18 +386,67 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="row in cargosBancarios">
-                                        <td>{{row.fechaOperacion}}</td>
-                                        <td>{{row.noMovimiento}}</td>
-                                        <td>{{row.referencia}}</td>
-                                        <td>{{row.concepto}}</td>
-                                        <td style="text-align: right;">{{row.saldoOperativo | currency}}</td>
+                                        <td>{{row.FECHA}}</td>
+                                        <td>{{row.TIPO}}</td>
+                                        <td>{{row.POLIZA}}</td>
+                                        <td>{{row.CONCEPTO}}</td>
+                                        <td style="text-align: right;">{{row.SALDO_ACTUAL | currency}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="padding-left: 84%;">Total: {{totalCargoContable | currency}} </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalDPI">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Enviar a DPI</h4>
+                </div>
+                <div class="modal-body" style="height: 250px;">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>No. Movimiento</th>
+                                        <th>Referencia</th>
+                                        <th>Concepto</th>
+                                        <th style="width: 10%; text-align: center;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="row in resumenDPI">
+                                        <td>{{row.FECHA}}</td>
+                                        <td>{{row.TIPO}}</td>
+                                        <td>{{row.POLIZA}}</td>
+                                        <td>{{row.CONCEPTO}}</td>
+                                        <td style="text-align: right;">{{row.SALDO_ACTUAL | currency}}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+                <div class="row modal-footer">
+                    <div class="col-sm-8"></div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Confirmar</button>
+                        <!--button type="button" class="btn btn-primary " ng-click="enviarCorreo(timbrados,filtro.correo)">Generar</button-->
+                    </div>
+                </div>
             </div>
+            <!-- /.modal-content -->
         </div>
+        <!-- /.modal-dialog -->
     </div>
 </div>

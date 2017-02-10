@@ -2,14 +2,15 @@ var conciliacionURL = global_settings.urlCORS + 'api/conciliacion/';
 
 registrationModule.factory('conciliacionRepository', function($http) {
     return {
-        getAbonoContable: function(idEmpresa, fInicial, fFinal) {
+        getAbonoContable: function(idEmpresa, fInicial, fFinal, popcion) {
             return $http({
                 url: conciliacionURL + 'abonoContable/',
                 method: "GET",
                 params: {
                     idEmpresa: idEmpresa,                    
                     fInicial: fInicial,
-                    fFinal: fFinal
+                    fFinal: fFinal,
+                    opcion: popcion
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -17,14 +18,15 @@ registrationModule.factory('conciliacionRepository', function($http) {
 
             });
         },
-        getCargoContable: function(idEmpresa, fInicial, fFinal) {
+        getCargoContable: function(idEmpresa, fInicial, fFinal, popcion) {
             return $http({
                 url: conciliacionURL + 'cargoContable/',
                 method: "GET",
                 params: {                    
                     idEmpresa: idEmpresa,                    
                     fInicial: fInicial,
-                    fFinal: fFinal
+                    fFinal: fFinal,
+                    opcion: popcion
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -32,14 +34,15 @@ registrationModule.factory('conciliacionRepository', function($http) {
 
             });
         },
-        getCargoBancario: function(idEmpresa, fInicial, fFinal) {
+        getCargoBancario: function(idEmpresa, fInicial, fFinal, popcion) {
             return $http({
                 url: conciliacionURL + 'cargoBancario/',
                 method: "GET",
                 params: {                    
                     idEmpresa: idEmpresa,                    
                     fInicial: fInicial,
-                    fFinal: fFinal
+                    fFinal: fFinal,
+                    opcion: popcion
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -47,14 +50,15 @@ registrationModule.factory('conciliacionRepository', function($http) {
 
             });
         },
-        getAbonoBancario: function(idEmpresa, fInicial, fFinal) {
+        getAbonoBancario: function(idEmpresa, fInicial, fFinal, popcion) {
             return $http({
                 url: conciliacionURL + 'abonoBancario/',
                 method: "GET",
                 params: {                    
                     idEmpresa: idEmpresa,                    
                     fInicial: fInicial,
-                    fFinal: fFinal
+                    fFinal: fFinal,
+                    opcion: popcion
                 },
                 headers: {
                     'Content-Type': 'application/json'
