@@ -8,6 +8,8 @@
             <div class="panel col-md-12">
                 <br>
                 <br>
+                <div class="col-md-6 title">Auxiliar Contable</div>
+                <div class="col-md-6">Banco</div>
                 <div class="col-md-6">
                     <div ui-grid="gridAuxiliarContable" ui-grid-selection class="grid"></div>
                 </div>
@@ -55,6 +57,27 @@
         </div>
     </div>
 </div>
+<!--Modal para colocar el numero del punteo-->
+<!--===================================================-->
+<div class="modal fade" id="punteo" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">Ingrese el número del punteo</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                <button class="btn btn-primary" ng-click="">Punteo</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End Modal para colocar el numero del punteo-->
 <!-- ************ Función para marcar todos los checkbox
 
 <script src="http://code.jquery.com/jquery-1.9.1.js "></script> 
