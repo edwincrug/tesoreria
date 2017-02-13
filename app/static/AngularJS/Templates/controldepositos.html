@@ -1,109 +1,56 @@
 <div ng-init="init()">
     <div class="panel col-md-12">
-    <br/>
+        <br/>
         <div class="ibox float-e-margins">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label class="form-label">Empresa:</label>
+                    <select class="form-control" ng-model="filtros.idEmpresa" ng-options="empresa.emp_idempresa as empresa.emp_nombre for empresa in empresaUsuario" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
+                        <option value="">Seleccioné Empresa</option>
+                    </select>
+                </div>
+                <div class="col-sm-6"></div>
+                <div class="col-sm-3">
+                <div class="pull-right">
+                                                <input id="demo-show-off-contact-checkbox" class="toggle-switch" type="checkbox" checked="">
+                                                <label for="demo-show-off-contact-checkbox">cargos</label>
+                                            </div>
+                </div>
+
+            </div>
             <div class="ibox-title" style="text-align:center">
                 <h3>Control de Depositos</h3>
             </div>
+            
             <div class="form-group col-md-3">
-		                    <label class="form-label">Empresa:</label>
-		                    <select class="form-control" ng-model="filtros.idEmpresa" ng-options="empresa.emp_idempresa as empresa.emp_nombre for empresa in empresaUsuario" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
-		                        <option value="">Seleccioné Empresa</option>
-		                    </select>
-		                </div>
-            <div class="form-group col-md-3">
-		                    <label class="form-label">Sucursal:</label>
-		                    <select class="form-control" ng-model="filtros.idEmpresa" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
-		                        <option value="">Seleccioné Sucursal</option>
-		                    </select>
-		                </div>
-		                <div class="form-group col-md-3" id="calendar">
-                                <label for="fInicio">Fecha Inicio:</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3" id="calendar">
-                                <label for="fInicio">Fecha Fin:</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy">
-                                </div>
-                            </div>
+                <label class="form-label">Sucursal:</label>
+                <select class="form-control" ng-model="filtros.idEmpresa" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
+                    <option value="">Seleccioné Sucursal</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3" id="calendar">
+                <label for="fInicio">Fecha Inicio:</label>
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy">
+                </div>
+            </div>
+            <div class="form-group col-md-3" id="calendar">
+                <label for="fInicio">Fecha Fin:</label>
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy">
+                </div>
+            </div>
+
+             <div class="col-md-3" style="margin-top: 23px">
+                            <button class="btn btn-warning">Buscar</button>
+                        </div>
             <div class="panel col-md-12">
-	            <br/>
-	            
-		            <!-- <div class="row">
-			            
-		                <div class="form-group col-md-3">
-		                    <label class="form-label">Banco:</label>
-		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
-		                        <option value="">Seleccioné Banco</option>
-		                    </select>
-		                </div>
-		                
-		                <div class="form-group col-md-3" id="calendar">
-                                <label for="fInicio">Fecha Elaboración:</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    <input type="text" class="form-control" id="fInicioDeposito" ng-model="fInicioDeposito" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
-                                </div>
-                            </div>
-
-		                 <div class="form-group col-md-3" id="calendar">
-                                <label for="fInicio">Fecha Elaboración:</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    <input type="text" class="form-control" id="fFinDeposito" ng-model="fFinDeposito" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
-                                </div>
-                            </div>
-
-		                
-		                <div class="col-md-3" style="margin-top: 23px">
-		                 	<button class="btn btn-warning">Buscar</button>
-		                </div>
-		            </div> -->
-		        
-					<div ng-if="!refresh" ui-grid="gridDocumentos" ui-grid-selection class="grid"></div>
-
-				<br/>
-<!-- 		            <div class="row">
-			            
-		                <div class="form-group col-md-3">
-		                    <label class="form-label">Banco:</label>
-		                    <select class="form-control" ng-model="tipoEmpresa.idTipoEmpresa" ng-options="empresa.idEmpresa as empresa.nombreEmpresa for empresa in empresaUsuario" name="txtTipoContrato" ng-change="cargaDocTipoContrato(nuevoContrato)" ng-disabled="timbradoPendiente">
-		                        <option value="">Seleccioné Banco</option>
-		                    </select>
-		                </div>
-		                
-		                <div class="form-group col-md-3" id="calendar">
-                                <label for="fInicio">Fecha Elaboración:</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    <input type="text" class="form-control" id="fInicioDocumento" ng-model="fInicioDocumento" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
-                                </div>
-                            </div>
-
-		                 <div class="form-group col-md-3" id="calendar">
-                                <label for="fInicio">Fecha Elaboración:</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    <input type="text" class="form-control" id="fFinDocumento" ng-model="esquemafFinDocumento" value={{fechaElaboracion}} placeholder="dd/mm/yyyy">
-                                </div>
-                            </div>
-
-		                
-		                <div class="col-md-3" style="margin-top: 23px">
-		                 	<button class="btn btn-warning">Buscar</button>
-		                </div>
-		            </div> -->
-		        
-					<div ui-grid="gridAuxiliar" ui-grid-selection class="grid"></div>
-
-	<br/>
-			    	 &nbsp;
-	        </div>
-	    </div>
+                <br/>
+                <div ng-if="!refresh" ui-grid="gridDocumentos" ui-grid-selection class="grid"></div>
+                <br/>
+            </div>
+        </div>
     </div>
 </div>
