@@ -14,7 +14,7 @@ registrationModule.factory('conciliacionInicioRepository', function($http) {
                 }
             });
         },
-        insertPuntoDeposito: function(banco, auxiliar, descripcion, estatus) {
+        insertPuntoDeposito: function(banco, auxiliar, descripcion, estatus, idpadre) {
             return $http({
                 url: conciliacionInicioURL + 'insertPuntoDeposito/',
                 method: "POST",
@@ -22,7 +22,46 @@ registrationModule.factory('conciliacionInicioRepository', function($http) {
                     idDepositoBanco: banco,
                     idAuxiliarContable: auxiliar,
                     descripcion: descripcion,
-                    idEstatus: estatus
+                    idEstatus: estatus,
+                    idPadre: idpadre
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getAuxiliarPunteo: function(idempresa) {
+            return $http({
+                url: conciliacionInicioURL + 'auxiliarPunteo/',
+                method: "GET",
+                params: {
+                    idEmpresa: idempresa
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        },
+        getBancoPunteo: function(idempresa) {
+            return $http({
+                url: conciliacionInicioURL + 'bancoPunteo/',
+                method: "GET",
+                params: {
+                    idEmpresa: idempresa
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        },
+        eliminarPunteo: function(idPunteo) {
+            return $http({
+                url: conciliacionInicioURL + 'eliminarPunteo/',
+                method: "POST",
+                data: {
+                    idPunteoAuxiliarBanco: idPunteo
                 },
                 headers: {
                     'Content-Type': 'application/json'

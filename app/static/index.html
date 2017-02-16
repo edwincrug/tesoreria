@@ -12,27 +12,24 @@
     <!--Hojas de estilos-->
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/toastr.css" rel="stylesheet" />
-<!--     <link href="/css/datepicker3.css" rel="stylesheet">
+    <!--     <link href="/css/datepicker3.css" rel="stylesheet">
     <script src="js/libs/bootstrap-datepicker.js"></script> -->
     <link href="css/datepicker3.css" rel="stylesheet">
     <link href="css/nifty.min.css" rel="stylesheet">
     <link href="css/demo/nifty-demo-icons.min.css" rel="stylesheet">
     <link href="css/demo/nifty-demo.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/themify-icons/themify-icons.min.css">
-    <link href="css/datatables.min.css" rel="stylesheet" /> 
-    
-
-
+    <!-- <link href="css/datatables.min.css" rel="stylesheet" /> -->
+    <link href="plugins/datatables/media/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="plugins/datatables/extensions/Responsive/css/dataTables.responsive.css" rel="stylesheet">
 </head>
 
 <body ng-app="registrationModule" ng-controller="mainController" ng-init="init()">
-  <div id="container" class="effect aside-float aside-bright mainnav-sm">
-        
+    <div id="container" class="effect aside-float aside-bright mainnav-sm">
         <!--NAVBAR-->
         <!--===================================================-->
         <header id="navbar" ng-show="mostrarMenu == 1">
             <div id="navbar-container" class="boxed">
-
                 <!--Brand logo & name-->
                 <!--================================-->
                 <div class="navbar-header">
@@ -45,13 +42,10 @@
                 </div>
                 <!--================================-->
                 <!--End brand logo & name-->
-
-
                 <!--Navbar Dropdown-->
                 <!--================================-->
                 <div class="navbar-content clearfix">
                     <ul class="nav navbar-top-links pull-left">
-
                         <!--Navigation toogle button-->
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <li class="tgl-menu-btn">
@@ -62,9 +56,7 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End Navigation toogle button-->
                     </ul>
-
                     <ul class="nav navbar-top-links pull-right">
-
                         <!--Language selector-->
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!-- <li class="dropdown">
@@ -76,9 +68,6 @@
                         </li> -->
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End language selector-->
-
-
-
                         <!--User dropdown-->
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <li id="dropdown-user" class="dropdown">
@@ -89,8 +78,6 @@
                                 </span>
                                 <div class="username hidden-xs"> {{userData.nombreUsuario}}</div>
                             </a>
-
-
                             <div class="dropdown-menu dropdown-menu-md dropdown-menu-right panel-default">
                                 <!-- Dropdown footer -->
                                 <div class="pad-all text-right">
@@ -102,7 +89,6 @@
                         </li>
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End user dropdown-->
-
                         <li>
                             <a href="#" class="aside-toggle navbar-aside-icon">
                                 <i class="pci-ver-dots"></i>
@@ -112,31 +98,26 @@
                 </div>
                 <!--================================-->
                 <!--End Navbar Dropdown-->
-
             </div>
         </header>
         <!--===================================================-->
         <!--END NAVBAR-->
-
         <div class="boxed">
-
             <!--CONTENT CONTAINER-->
             <!--===================================================-->
             <div id="content-container">
-                <div ng-view ></div>
+                <div ng-view></div>
             </div>
-            <!--===================================================-->            
+            <!--===================================================-->
             <!--MAIN NAVIGATION-->
             <!--===================================================-->
             <nav id="mainnav-container" ng-show="mostrarMenu == 1">
                 <div id="mainnav">
-
                     <!--Menu-->
                     <!--================================-->
                     <div id="mainnav-menu-wrap">
                         <div class="nano">
                             <div class="nano-content">
-
                                 <!--Profile Widget-->
                                 <!--================================-->
                                 <div id="mainnav-profile" class="mainnav-profile">
@@ -154,10 +135,8 @@
                                     </div>
                                 </div>
                                 <ul id="mainnav-menu" class="list-group">
-                        
                                     <!--Category name-->
                                     <li class="list-header">Navegación</li>
-                        
                                     <!--Menu list item-->
                                     <li>
                                         <a href="/controlDepositos">
@@ -167,7 +146,6 @@
                                             </span>
                                         </a>
                                     </li>
-                        
                                     <!--Menu list item-->
                                     <li>
                                         <a href="/caja">
@@ -175,16 +153,14 @@
                                             <span class="menu-title">
                                                 <strong>Amarre de Caja</strong>
                                             </span>
-                                            
                                         </a>
                                     </li>
-                                     <li>
+                                    <li>
                                         <a href="/conciliacionInicio">
                                             <i class="glyphicon glyphicon-sort"></i>
                                             <span class="menu-title">
                                                 <strong>Conciliación Contable</strong>
                                             </span>
-                                            
                                         </a>
                                     </li>
                                 </ul>
@@ -193,13 +169,11 @@
                     </div>
                     <!--================================-->
                     <!--End menu-->
-
                 </div>
             </nav>
             <!--===================================================-->
             <!--END MAIN NAVIGATION-->
         </div>
-
         <!-- SCROLL PAGE BUTTON -->
         <!--===================================================-->
         <button class="scroll-top btn">
@@ -208,7 +182,6 @@
         <!--===================================================-->
     </div>
     <!--Interface de usuario-->
-      
     <!-- Librerias Angular-->
     <script src="js/libs/angular/angular.min.js"></script>
     <script src="js/libs/angular/angular-route.min.js"></script>
@@ -217,7 +190,7 @@
     <!--BootstrapJS [ RECOMMENDED ]-->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/libs/toastr/toastr.min.js"></script> 
+    <script src="js/libs/toastr/toastr.min.js"></script>
     <script src="js/demo/ui-panels.js"></script>
     <script src="js/datatables.min.js"></script>
     <!--NiftyJS [ RECOMMENDED ]-->
@@ -228,7 +201,11 @@
     <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
     <script src="http://ui-grid.info/release/ui-grid.js"></script>
     <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
-
+    <!--Responsive table-->
+    <script src="plugins/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="plugins/datatables/media/js/dataTables.bootstrap.js"></script>
+    <script src="plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+    <script src="js/demo/tables-datatables.js"></script>
     <!-- <script src="js/libs/navBar.js"></script>
     <script src="js/libs/jsTree/jstree.min.js"></script>
     <script src="js/libs/dropzone.min.js"></script> -->

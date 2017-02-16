@@ -1,9 +1,15 @@
-registrationModule.controller('conciliacionInicioController', function($scope, $rootScope, $location, $timeout, $log, localStorageService, filtrosRepository, conciliacionInicioRepository, alertFactory, uiGridConstants) {
+registrationModule.controller('conciliacionInicioController', function($scope, $rootScope, $location, $timeout, $log, localStorageService, filtrosRepository, conciliacionInicioRepository, alertFactory, uiGridConstants, i18nService, uiGridGroupingConstants) {
 
     // ****************** Se guarda la información del usuario en variable userData
     $rootScope.userData = localStorageService.get('userData');
     $scope.nodoPadre = [];
-    $scope.abonoAuxiliar = 1;
+    $scope.abonoAuxiliar = 0;
+    $scope.cargoAuxiliar = 0;
+    $scope.abonoBanco = 0;
+    $scope.cargoBanco = 0;
+    $scope.auxiliarPadre = '';
+    $scope.bancoPadre = '';
+    i18nService.setCurrentLang('es'); //Para seleccionar el idioma
     //****************************************************************************************************
     // INICIA las variables para el GRID AUXILIAR CONTABLE
     //****************************************************************************************************
@@ -13,15 +19,18 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         selectionRowHeaderWidth: 35,
         rowHeight: 35,
         showGridFooter: true,
-        showColumnFooter: true
+        //showColumnFooter: true
     };
     $scope.gridAuxiliarContable.columnDefs = [
         { name: 'FECHA', displayName: 'Fecha', width: '10%' },
         { name: 'TIPO', displayName: 'Tipo Pol', width: '20%' },
         { name: 'POLIZA', displayName: 'No Pol', width: '15%' },
-        { name: 'CONCEPTO', displayName: 'Concepto', width: '25%', footerCellTemplate: '<div class="ui-grid-cell-contents" style="color: blue">Total</div>' },
-        { name: 'CARGO', displayName: 'Cargo', width: '15%', cellFilter: 'currency', footerCellTemplate: '<div class="ui-grid-cell-contents" ng-controller="conciliacionInicioController" >{{abonoAuxiliar | currency}}</div>' },
-        { name: 'ABONO', displayName: 'Abono', width: '15%', cellFilter: 'currency', aggregationType: uiGridConstants.selection }
+        { name: 'CONCEPTO', displayName: 'Concepto', width: '25%' },
+        { name: 'CARGO', displayName: 'Cargo', width: '15%', cellFilter: 'currency' },
+        { name: 'ABONO', displayName: 'Abono', width: '15%', cellFilter: 'currency' }
+        //{ name: 'CONCEPTO', displayName: 'Concepto', width: '25%', footerCellTemplate: '<div class="ui-grid-cell-contents" style="color: blue">Total</div>' },
+        //{ name: 'CARGO', displayName: 'Cargo', width: '15%', cellFilter: 'currency', footerCellTemplate: '<div class="ui-grid-cell-contents" ng-controller="conciliacionInicioController" >{{abonoAuxiliar | currency}}</div>' },
+        //{ name: 'ABONO', displayName: 'Abono', width: '15%', cellFilter: 'currency', aggregationType: uiGridConstants.selection }
     ];
     $scope.gridAuxiliarContable.multiSelect = true;
     //****************************************************************************************************
@@ -38,47 +47,13 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         { name: 'banco', displayName: 'Banco', width: '20%' },
         { name: 'referencia', displayName: 'Referencia', width: '20%' },
         { name: 'concepto', displayName: 'Concepto', width: '20%' },
-        { name: 'esCargo', displayName: 'Cargo', width: '20%', cellFilter: 'currency' },
+        { name: 'cargo', displayName: 'Cargo', width: '20%', cellFilter: 'currency' },
         { name: 'abono', displayName: 'Abono', width: '20%', cellFilter: 'currency' }
     ];
     $scope.gridDepositosBancos.multiSelect = true;
     //****************************************************************************************************
-    // INICIA las variables para el GRID AUXILIAR CONTABLE PUNTEO
+    // INICIA 
     //****************************************************************************************************
-    $scope.gridAuxiliarContablePunteado = {
-        enableRowSelection: true,
-        enableSelectAll: true,
-        selectionRowHeaderWidth: 35,
-        rowHeight: 35,
-        showGridFooter: true
-    };
-    $scope.gridAuxiliarContablePunteado.columnDefs = [
-        { name: 'FECHA', displayName: 'Fecha', width: '10%' },
-        { name: 'TIPO', displayName: 'Tipo Pol', width: '10%' },
-        { name: 'POLIZA', displayName: 'No Pol', width: '10%' },
-        { name: 'CONCEPTO', displayName: 'Concepto', width: '60%' },
-        { name: 'CARGO', displayName: 'Cargo', width: '20%', cellFilter: 'currency' },
-        { name: 'ABONO', displayName: 'Abono', width: '20%', cellFilter: 'currency' }
-    ];
-    $scope.gridAuxiliarContablePunteado.multiSelect = false;
-    //****************************************************************************************************
-    // INICIA las variables para el GRID BANCOS PUNTEO
-    //****************************************************************************************************    
-    $scope.gridDepositosBancosPunteado = {
-        enableRowSelection: true,
-        enableSelectAll: true,
-        selectionRowHeaderWidth: 35,
-        rowHeight: 35,
-        showGridFooter: true
-    };
-    $scope.gridDepositosBancosPunteado.columnDefs = [
-        { name: 'banco', displayName: 'Banco', width: '20%' },
-        { name: 'referencia', displayName: 'Referencia', width: '20%' },
-        { name: 'concepto', displayName: 'Concepto', width: '20%' },
-        { name: 'esCargo', displayName: 'Cargo', width: '20%', cellFilter: 'currency' },
-        { name: 'abono', displayName: 'Abono', width: '20%', cellFilter: 'currency' }
-    ];
-    $scope.gridDepositosBancosPunteado.multiSelect = false;
 
     $scope.init = function() {
         //$scope.calendario();
@@ -88,9 +63,10 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         $scope.getClaveBanco(1)
         $scope.getCuentacontable(1)
         $scope.getDepositosBancos(1, 1);
-        $scope.getDepositosBancos(1, 2);
         $scope.getAuxiliarContable(1, '1100-0072-0001-0010', 1);
-        $scope.getAuxiliarContable(1, '1100-0072-0001-0010', 2);
+        $scope.getAuxiliarPunteo(1);
+        $scope.getBancoPunteo(1);
+        $scope.tabla();
         // if($rootScope.userData == null){
         //  location.href = '/';
         //  alertFactory.warning('Inicie Sesión')
@@ -142,22 +118,17 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
 
     $scope.getAuxiliarContable = function(idEmpresa, numero_cuenta, idestatus) {
 
-        if (idestatus == 1) {
+        if (idestatus == 1) { //Consigo los datos del Auxiliar Contable sin puntear
             filtrosRepository.getAuxiliar(idEmpresa, numero_cuenta, idestatus).then(function(result) {
                 if (result.data.length > 0) {
                     $scope.auxiliarContable = result.data;
-                    console.log($scope.auxiliarContable, 'Auxiliar Sin Puntear');
                     $scope.gridAuxiliarContable.data = result.data;
-
                 }
             });
-        } else if (idestatus == 2) {
+        } else if (idestatus == 2) { //consigo los datos el Auxiliar Contable Punteado
             filtrosRepository.getAuxiliar(idEmpresa, numero_cuenta, idestatus).then(function(result) {
                 if (result.data.length > 0) {
                     $scope.auxiliarContable = result.data;
-                    console.log($scope.auxiliarContable, 'Auxiliar Punteado');
-                    $scope.gridAuxiliarContablePunteado.data = result.data;
-
                 }
             });
         }
@@ -165,24 +136,20 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     }
 
     $scope.getDepositosBancos = function(idBanco, idestatus) {
-        if (idestatus == 1) {
+        if (idestatus == 1) { //Consigo los datos del Banco sin Puntear
             filtrosRepository.getDepositos(idBanco, idestatus).then(function(result) {
                 if (result.data.length > 0) {
                     $scope.depositosBancos = result.data;
-                    console.log($scope.depositosBancos, 'Banco Sin Puntear')
                     $scope.gridDepositosBancos.data = result.data;
                 }
             });
-        } else if (idestatus == 2) {
+        } else if (idestatus == 2) { //Consigo los datos del banco Punteado
             filtrosRepository.getDepositos(idBanco, idestatus).then(function(result) {
                 if (result.data.length > 0) {
                     $scope.depositosBancos = result.data;
-                    console.log($scope.depositosBancos, 'Banco Punteado')
-                    $scope.gridDepositosBancosPunteado.data = result.data;
                 }
             });
         }
-
     }
 
     $scope.datosss = function(obj) {
@@ -466,10 +433,11 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         gridApi.selection.on.rowSelectionChanged($scope, function(row) {
             var msg = 'row selected ' + row.isSelected;
             if (row.isSelected == true) {
-                $scope.abonoAuxiliar = $scope.abonoAuxiliar + row.entity.CARGO;
-                console.log(uiGridConstants.enableRowSelection, 'Andale por fa ')
+                $scope.abonoAuxiliar = $scope.abonoAuxiliar + row.entity.ABONO;
+                $scope.cargoAuxiliar = $scope.cargoAuxiliar + row.entity.CARGO;
             } else if (row.isSelected == false) {
-                $scope.abonoAuxiliar = $scope.abonoAuxiliar - row.entity.CARGO;
+                $scope.abonoAuxiliar = $scope.abonoAuxiliar - row.entity.ABONO;
+                $scope.cargoAuxiliar = $scope.cargoAuxiliar - row.entity.CARGO;
             }
             console.log(msg, 'Estoy en rowSelectionChanged');
         }); //Este me dice cuales van siendo seleccionadas
@@ -490,6 +458,13 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         $scope.gridApiBancos = gridApi;
         gridApi.selection.on.rowSelectionChanged($scope, function(row) {
             var msg = 'row selected ' + row.isSelected;
+            if (row.isSelected == true) {
+                $scope.abonoBanco = $scope.abonoBanco + row.entity.abono;
+                $scope.cargoBanco = $scope.cargoBanco + row.entity.cargo;
+            } else if (row.isSelected == false) {
+                $scope.abonoBanco = $scope.abonoBanco - row.entity.abono;
+                $scope.cargoBanco = $scope.cargoBanco - row.entity.cargo;
+            }
             console.log(msg, 'Estoy en rowSelectionChanged');
 
         }); //Este me dice cuales van siendo seleccionadas
@@ -510,104 +485,114 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         $scope.punteoBanco = [];
         $scope.gridApiBancos.selection.clearSelectedRows();
         $scope.gridApiAuxiliar.selection.clearSelectedRows();
-        angular.forEach($scope.punteoAuxiliar, function(value, key) {
-            var valueAuxiliar = value.idAuxiliarContable;
-            angular.forEach($scope.punteoBanco, function(value, key) {
-                console.log(valueAuxiliar, value.idDepositoBanco);
-                conciliacionInicioRepository.insertPuntoDeposito(value.idDepositoBanco, valueAuxiliar, '', 2).then(function(result) {
-                    console.log(result.data);
-                    if (result.data[0].length) {
-                        console.log('Respuesta Incorrecta');
-                    } else {
-                        console.log('Respuesta Correcta');
-                    }
-                })
-            });
-            $scope.getAuxiliarContable(1, '1100-0072-0001-0010', 1);
-            $scope.getAuxiliarContable(1, '1100-0072-0001-0010', 2);
+        if ($scope.punteoAuxiliar.length > 0 && $scope.punteoBanco.length > 0) {
+            if ($scope.punteoAuxiliar.length == 1) {
+                angular.forEach($scope.punteoAuxiliar, function(value, key) {
+                    var valueAuxiliar = value.idAuxiliarContable;
+                    angular.forEach($scope.punteoBanco, function(value, key) {
+                        console.log(valueAuxiliar, value.idDepositoBanco);
+                        conciliacionInicioRepository.insertPuntoDeposito(value.idDepositoBanco, valueAuxiliar, '', 2, 2).then(function(result) {
+                            console.log(result.data);
+                            if (result.data[0].length) {
+                                console.log('Respuesta Incorrecta');
+                            } else {
+                                console.log('Respuesta Correcta');
+                            }
+                        })
+                    });
+                });
+
+                $scope.abonoAuxiliar = 0;
+                $scope.cargoAuxiliar = 0;
+                $scope.abonoBanco = 0;
+                $scope.cargoBanco = 0;
+                $scope.getDepositosBancos(1, 1);
+                $scope.getAuxiliarContable(1, '1100-0072-0001-0010', 1);
+                $scope.getAuxiliarPunteo(1);
+                $scope.getBancoPunteo(1);
+            } else if ($scope.punteoBanco.length == 1) {
+                angular.forEach($scope.punteoAuxiliar, function(value, key) {
+                    var valueAuxiliar = value.idAuxiliarContable;
+                    angular.forEach($scope.punteoBanco, function(value, key) {
+                        console.log(valueAuxiliar, value.idDepositoBanco);
+                        conciliacionInicioRepository.insertPuntoDeposito(value.idDepositoBanco, valueAuxiliar, '', 2, 1).then(function(result) {
+                            console.log(result.data);
+                            if (result.data[0].length) {
+                                console.log('Respuesta Incorrecta');
+                            } else {
+                                console.log('Respuesta Correcta');
+                            }
+                        })
+                    });
+                });
+                $scope.abonoAuxiliar = 0;
+                $scope.cargoAuxiliar = 0;
+                $scope.abonoBanco = 0;
+                $scope.cargoBanco = 0;
+                $scope.getDepositosBancos(1, 1);
+                $scope.getAuxiliarContable(1, '1100-0072-0001-0010', 1);
+                $scope.getAuxiliarPunteo(1);
+                $scope.getBancoPunteo(1);
+            } else {
+                alertFactory.warning('Punteo no valido')
+            }
+        } else {
+            alertFactory.warning('No ha seleccionado ninguna relación');
+        }
+
+    };
+    //****************************************************************************************************
+    // INICIA Obtengo los padres del Auxiliar contable punteado
+    //****************************************************************************************************
+    $scope.getAuxiliarPunteo = function(idempresa) {
+        conciliacionInicioRepository.getAuxiliarPunteo(idempresa).then(function(result) {
+            console.log(result.data, 'Soy el auxiliar punteado con puros papas');
+            $scope.auxiliarPadre = result.data;
+            //$scope.tabla('auxiliarPunteado');
         });
     };
     //****************************************************************************************************
-    // INICIA la elección del grid que se mostrara AuxiliarContable=1 Banco=2
+    // INICIA Obtengo los padres del Banco punteado
     //****************************************************************************************************
-    $scope.cargaGrid = function(grid) {
-        if (grid == 1) {
-            $scope.gridAuxiliarContablePunteado = {
-                enableRowSelection: true,
-                enableSelectAll: true,
-                selectionRowHeaderWidth: 35,
-                rowHeight: 35,
-                showGridFooter: true
-            };
-            $scope.gridAuxiliarContablePunteado.columnDefs = [
-                { name: 'FECHA', displayName: 'Fecha', width: '10%' },
-                { name: 'TIPO', displayName: 'Tipo Pol', width: '10%' },
-                { name: 'POLIZA', displayName: 'No Pol', width: '10%' },
-                { name: 'CONCEPTO', displayName: 'Concepto', width: '60%' },
-                { name: 'CARGO', displayName: 'Cargo', width: '20%', cellFilter: 'currency' },
-                { name: 'ABONO', displayName: 'Abono', width: '20%', cellFilter: 'currency' }
-            ];
-            $scope.gridAuxiliarContablePunteado.multiSelect = false;
-            $scope.getAuxiliarContable(1, '1100-0072-0001-0010', 2);
-        } else if (grid == 2) {
-            $scope.gridAuxiliarContablePunteado = $scope.gridDepositosBancosPunteado;
-            $scope.gridAuxiliarContablePunteado.columnDefs = $scope.gridDepositosBancosPunteado.columnDefs;
-            $scope.gridAuxiliarContablePunteado.multiSelect = $scope.gridDepositosBancosPunteado.multiSelect;
-            $scope.getDepositosBancos(1, 2);
-        } else {
-            alertFactory.error('Ocurrio un problema')
-        }
-    }
+    $scope.getBancoPunteo = function(idempresa) {
+        conciliacionInicioRepository.getBancoPunteo(idempresa).then(function(result) {
+            console.log(result.data, 'Soy el banco punteado con puros papas');
+            //$scope.tabla('bancoPunteado');
+            $scope.bancoPadre = result.data;
+        });
+    };
+    //****************************************************************************************************
+    // INICIA inicio la tabla para los distintos casos
+    //****************************************************************************************************
+    $scope.tabla = function() {
+        // $('.tablanose').DataTable({
+        //     destroy: true,
+        //     searching: false
+        // });
+        setTimeout(function() {
+            $('.tabla-punteo').dataTable({
+                destroy: true,
+                "responsive": true,
+                "language": {
+                    "paginate": {
+                        "previous": '<i class="demo-psi-arrow-left"></i>',
+                        "next": '<i class="demo-psi-arrow-right"></i>'
+                    }
+                },
+                searching: false,
+                paging: false
+            });
+        }, 100);
+    };
+    $scope.eliminarPunteo = function(punteo) {
+        conciliacionInicioRepository.eliminarPunteo(punteo.idPunteoAuxiliarBanco).then(function(result) {
+            console.log(result.data);
+            $scope.getDepositosBancos(1, 1);
+            $scope.getAuxiliarContable(1, '1100-0072-0001-0010', 1);
+            $scope.getAuxiliarPunteo(1);
+            $scope.getBancoPunteo(1);
 
-
-
-    //Lo que me robe  
-
-
-
-    // $scope.toggleMultiSelect = function() {
-    //     $scope.gridApi.selection.setMultiSelect(!$scope.gridApi.grid.options.multiSelect);
-    // };
-
-    // $scope.toggleModifierKeysToMultiSelect = function() {
-    //     $scope.gridApi.selection.setModifierKeysToMultiSelect(!$scope.gridApi.grid.options.modifierKeysToMultiSelect);
-    // };
-
-    // $scope.selectAll = function() {
-    //     $scope.gridApi.selection.selectAllRows();
-    // };
-
-    // $scope.clearAll = function() {
-    //     $scope.gridApi.selection.clearSelectedRows();
-    // };
-
-    // $scope.toggleRow1 = function() {
-    //     $scope.gridApi.selection.toggleRowSelection($scope.gridAuxiliarContable.data[0]);
-    // };
-
-    // $scope.toggleFullRowSelection = function() {
-    //     $scope.gridAuxiliarContable.enableFullRowSelection = !$scope.gridAuxiliarContable.enableFullRowSelection;
-    //     $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
-    // };
-
-    // $scope.setSelectable = function() {
-    //     $scope.gridApi.selection.clearSelectedRows();
-
-    //     $scope.gridAuxiliarContable.isRowSelectable = function(row) {
-    //         if (row.entity.age > 30) {
-    //             return false;
-    //         } else {
-    //             return true;
-    //         }
-    //     };
-    //     $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
-
-    //     $scope.gridAuxiliarContable.data[0].age = 31;
-    //     $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
-    // };
-
-
-
-    //????????????????????????????????????????????????
+        });
+    };
 
 });
