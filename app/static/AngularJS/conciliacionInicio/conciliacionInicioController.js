@@ -17,7 +17,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     //****************************************************************************************************
     $scope.gridAuxiliarContable = {
         enableRowSelection: true,
-        enableSelectAll: true,
+        enableSelectAll: false,
         selectionRowHeaderWidth: 35,
         rowHeight: 35,
         showGridFooter: true,
@@ -38,7 +38,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     //****************************************************************************************************
     $scope.gridDepositosBancos = {
         enableRowSelection: true,
-        enableSelectAll: true,
+        enableSelectAll: false,
         selectionRowHeaderWidth: 35,
         rowHeight: 35,
         showGridFooter: true,
@@ -134,7 +134,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
             });
         }
 
-    }
+    };
 
     $scope.getDepositosBancos = function(idBanco, idestatus) {
         if (idestatus == 1) { //Consigo los datos del Banco sin Puntear
@@ -151,265 +151,265 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
                 }
             });
         }
-    }
+    };
 
     $scope.datosss = function(obj) {
-            //console.log(obj)
-        }
-        //**************************************************************************************************
-        // INICIA Genera el pdf 
-        //**************************************************************************************************
+        //console.log(obj)
+    };
+    //**************************************************************************************************
+    // INICIA Genera el pdf 
+    //**************************************************************************************************
     $scope.generarReporte = function() {
-            $('#loading').modal('show');
-            var infReporte = '';
-            var jsonData = '';
-            var ruta = '';
-            infReporte = {
-                "titulo": "CONCILIACIÓN BANCARIA",
-                "titulo2": "BANCOS",
-                "titulo3": "FA04",
-                "empresa": "ANDRADE UNIVERSIDAD, S.A DE C.V.",
-                "fechaElaboracion": "31/12/2016",
-                "conciliacionBancaria": "BANCOMER",
-                "chequera": "31/12/2016",
-                "bancoCuenta": "195334667",
-                "clabe": "01218000 195334667",
-                "cuentaContable": "1100-0020-0001-0001",
-                "estadoCuenta": "407480.53",
-                "aCB": "35525.00",
-                "aBC": "-",
-                "cBC": "-",
-                "cCB": "64009.63",
-                "saldoConciliacion": "435965.15",
-                "saldoContabilidad": "435965.15",
-                "diferencia": "0.00",
-                "menosBanco": [{
-                        "fecha": "30/12/2016",
-                        "poliza": "UNI - EGRESOS",
-                        "noPoliza": "399",
-                        "concepto": "22638 - TANIA ANGELICA RAMIREZ PALMA",
-                        "parcial": " ",
-                        "total": "500.00"
-                    },
-
-                    {
-                        "fecha": "30/12/2016",
-                        "poliza": "UNI - EGRESOS",
-                        "noPoliza": "400",
-                        "concepto": "23192 - DEYANIRA PEREZ SANCHEZ",
-                        "parcial": " ",
-                        "total": "5000.00"
-                    },
-
-                    {
-                        "fecha": "30/12/2016",
-                        "poliza": "UNI - EGRESOS",
-                        "noPoliza": "401",
-                        "concepto": "23084 - JORGE ALEJANDRO VALDES YAÑEZ",
-                        "parcial": " ",
-                        "total": "5000.00"
-                    },
-
-                    {
-                        "fecha": "30/12/2016",
-                        "poliza": "UNI - EGRESOS",
-                        "noPoliza": "402",
-                        "concepto": "22814 - JHONATAN PANTOJA RIOJAS",
-                        "parcial": " ",
-                        "total": "5000.00"
-                    },
-
-                    {
-                        "fecha": "30/12/2016",
-                        "poliza": "UNI - EGRESOS",
-                        "noPoliza": "403",
-                        "concepto": "23131 - LUIS RODRIGUEZ LUNA",
-                        "parcial": " ",
-                        "total": "10025.00"
-                    },
-
-                    {
-                        "fecha": "30/12/2016",
-                        "poliza": "UNI - EGRESOS",
-                        "noPoliza": "404",
-                        "concepto": "22284 - MARIA MAGDALENA GUZMAN TERRAZAS",
-                        "parcial": " ",
-                        "total": "10000.00"
-                    }
-                ],
-                "masContabilidad": [{
-                    "fecha": " ",
-                    "poliza": " ",
-                    "noPoliza": " ",
-                    "concepto": " ",
+        $('#loading').modal('show');
+        var infReporte = '';
+        var jsonData = '';
+        var ruta = '';
+        infReporte = {
+            "titulo": "CONCILIACIÓN BANCARIA",
+            "titulo2": "BANCOS",
+            "titulo3": "FA04",
+            "empresa": "ANDRADE UNIVERSIDAD, S.A DE C.V.",
+            "fechaElaboracion": "31/12/2016",
+            "conciliacionBancaria": "BANCOMER",
+            "chequera": "31/12/2016",
+            "bancoCuenta": "195334667",
+            "clabe": "01218000 195334667",
+            "cuentaContable": "1100-0020-0001-0001",
+            "estadoCuenta": "407480.53",
+            "aCB": "35525.00",
+            "aBC": "-",
+            "cBC": "-",
+            "cCB": "64009.63",
+            "saldoConciliacion": "435965.15",
+            "saldoContabilidad": "435965.15",
+            "diferencia": "0.00",
+            "menosBanco": [{
+                    "fecha": "30/12/2016",
+                    "poliza": "UNI - EGRESOS",
+                    "noPoliza": "399",
+                    "concepto": "22638 - TANIA ANGELICA RAMIREZ PALMA",
                     "parcial": " ",
-                    "total": " "
-                }],
-                "menosContabilidad": [{
-                    "fecha": " ",
-                    "poliza": " ",
-                    "noPoliza": " ",
-                    "concepto": " ",
-                    "parcial": " ",
-                    "total": " "
-                }],
-                "masBanco": [{
-                    "fecha": "30/12/2016",
-                    "poliza": "PED.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "118",
-                    "concepto": "TRANSFERIR INGRESOS DE CAJA/DB000012224/03- TARJETA DE CRÉDITO/BANCOMER1292",
-                    "parcial": "",
-                    "total": "1065.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "PED.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "118",
-                    "concepto": "TRANSFERIR INGRESOS DE CAJA/FB000002653/03- TARJETA DE CRÉDITO/BANCOMER0673",
-                    "parcial": "",
-                    "total": "180.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "UNI.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "122",
-                    "concepto": "TRANSFERIR INGRESOS DE CAJA/6765/03- TARJETA DE CRÉDITO/2834BBVA",
-                    "parcial": "",
-                    "total": "12061.10"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005913/03- TARJETA DE CRÉDITO/TCRBBV4336",
-                    "parcial": "",
-                    "total": "2755.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005917/03- TARJETA DE CRÉDITO/TCR BBVA 7132",
-                    "parcial": "",
-                    "total": "4650.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005921/03- TARJETA DE CRÉDITO/TCR BBVA 2884",
-                    "parcial": "",
-                    "total": "10000.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005922/03- TARJETA DE CRÉDITO/TCR BBVA 3332",
-                    "parcial": "",
-                    "total": "1590.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005909/03- TARJETA DE CRÉDITO/TCR BBVA 5988",
-                    "parcial": "",
-                    "total": "1065.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005908/03- TARJETA DE DÉBITO/TDB BBVA 4106",
-                    "parcial": "",
-                    "total": "2573.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/FC000002304/03- TARJETA DE DÉBITO/TDB BBVA 3236",
-                    "parcial": "",
-                    "total": "319.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005918/03- TARJETA DE DÉBITO/TDB BBVA 1105",
-                    "parcial": "",
-                    "total": "3070.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005912/03- TARJETA DE DÉBITO/TDB BBVA 6650",
-                    "parcial": "",
-                    "total": "1379.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005915/03- TARJETA DE DÉBITO/TDB BBVA 8098",
-                    "parcial": "",
-                    "total": "4020.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/FC000002306/03- TARJETA DE DÉBITO/TDB BBVA 8098",
-                    "parcial": "",
-                    "total": "548.54"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005916/03- TARJETA DE DÉBITO/TDB BBVA 3758",
-                    "parcial": "",
-                    "total": "8134.99"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/MM000005854/03- TARJETA DE DÉBITO/TDB BBVA 2813",
-                    "parcial": "",
-                    "total": "10000.00"
-                }, {
-                    "fecha": "30/12/2016",
-                    "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
-                    "noPoliza": "80",
-                    "concepto": "RANSFERIR INGRESOS DE CAJA/FC000002302/03- TARJETA DE DÉBITO/TDB BBVA 1868",
-                    "parcial": "",
-                    "total": "598.99"
-                }],
-                "firmas": [{
-                    "titulo": "ELABORÓ",
-                    "nombre": "CARLA HERNÁNDEZ RODRÍGUEZ",
-                    "fecha": ""
-                }, {
-                    "titulo": "GERENTE ADMINISTRATIVO",
-                    "nombre": "GUADALUPE HERNÁNDEZ MEJÍA",
-                    "fecha": ""
-                }, {
-                    "titulo": "CONTADOR",
-                    "nombre": "DAVID VÁZQUEZ RICO",
-                    "fecha": ""
-                }]
-            }
-
-            jsonData = {
-                "template": {
-                    "name": "tesoreria_rpt"
+                    "total": "500.00"
                 },
-                "data": infReporte
-            }
-            conciliacionInicioRepository.getReportePdf(jsonData).then(function(fileName) {
-                setTimeout(function() {
-                    $("#objReportePdf").remove();
-                    //window.open("http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + fileName.data);
-                    ruta = fileName.data;
-                    //console.log(fileName.data);
-                    $("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
-                    $('#loading').modal('hide');
-                    $('#reproteModalPdf').modal('show');
-                }, 5000);
 
-            });
+                {
+                    "fecha": "30/12/2016",
+                    "poliza": "UNI - EGRESOS",
+                    "noPoliza": "400",
+                    "concepto": "23192 - DEYANIRA PEREZ SANCHEZ",
+                    "parcial": " ",
+                    "total": "5000.00"
+                },
+
+                {
+                    "fecha": "30/12/2016",
+                    "poliza": "UNI - EGRESOS",
+                    "noPoliza": "401",
+                    "concepto": "23084 - JORGE ALEJANDRO VALDES YAÑEZ",
+                    "parcial": " ",
+                    "total": "5000.00"
+                },
+
+                {
+                    "fecha": "30/12/2016",
+                    "poliza": "UNI - EGRESOS",
+                    "noPoliza": "402",
+                    "concepto": "22814 - JHONATAN PANTOJA RIOJAS",
+                    "parcial": " ",
+                    "total": "5000.00"
+                },
+
+                {
+                    "fecha": "30/12/2016",
+                    "poliza": "UNI - EGRESOS",
+                    "noPoliza": "403",
+                    "concepto": "23131 - LUIS RODRIGUEZ LUNA",
+                    "parcial": " ",
+                    "total": "10025.00"
+                },
+
+                {
+                    "fecha": "30/12/2016",
+                    "poliza": "UNI - EGRESOS",
+                    "noPoliza": "404",
+                    "concepto": "22284 - MARIA MAGDALENA GUZMAN TERRAZAS",
+                    "parcial": " ",
+                    "total": "10000.00"
+                }
+            ],
+            "masContabilidad": [{
+                "fecha": " ",
+                "poliza": " ",
+                "noPoliza": " ",
+                "concepto": " ",
+                "parcial": " ",
+                "total": " "
+            }],
+            "menosContabilidad": [{
+                "fecha": " ",
+                "poliza": " ",
+                "noPoliza": " ",
+                "concepto": " ",
+                "parcial": " ",
+                "total": " "
+            }],
+            "masBanco": [{
+                "fecha": "30/12/2016",
+                "poliza": "PED.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "118",
+                "concepto": "TRANSFERIR INGRESOS DE CAJA/DB000012224/03- TARJETA DE CRÉDITO/BANCOMER1292",
+                "parcial": "",
+                "total": "1065.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "PED.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "118",
+                "concepto": "TRANSFERIR INGRESOS DE CAJA/FB000002653/03- TARJETA DE CRÉDITO/BANCOMER0673",
+                "parcial": "",
+                "total": "180.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "UNI.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "122",
+                "concepto": "TRANSFERIR INGRESOS DE CAJA/6765/03- TARJETA DE CRÉDITO/2834BBVA",
+                "parcial": "",
+                "total": "12061.10"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005913/03- TARJETA DE CRÉDITO/TCRBBV4336",
+                "parcial": "",
+                "total": "2755.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005917/03- TARJETA DE CRÉDITO/TCR BBVA 7132",
+                "parcial": "",
+                "total": "4650.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005921/03- TARJETA DE CRÉDITO/TCR BBVA 2884",
+                "parcial": "",
+                "total": "10000.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005922/03- TARJETA DE CRÉDITO/TCR BBVA 3332",
+                "parcial": "",
+                "total": "1590.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005909/03- TARJETA DE CRÉDITO/TCR BBVA 5988",
+                "parcial": "",
+                "total": "1065.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005908/03- TARJETA DE DÉBITO/TDB BBVA 4106",
+                "parcial": "",
+                "total": "2573.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/FC000002304/03- TARJETA DE DÉBITO/TDB BBVA 3236",
+                "parcial": "",
+                "total": "319.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005918/03- TARJETA DE DÉBITO/TDB BBVA 1105",
+                "parcial": "",
+                "total": "3070.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005912/03- TARJETA DE DÉBITO/TDB BBVA 6650",
+                "parcial": "",
+                "total": "1379.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005915/03- TARJETA DE DÉBITO/TDB BBVA 8098",
+                "parcial": "",
+                "total": "4020.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/FC000002306/03- TARJETA DE DÉBITO/TDB BBVA 8098",
+                "parcial": "",
+                "total": "548.54"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/DC000005916/03- TARJETA DE DÉBITO/TDB BBVA 3758",
+                "parcial": "",
+                "total": "8134.99"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/MM000005854/03- TARJETA DE DÉBITO/TDB BBVA 2813",
+                "parcial": "",
+                "total": "10000.00"
+            }, {
+                "fecha": "30/12/2016",
+                "poliza": "CUA.- TRASPASO DE SALDO INGRESOS",
+                "noPoliza": "80",
+                "concepto": "RANSFERIR INGRESOS DE CAJA/FC000002302/03- TARJETA DE DÉBITO/TDB BBVA 1868",
+                "parcial": "",
+                "total": "598.99"
+            }],
+            "firmas": [{
+                "titulo": "ELABORÓ",
+                "nombre": "CARLA HERNÁNDEZ RODRÍGUEZ",
+                "fecha": ""
+            }, {
+                "titulo": "GERENTE ADMINISTRATIVO",
+                "nombre": "GUADALUPE HERNÁNDEZ MEJÍA",
+                "fecha": ""
+            }, {
+                "titulo": "CONTADOR",
+                "nombre": "DAVID VÁZQUEZ RICO",
+                "fecha": ""
+            }]
         }
-        //**************************************************************************************************
-        // TERMINA Genera el pdf 
-        //**************************************************************************************************    
+
+        jsonData = {
+            "template": {
+                "name": "tesoreria_rpt"
+            },
+            "data": infReporte
+        }
+        conciliacionInicioRepository.getReportePdf(jsonData).then(function(fileName) {
+            setTimeout(function() {
+                $("#objReportePdf").remove();
+                //window.open("http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + fileName.data);
+                ruta = fileName.data;
+                //console.log(fileName.data);
+                $("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
+                $('#loading').modal('hide');
+                $('#reproteModalPdf').modal('show');
+            }, 5000);
+
+        });
+    };
+    //**************************************************************************************************
+    // TERMINA Genera el pdf 
+    //**************************************************************************************************    
 
     $scope.setTablePaging = function(idTable) {
         $('#' + idTable).DataTable({
@@ -647,5 +647,21 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
             console.log($scope.abonoTotalAuxiliar, 'Soy el abono total Auxiliar')
             console.log($scope.cargoTotalAuxiliar, 'Soy el cargo total Auxiliar')
         });
+    };
+    //****************************************************************************************************
+    // INICIA Se genera modal de alerta para que el usuario acepte o rechace generar el punteo definitivo
+    //****************************************************************************************************
+    $scope.generaAlertaPunteo = function() {
+        if ($scope.bancoPadre.length > 0 || $scope.auxiliarPadre.length > 0) {
+            $('#alertaPunteo').modal('show');
+        } else {
+            alertFactory.error('No existen punteos')
+        }
+    };
+    //****************************************************************************************************
+    // INICIA Se guarda el punteo que ya no podra ser modificado
+    //****************************************************************************************************
+    $scope.generaPunteo = function() {
+
     };
 });
