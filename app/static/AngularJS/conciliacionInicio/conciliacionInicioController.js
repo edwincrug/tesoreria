@@ -67,7 +67,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         $scope.getAuxiliarContable(1, '1100-0072-0001-0010', 1);
         $scope.getAuxiliarPunteo(1);
         $scope.getBancoPunteo(1);
-        //$scope.tabla();
+        $scope.tabla();
         // if($rootScope.userData == null){
         //  location.href = '/';
         //  alertFactory.warning('Inicie Sesión')
@@ -561,7 +561,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     //****************************************************************************************************
     $scope.getAuxiliarPunteo = function(idempresa) {
         conciliacionInicioRepository.getAuxiliarPunteo(idempresa).then(function(result) {
-            $scope.tabla();
+            //$scope.tabla();
             $scope.auxiliarPadre = result.data;
 
         });
@@ -571,7 +571,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     //****************************************************************************************************
     $scope.getBancoPunteo = function(idempresa) {
         conciliacionInicioRepository.getBancoPunteo(idempresa).then(function(result) {
-            $scope.tabla();
+            //$scope.tabla();
             $scope.bancoPadre = result.data;
 
         });
