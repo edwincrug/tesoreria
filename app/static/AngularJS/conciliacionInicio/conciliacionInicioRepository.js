@@ -67,6 +67,18 @@ registrationModule.factory('conciliacionInicioRepository', function($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        detallePunteo: function(idPunteo) {
+            return $http({
+                url: conciliacionInicioURL + 'detallePunteo/',
+                method: "POST",
+                data: {
+                    idPunteoAuxiliarBanco: idPunteo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

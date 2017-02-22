@@ -78,5 +78,19 @@ conciliacionInicio.prototype.post_eliminarPunteo = function(req, res, next) {
         });
     });
 };
+conciliacionInicio.prototype.post_detallePunteo = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idPunteoAuxiliarBanco', value: req.body.idPunteoAuxiliarBanco, type: self.model.types.INT }
+    ];
+
+    this.model.query('SEL_PUNTEO_AUXILIAR_DEPOSITO_DETALLES_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 
 module.exports = conciliacionInicio;

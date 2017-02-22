@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="css/tesoreria.css">
 <div ng-init="init()">
     <div class="panel col-md-12">
         <br/>
@@ -13,23 +14,45 @@
                         <h4>Banco</h4>
                     </div>
                     <div ui-grid="gridDepositosBancos" ui-grid-selection class="grid"></div>
-                    <div class="col-md-4"><span class="text-bold text-info">Total Seleccionado</span></div>
-                    <div class="col-md-4"><span class="text-bold text-info">Cargo: </span><span>{{cargoBanco  | currency}}</span></div>
-                    </span>
-                    <div class="col-md-4"><span class="text-bold text-info">Abono: </span><span>{{abonoBanco | currency}}</span></div>
+                    <div class="media middle pad-all">
+                        <div class="media-left">
+                            <span class="icon-wrap icon-wrap-sm icon-circle bg-mint">
+                                <i class="demo-pli-coin icon-2x"></i>
+                          </span>
+                        </div>
+                        <div class="media-body">
+                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : cargoBanco > 0, 'text-danger text-semibold' : cargoBanco > 0 && cargoAuxiliar > 0}">{{cargoBanco | currency}}</p>
+                            <p class="text-muted mar-no">Cargo</p>
+                        </div>
+                        <div class="media-body">
+                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : abonoBanco > 0, 'text-danger text-semibold' : abonoBanco > 0 && abonoAuxiliar > 0}">{{abonoBanco | currency}}</p>
+                            <p class="text-muted mar-no">Abono</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="text-main">
                         <h4>Auxiliar Contable</h4>
                     </div>
                     <div ui-grid="gridAuxiliarContable" ui-grid-selection class="grid"></div>
-                    <div class="col-md-4"><span class="text-bold text-info">Total Seleccionado</span></div>
-                    <div class="col-md-4"><span class="text-bold text-info">Cargo: </span><span>{{cargoAuxiliar  | currency}}</span></div>
-                    <div class="col-md-4"><span class="text-bold text-info">Abono: </span><span>{{abonoAuxiliar | currency}}</span></div>
+                    <div class="media middle pad-all">
+                        <div class="media-left">
+                            <span class="icon-wrap icon-wrap-sm icon-circle bg-mint">
+                                <i class="demo-pli-coin icon-2x"></i>
+                          </span>
+                        </div>
+                        <div class="media-body">
+                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : cargoAuxiliar > 0, 'text-danger text-semibold' : cargoBanco > 0 && cargoAuxiliar > 0}">{{cargoAuxiliar | currency}}</p>
+                            <p class="text-muted mar-no">Cargo</p>
+                        </div>
+                        <div class="media-body">
+                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : abonoAuxiliar > 0, 'text-danger text-semibold' : abonoBanco > 0 && abonoAuxiliar > 0}">{{abonoAuxiliar | currency}}</p>
+                            <p class="text-muted mar-no">Abono</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-12">
-                <br>
                 <br>
                 <a class="btn btn-primary pull-right" ng-click="GuardarGrid()">Punteo</a>
                 <br>
@@ -40,7 +63,7 @@
             <br>
             <br>
             <!--INICIA LO QUE ME ROBE PARA MOSTRAR LOS DATOS-->
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="text-main">
                     <h4>Banco Punteado</h4>
                 </div>
@@ -61,19 +84,19 @@
                             <td>{{banco.banco}}</td>
                             <td>{{banco.referencia}}</td>
                             <td>{{banco.concepto}}</td>
-                            <td>{{banco.abono}}</td>
-                            <td>{{banco.cargo}}</td>
+                            <td class="text-right" ng-class="{'text-success text-semibold' : banco.abono > 0}">{{banco.abono | currency}}</td>
+                            <td class="text-right" ng-class="{'text-success text-semibold' : banco.cargo > 0}">{{banco.cargo | currency}}</td>
                             <td>
                                 <button class="btn btn-danger btn-xs" ng-click="eliminarPunteo(banco)"><i class="demo-pli-cross"></i></button>
                             </td>
                             <td>
-                                <button class="btn btn-info btn-xs"><i class="ti-eye"></i></button>
+                                <button class="btn btn-info btn-xs" ng-click="verDetallePunteo(banco, 1)"><i class="ti-eye"></i></button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="text-main">
                     <h4>Auxiliar Contable Punteado</h4>
                 </div>
@@ -96,13 +119,13 @@
                             <td>{{auxiliar.tipo}}</td>
                             <td>{{auxiliar.poliza}}</td>
                             <td>{{auxiliar.concepto}}</td>
-                            <td>{{auxiliar.cargo}}</td>
-                            <td>{{auxiliar.abono}}</td>
+                            <td class="text-right" ng-class="{'text-success text-semibold' : auxiliar.cargo > 0}">{{auxiliar.cargo | currency}}</td>
+                            <td class="text-right" ng-class="{'text-success text-semibold' : auxiliar.abono > 0}">{{auxiliar.abono | currency}}</td>
                             <td>
                                 <button class="btn btn-danger btn-xs" ng-click="eliminarPunteo(auxiliar)"><i class="demo-pli-cross"></i></button>
                             </td>
                             <td>
-                                <button class="btn btn-info btn-xs"><i class="ti-eye"></i></button>
+                                <button class="btn btn-info btn-xs" ng-click="verDetallePunteo(auxiliar, 2)"><i class="ti-eye"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -118,22 +141,73 @@
         </div>
     </div>
 </div>
-</div>
+
 <!--Modal para colocar el numero del punteo-->
 <!--===================================================-->
-<div class="modal fade" id="punteo" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="punteoDetalle" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
-                <h4 class="modal-title">Ingrese el número del punteo</h4>
+            <div class="modal-header label-mint">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle text-white"></i></button>
+                <h4 class="modal-title text-white">Detalle del Punteo</h4>
             </div>
             <div class="modal-body">
-                <input type="text" class="form-control">
-            </div>
-            <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
-                <button class="btn btn-primary" ng-click="">Punteo</button>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Banco</th>
+                            <th>Referencia</th>
+                            <th>Concepto</th>
+                            <th>Cargo</th>
+                            <th>Abono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="bancoD in bancoDetalle">
+                            <td>{{bancoD.banco}}</td>
+                            <td>{{bancoD.referencia}}</td>
+                            <td>{{bancoD.concepto}}</td>
+                            <td class="text-right" ng-class="{'text-success text-semibold' : bancoD.cargo > 0}">{{bancoD.cargo | currency}}</td>
+                            <td class="text-right" ng-class="{'text-success text-semibold' : bancoD.abono > 0}">{{bancoD.abono | currency}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-bold text-right text-info">Total</td>
+                            <td class="text-danger text-semibold text-right"><span ng-if="cargoTotalBanco > 0">{{cargoTotalBanco | currency}}</span></td>
+                            <td class="text-danger text-semibold text-right"><span ng-if="abonoTotalBanco > 0">{{abonoTotalBanco | currency}}</span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Tipo Póliza</th>
+                            <th># Póliza</th>
+                            <th>Concepto</th>
+                            <th>Cargo</th>
+                            <th>Abono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="auxiliarD in auxiliarDetalle">
+                            <td>{{auxiliarD.fecha}}</td>
+                            <td>{{auxiliarD.tipo}}</td>
+                            <td>{{auxiliarD.poliza}}</td>
+                            <td>{{auxiliarD.concepto}}</td>
+                            <td class="text-right" ng-class="{'text-success text-semibold' : auxiliarD.cargo > 0}">{{auxiliarD.cargo | currency}}</td>
+                            <td class="text-right" ng-class="{'text-success text-semibold' : auxiliarD.abono > 0}">{{auxiliarD.abono | currency}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-bold text-right text-info">Total</td>
+                            <td class="text-danger text-semibold text-right"><span ng-if="cargoTotalAuxiliar > 0">{{cargoTotalAuxiliar | currency}}</span></td>
+                            <td class="text-danger text-semibold text-right"><span ng-if="abonoTotalAuxiliar > 0">{{abonoTotalAuxiliar | currency}}</span></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
