@@ -196,11 +196,11 @@ Filtros.prototype.get_cartera = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'cliente', value: req.query.cliente, type: self.model.types.INT },
-                  { name: 'empresa', value: req.query.empresa, type: self.model.types.INT },
-                  { name: 'sucursal', value: req.query.sucursal, type: self.model.types.INT },
-                  { name: 'departamento', value: req.query.departamento, type: self.model.types.INT },
-                  { name: 'fechaIni', value: req.query.fechaIni, type: self.model.types.STRING },
+    var params = [{ name: 'idCliente', value: req.query.cliente, type: self.model.types.INT },
+                  { name: 'idEmpresas', value: req.query.empresa, type: self.model.types.INT },
+                  { name: 'idSucursales', value: req.query.sucursal, type: self.model.types.INT },
+                  { name: 'idDepartamentos', value: req.query.departamento, type: self.model.types.INT },
+                  { name: 'fechaInicio', value: req.query.fechaIni, type: self.model.types.STRING },
                   { name: 'fechaFin', value: req.query.fechaFin, type: self.model.types.STRING }
                   ];
 

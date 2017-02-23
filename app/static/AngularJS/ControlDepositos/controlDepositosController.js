@@ -6,11 +6,12 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
     $scope.init = function() {
         $scope.getEmpresa($scope.idUsuario);
-        $scope.getSucursales(15,4);
+        $scope.getSucursales(15,5);
+        $scope.getBancos(1);
         $scope.calendario();
         $scope.dato = "0000";
         $scope.getDepositosBancos(1,1,'10/11/2015','31/12/2015');
-        $scope.getCarteraVencida('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
+        $scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
     }
     $scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
@@ -59,8 +60,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     $scope.getCarteraVencida = function(cliente,empresa,sucursal,departamento,fechaIni,fechaFin){
       filtrosRepository.getCartera(cliente,empresa,sucursal,departamento,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
-                //$scope.listAuxiliarContable = result.data;
-                $scope.gridAuxiliar.data = result.data;
+                $scope.gridCartera.data = result.data;
             }
         });
     }
@@ -75,82 +75,34 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
 
     $scope.gridCartera = {
-      enableRowSelection: true,
-      enableSelectAll: true,
-      selectionRowHeaderWidth: 35,
-      rowHeight: 35,
-      showGridFooter:true
+      enableColumnResize: true,
+                enableRowSelection: true,
+                enableGridMenu: true,
+                enableFiltering: true,
+                enableGroupHeaderSelection: false,
+                treeRowHeaderAlwaysVisible: true,
+                showColumnFooter: true,
+                showGridFooter: true,
+                height: 900,
+                cellEditableCondition: function($scope) {
+                    return $scope.row.entity.seleccionable;
+                }
     };
 
-  $scope.gridAuxiliar.columnDefs = [
-    { name: 'CONCEPTO',displayName: 'Concepto', width: '20%' },
-    { name: 'NUMERO_CUENTA', displayName: 'Numero de cuenta',width: '20%'},
-    { name: 'FECHA', width: '20%',displayName: 'Fecha' },
-    { name: 'ABONO', width: '40%',displayName: 'Abono',cellFilter: 'currency'}
+  $scope.gridCartera.columnDefs = [
+    { name: 'nombreSucursal', width: '10%',displayName: 'Sucursal'},
+    { name: 'nombreDepartamento', width: '10%', displayName: 'Departamento'},
+    { name: 'folio', width: '10%',displayName: 'Factura'},
+    { name: 'fecha', width: '10%',displayName: 'fecha'},
+    { name: 'nombreCliente', width: '30%',displayName: 'Cliente'},
+    { name: 'importe', width: '10%',displayName: 'Importe',cellFilter: 'currency'},
+    { name: 'saldo', width: '10%',displayName: 'Saldo',cellFilter: 'currency'},
+
   ];
 
-  $scope.gridAuxiliar.multiSelect = true;
+  $scope.gridCartera.multiSelect = true;
 
-  
-    $scope.info = {};
-
-    $scope.toggleMultiSelect = function() {
-      $scope.gridApi.selection.setMultiSelect(!$scope.gridApi.grid.options.multiSelect);
-    };
-
-    $scope.toggleModifierKeysToMultiSelect = function() {
-      $scope.gridApi.selection.setModifierKeysToMultiSelect(!$scope.gridApi.grid.options.modifierKeysToMultiSelect);
-    };
-
-    $scope.selectAll = function() {
-      $scope.gridApi.selection.selectAllRows();
-    };
-
-    $scope.clearAll = function() {
-      $scope.gridApi.selection.clearSelectedRows();
-    };
-
-    $scope.toggleRow1 = function() {
-      $scope.gridApi.selection.toggleRowSelection($scope.gridAuxiliar.data[0]);
-    };
-
-    $scope.toggleFullRowSelection = function() {
-      $scope.gridAuxiliar.enableFullRowSelection = !$scope.gridAuxiliar.enableFullRowSelection;
-      $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
-    };
-
-    $scope.setSelectable = function() {
-      $scope.gridApi.selection.clearSelectedRows();
-
-      $scope.gridAuxiliar.isRowSelectable = function(row){
-        if(row.entity.age > 30){
-          return false;
-        } else {
-          return true;
-        }
-      };
-      $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
-
-      $scope.gridAuxiliar.data[0].age = 31;
-      $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
-    };
-
-    $scope.gridAuxiliar.onRegisterApi = function(gridApi){
-      //set gridApi on scope
-      $scope.gridApi = gridApi;
-      gridApi.selection.on.rowSelectionChanged($scope,function(row){
-        var msg = 'row selected ' + row.isSelected;
-        $log.log(msg);
-      });
-
-      gridApi.selection.on.rowSelectionChangedBatch($scope,function(rows){
-        var msg = 'rows changed ' + rows.length;
-        $log.log(msg);
-      });
-    };
-
-
-  $scope.gridDocumentos = { 
+   $scope.gridDocumentos = { 
     enableColumnResize: true,
                 enableRowSelection: true,
                 enableGridMenu: true,
