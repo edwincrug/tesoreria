@@ -5,7 +5,7 @@
 // -- Modificó: 
 // -- Fecha: 
 // -- =============================================
-var registrationModule = angular.module("registrationModule", ["ngRoute", "LocalStorageModule", 'ui.grid', 'ui.grid.selection','ui.grid.grouping'])
+var registrationModule = angular.module("registrationModule", ["ngRoute", "LocalStorageModule", 'ui.grid', 'ui.grid.selection', 'ui.grid.grouping', 'ui.grid.pinning'])
     .config(function($routeProvider, $locationProvider) {
 
         /*cheange the routes*/
@@ -34,7 +34,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/controldepositos.html', //FAL 19012017
             controller: 'controlDepositosController'
         });
-        $routeProvider.otherwise({redirectTo:'/'});
+        $routeProvider.otherwise({ redirectTo: '/' });
 
         $locationProvider.html5Mode({
             enabled: true,

@@ -25,12 +25,12 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
             //showColumnFooter: true
     };
     $scope.gridAuxiliarContable.columnDefs = [
-        { name: 'FECHA', displayName: 'Fecha', width: '20%', type: 'date', cellFilter: 'date:\'dd-MM-yyyy\'' },
-        { name: 'TIPO', displayName: 'Tipo Pol', width: '30%' },
-        { name: 'POLIZA', displayName: 'No Pol', width: '15%' },
-        { name: 'CONCEPTO', displayName: 'Concepto', width: '60%' },
-        { name: 'CARGO', displayName: 'Cargo', width: '15%', cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.CARGO > 0">{{row.entity.CARGO | currency}}</span></div><div class="text-right"><span ng-if="row.entity.CARGO == 0">{{row.entity.CARGO | currency}}</span></div>' },
-        { name: 'ABONO', displayName: 'Abono', width: '15%', cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.ABONO > 0">{{row.entity.ABONO | currency}}</span></div><div class="text-right"><span ng-if="row.entity.ABONO == 0">{{row.entity.ABONO | currency}}</span></div>' }
+        { name: 'FECHA', displayName: 'Fecha', width: 100, type: 'date', cellFilter: 'date:\'dd-MM-yyyy\'' },
+        { name: 'TIPO', displayName: 'Tipo Pol', width: 200 },
+        { name: 'POLIZA', displayName: 'No Pol', width: 100 },
+        { name: 'CONCEPTO', displayName: 'Concepto', width: 600 },
+        { name: 'CARGO', displayName: 'Cargo', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.CARGO > 0">{{row.entity.CARGO | currency}}</span></div><div class="text-right"><span ng-if="row.entity.CARGO == 0">{{row.entity.CARGO | currency}}</span></div>' },
+        { name: 'ABONO', displayName: 'Abono', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.ABONO > 0">{{row.entity.ABONO | currency}}</span></div><div class="text-right"><span ng-if="row.entity.ABONO == 0">{{row.entity.ABONO | currency}}</span></div>' }
     ];
     $scope.gridAuxiliarContable.multiSelect = true;
     //****************************************************************************************************
@@ -45,11 +45,11 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         enableFiltering: true
     };
     $scope.gridDepositosBancos.columnDefs = [
-        { name: 'banco', displayName: 'Banco', width: '20%' },
-        { name: 'referencia', displayName: 'Referencia', width: '20%' },
-        { name: 'concepto', displayName: 'Concepto', width: '20%' },
-        { name: 'cargo', displayName: 'Cargo', width: '20%', cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.cargo > 0">{{row.entity.cargo | currency}}</span></div><div class="text-right"><span ng-if="row.entity.cargo == 0">{{row.entity.cargo | currency}}</span></div>' },
-        { name: 'abono', displayName: 'Abono', width: '20%', cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.abono > 0">{{row.entity.abono | currency}}</span></div><div class="text-right"><span ng-if="row.entity.abono == 0">{{row.entity.abono | currency}}</span></div>' }
+        { name: 'banco', displayName: 'Banco', width: 100 },
+        { name: 'referencia', displayName: 'Referencia', width: 200 },
+        { name: 'concepto', displayName: 'Concepto', width: 300 },
+        { name: 'cargo', displayName: 'Cargo', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.cargo > 0">{{row.entity.cargo | currency}}</span></div><div class="text-right"><span ng-if="row.entity.cargo == 0">{{row.entity.cargo | currency}}</span></div>' },
+        { name: 'abono', displayName: 'Abono', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.abono > 0">{{row.entity.abono | currency}}</span></div><div class="text-right"><span ng-if="row.entity.abono == 0">{{row.entity.abono | currency}}</span></div>' }
     ];
     $scope.gridDepositosBancos.multiSelect = true;
     //****************************************************************************************************
@@ -67,7 +67,8 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         $scope.getAuxiliarContable(1, '1100-0072-0001-0010', 1);
         $scope.getAuxiliarPunteo(1);
         $scope.getBancoPunteo(1);
-        $scope.tabla();
+        $scope.tabla('bancoPunteo');
+        $scope.tabla('auxiliarPunteo');
         // if($rootScope.userData == null){
         //  location.href = '/';
         //  alertFactory.warning('Inicie Sesión')
@@ -481,7 +482,11 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     //****************************************************************************************************
     // INICIA guarda los grid elegidos de auxiliar y banco
     // Para poder realizar el punteo con exito debe cumplir con ciertos criterios
-    // 1.- Debe existir una relación entre el deposito bancario y el auxiliar contable
+    // 1.- Debe haber seleccionado registros del deposito bancario y el auxiliar contable para relacionarlos entre si
+    // 2.- Solo puede existir relaciones de 1 a muchos o 1 a 1 o muchos a 1
+    // 3.- No puede seleccionar en un solo grid dos registros que tengan abono y cargo ya que todos los seleccionados deben ser 
+    //     cargos o abonos
+    // 4.- La seleccion de registro entre depósito bancario y auxiliar contable el total de la suma debe ser = +-1
     //****************************************************************************************************
     $scope.GuardarGrid = function() {
         $scope.punteoAuxiliar = [];
@@ -514,18 +519,21 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         }
 
     };
+    //****************************************************************************************************
+    // INICIA funcion que verifica que la cantidad sea igual o mas menos 1 
+    //****************************************************************************************************
     $scope.verificaCantidades = function(tipopunteo) {
         if ($scope.cargoBanco != 0 && $scope.abonoAuxiliar != 0) {
             if ((($scope.cargoBanco - 1) <= $scope.abonoAuxiliar && $scope.abonoAuxiliar <= ($scope.cargoBanco + 1)) || (($scope.abonoAuxiliar - 1) <= $scope.cargoBanco && $scope.cargoBanco <= ($scope.abonoAuxiliar + 1))) {
                 $scope.guardaPunteo(tipopunteo);
             } else {
-                alertFactory.error('La cantidad de cargo y abono no coinciden +-1');
+                alertFactory.error('La cantidad de cargo y abono no coinciden');
             }
         } else if ($scope.abonoBanco != 0 && $scope.cargoAuxiliar != 0) {
             if ((($scope.abonoBanco - 1) <= $scope.cargoAuxiliar && $scope.cargoAuxiliar <= ($scope.abonoBanco + 1)) || (($scope.cargoAuxiliar - 1) <= $scope.abonoBanco && $scope.abonoBanco <= ($scope.cargoAuxiliar + 1))) {
                 $scope.guardaPunteo(tipopunteo);
             } else {
-                alertFactory.error('La cantidad de cargo y abono no coinciden +-1');
+                alertFactory.error('La cantidad de cargo y abono no coinciden');
             }
         } else {
             alertFactory.warning('No puede relacionar abono con abono o cargo con cargo');
@@ -572,9 +580,8 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     //****************************************************************************************************
     $scope.getAuxiliarPunteo = function(idempresa) {
         conciliacionInicioRepository.getAuxiliarPunteo(idempresa).then(function(result) {
-            //$scope.tabla();
             $scope.auxiliarPadre = result.data;
-
+            
         });
     };
     //****************************************************************************************************
@@ -582,17 +589,17 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     //****************************************************************************************************
     $scope.getBancoPunteo = function(idempresa) {
         conciliacionInicioRepository.getBancoPunteo(idempresa).then(function(result) {
-            //$scope.tabla();
             $scope.bancoPadre = result.data;
-
+            
         });
     };
     //****************************************************************************************************
     // INICIA inicio la tabla para los distintos casos
     //****************************************************************************************************
-    $scope.tabla = function() {
+    $scope.tabla = function(idtabla) {
+
         setTimeout(function() {
-            $('.tabla-punteo').dataTable({
+            $('#' + idtabla).dataTable({
                 destroy: true,
                 "responsive": true,
                 // "language": {
@@ -605,7 +612,9 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
                 paging: false,
                 autoFill: true
             });
-        }, 500);
+        }, 1000);
+
+        //$("#" + idtabla + "_length").removeClass("dataTables_info").addClass("hide-div");
     };
     $scope.eliminarTabla = function() {
 

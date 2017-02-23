@@ -13,7 +13,7 @@
                     <div class="text-main">
                         <h4>Depósito Bancario</h4>
                     </div>
-                    <div ui-grid="gridDepositosBancos" ui-grid-selection class="grid"></div>
+                    <div ui-grid="gridDepositosBancos" ui-grid-selection ui-grid-pinning class="grid"></div>
                     <div class="media middle pad-all">
                         <div class="media-left">
                             <span class="icon-wrap icon-wrap-sm icon-circle bg-mint">
@@ -21,11 +21,11 @@
                           </span>
                         </div>
                         <div class="media-body">
-                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : cargoBanco > 0, 'text-danger text-semibold' : cargoBanco > 0 && cargoAuxiliar > 0}">{{cargoBanco | currency}}</p>
+                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : cargoBanco > 0 && (((cargoBanco - 1) <= abonoAuxiliar && abonoAuxiliar <= (cargoBanco + 1)) || ((abonoAuxiliar - 1) <= cargoBanco && cargoBanco <= (abonoAuxiliar + 1))), 'text-danger text-semibold' : (cargoBanco > 0 && cargoAuxiliar > 0)}">{{cargoBanco | currency}}</p>
                             <p class="text-muted mar-no">Cargo</p>
                         </div>
                         <div class="media-body">
-                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : abonoBanco > 0, 'text-danger text-semibold' : abonoBanco > 0 && abonoAuxiliar > 0}">{{abonoBanco | currency}}</p>
+                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : abonoBanco > 0 && (((abonoBanco - 1) <= cargoAuxiliar && cargoAuxiliar <= (abonoBanco + 1)) || ((cargoAuxiliar - 1) <= abonoBanco && abonoBanco <= (cargoAuxiliar + 1))), 'text-danger text-semibold' : (abonoBanco > 0 && abonoAuxiliar > 0)}">{{abonoBanco | currency}}</p>
                             <p class="text-muted mar-no">Abono</p>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                     <div class="text-main">
                         <h4>Auxiliar Contable</h4>
                     </div>
-                    <div ui-grid="gridAuxiliarContable" ui-grid-selection class="grid"></div>
+                    <div ui-grid="gridAuxiliarContable" ui-grid-selection ui-grid-pinning class="grid"></div>
                     <div class="media middle pad-all">
                         <div class="media-left">
                             <span class="icon-wrap icon-wrap-sm icon-circle bg-mint">
@@ -42,11 +42,11 @@
                           </span>
                         </div>
                         <div class="media-body">
-                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : cargoAuxiliar > 0, 'text-danger text-semibold' : cargoBanco > 0 && cargoAuxiliar > 0}">{{cargoAuxiliar | currency}}</p>
+                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : cargoAuxiliar > 0 && (((abonoBanco - 1) <= cargoAuxiliar && cargoAuxiliar <= (abonoBanco + 1)) || ((cargoAuxiliar - 1) <= abonoBanco && abonoBanco <= (cargoAuxiliar + 1))), 'text-danger text-semibold' : cargoBanco > 0 && cargoAuxiliar > 0}">{{cargoAuxiliar | currency}}</p>
                             <p class="text-muted mar-no">Cargo</p>
                         </div>
                         <div class="media-body">
-                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : abonoAuxiliar > 0, 'text-danger text-semibold' : abonoBanco > 0 && abonoAuxiliar > 0}">{{abonoAuxiliar | currency}}</p>
+                            <p class="text-2x mar-no text-semibold" ng-class="{'text-info text-semibold' : abonoAuxiliar > 0 && (((cargoBanco - 1) <= abonoAuxiliar && abonoAuxiliar <= (cargoBanco + 1)) || ((abonoAuxiliar - 1) <= cargoBanco && cargoBanco <= (abonoAuxiliar + 1))), 'text-danger text-semibold' : abonoBanco > 0 && abonoAuxiliar > 0}">{{abonoAuxiliar | currency}}</p>
                             <p class="text-muted mar-no">Abono</p>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                     <div class="text-main">
                         <h4>Banco Punteado</h4>
                     </div>
-                    <table class="table table-striped table-bordered tabla-punteo" cellspacing="0" width="100%">
+                    <table id="bancoPunteo" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>Banco</th>
@@ -98,7 +98,7 @@
                     <div class="text-main">
                         <h4>Auxiliar Contable Punteado</h4>
                     </div>
-                    <table class="table table-striped table-bordered tabla-punteo" cellspacing="0" width="100%">
+                    <table id="auxiliarPunteo" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -174,8 +174,8 @@
                     <tfoot>
                         <tr>
                             <td colspan="3" class="text-bold text-right text-info">Total</td>
-                            <td class="text-danger text-semibold text-right"><span ng-if="cargoTotalBanco > 0">{{cargoTotalBanco | currency}}</span></td>
-                            <td class="text-danger text-semibold text-right"><span ng-if="abonoTotalBanco > 0">{{abonoTotalBanco | currency}}</span></td>
+                            <td class="text-info text-semibold text-right"><span ng-if="cargoTotalBanco > 0">{{cargoTotalBanco | currency}}</span></td>
+                            <td class="text-info text-semibold text-right"><span ng-if="abonoTotalBanco > 0">{{abonoTotalBanco | currency}}</span></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -203,8 +203,8 @@
                     <tfoot>
                         <tr>
                             <td colspan="4" class="text-bold text-right text-info">Total</td>
-                            <td class="text-danger text-semibold text-right"><span ng-if="cargoTotalAuxiliar > 0">{{cargoTotalAuxiliar | currency}}</span></td>
-                            <td class="text-danger text-semibold text-right"><span ng-if="abonoTotalAuxiliar > 0">{{abonoTotalAuxiliar | currency}}</span></td>
+                            <td class="text-info text-semibold text-right"><span ng-if="cargoTotalAuxiliar > 0">{{cargoTotalAuxiliar | currency}}</span></td>
+                            <td class="text-info text-semibold text-right"><span ng-if="abonoTotalAuxiliar > 0">{{abonoTotalAuxiliar | currency}}</span></td>
                         </tr>
                     </tfoot>
                 </table>
