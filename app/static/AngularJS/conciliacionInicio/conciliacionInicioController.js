@@ -480,6 +480,8 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     };
     //****************************************************************************************************
     // INICIA guarda los grid elegidos de auxiliar y banco
+    // Para poder realizar el punteo con exito debe cumplir con ciertos criterios
+    // 1.- Debe existir una relación entre el deposito bancario y el auxiliar contable
     //****************************************************************************************************
     $scope.GuardarGrid = function() {
         $scope.punteoAuxiliar = [];
@@ -491,11 +493,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
                 if ($scope.cargoBanco != 0 && $scope.abonoBanco != 0) {
                     alertFactory.warning('No se puede seleccionar abono y cargo al mismo tiempo');
                 } else {
-                    if (($scope.cargoBanco != 0 && $scope.abonoAuxiliar != 0) || ($scope.abonoBanco != 0 && $scope.cargoAuxiliar != 0)) {
-                        $scope.guardaPunteo(2);
-                    } else {
-                        alertFactory.warning('No puede relacionar abono con abono o cargo con cargo');
-                    }
+                    $scope.verificaCantidades(2);
                 }
                 $scope.limpiaVariables();
                 $scope.getGridTablas();
@@ -503,11 +501,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
                 if ($scope.cargoAuxiliar != 0 && $scope.abonoAuxiliar != 0) {
                     alertFactory.warning('No se puede seleccionar abono y cargo al mismo tiempo');
                 } else {
-                    if (($scope.cargoBanco != 0 && $scope.abonoAuxiliar != 0) || ($scope.abonoBanco != 0 && $scope.cargoAuxiliar != 0)) {
-                        $scope.guardaPunteo(1);
-                    } else {
-                        alertFactory.warning('No puede relacionar abono con abono o cargo con cargo');
-                    }
+                    $scope.verificaCantidades(1);
                 }
                 $scope.limpiaVariables();
                 $scope.getGridTablas();
@@ -519,6 +513,23 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
             alertFactory.warning('No ha seleccionado ninguna relación');
         }
 
+    };
+    $scope.verificaCantidades = function(tipopunteo) {
+        if ($scope.cargoBanco != 0 && $scope.abonoAuxiliar != 0) {
+            if ((($scope.cargoBanco - 1) <= $scope.abonoAuxiliar && $scope.abonoAuxiliar <= ($scope.cargoBanco + 1)) || (($scope.abonoAuxiliar - 1) <= $scope.cargoBanco && $scope.cargoBanco <= ($scope.abonoAuxiliar + 1))) {
+                $scope.guardaPunteo(tipopunteo);
+            } else {
+                alertFactory.error('La cantidad de cargo y abono no coinciden +-1');
+            }
+        } else if ($scope.abonoBanco != 0 && $scope.cargoAuxiliar != 0) {
+            if ((($scope.abonoBanco - 1) <= $scope.cargoAuxiliar && $scope.cargoAuxiliar <= ($scope.abonoBanco + 1)) || (($scope.cargoAuxiliar - 1) <= $scope.abonoBanco && $scope.abonoBanco <= ($scope.cargoAuxiliar + 1))) {
+                $scope.guardaPunteo(tipopunteo);
+            } else {
+                alertFactory.error('La cantidad de cargo y abono no coinciden +-1');
+            }
+        } else {
+            alertFactory.warning('No puede relacionar abono con abono o cargo con cargo');
+        }
     };
     //****************************************************************************************************
     // INICIA funcion para guardar el punteo
