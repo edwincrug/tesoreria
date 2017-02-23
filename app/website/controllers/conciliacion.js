@@ -88,4 +88,22 @@ Conciliacion.prototype.get_cargoBancario = function(req, res, next) {
     });
 };
 
+Conciliacion.prototype.get_depositosPendientes = function(req, res, next) {
+
+    console.log('freshh')
+
+    var self = this;
+
+    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT },                  
+                  { name: 'idEstatus', value: req.query.idEstatus, type: self.model.types.INT },
+                  { name: 'idTipoAuxiliar', value: req.query.idTipoAuxiliar, type: self.model.types.INT }];
+
+    this.model.query('INS_DEPOSITOS_PENDIENTES_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 module.exports = Conciliacion;
