@@ -10,7 +10,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.calendario();
         $scope.dato = "0000";
         $scope.getDepositosBancos(1,1,'10/11/2015','31/12/2015');
-        $scope.getCartera('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
+        $scope.getCarteraVencida('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
     }
     $scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
@@ -56,8 +56,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
-    $scope.getCartera = function(server,database,fechaIni,fechaFin){
-      filtrosRepository.getAuxiliar(server,database,fechaIni,fechaFin).then(function(result) {
+    $scope.getCarteraVencida = function(cliente,empresa,sucursal,departamento,fechaIni,fechaFin){
+      filtrosRepository.getCartera(cliente,empresa,sucursal,departamento,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 //$scope.listAuxiliarContable = result.data;
                 $scope.gridAuxiliar.data = result.data;
@@ -74,7 +74,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     }
 
 
-    $scope.gridAuxiliar = {
+    $scope.gridCartera = {
       enableRowSelection: true,
       enableSelectAll: true,
       selectionRowHeaderWidth: 35,
