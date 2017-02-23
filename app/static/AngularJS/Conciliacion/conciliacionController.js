@@ -20,6 +20,8 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
         $scope.totalCargoContaBanco = 0;
         $scope.totalCargoBancoConta = 0;
 
+        $scope.idTipoAuxiliar = 0;
+
         $scope.abonosContables = [];
         $scope.cargosContables = [];
         $scope.abonosBancarios = [];
@@ -53,11 +55,21 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
     $scope.getAbonoContable = function(idEmpresa, fInicial, fFinal, opcion) {
         conciliacionRepository.getAbonoContable(idEmpresa, fInicial, fFinal, opcion).then(function(result) {
             if (result.data.length > 0) {
-                $scope.abonosContables = result.data;
-                $scope.resumenDPI = result.data;
 
-                for (var i = 0, len = result.data.length; i < len; i++)
-                    $scope.totalAbonoContable = $scope.totalAbonoContable + result.data[i].SALDO_ACTUAL;
+                if (opcion == 1) {
+                    $scope.abonosContables = result.data;
+
+                    for (var i = 0, len = result.data.length; i < len; i++)
+                        $scope.totalAbonoContable = $scope.totalAbonoContable + result.data[i].SALDO_ACTUAL;
+                } else
+                    {
+                        console.log('entro a getAbonoContable')
+                        console.log(result.data);
+                        console.log(result.data[0].idTipoAuxiliar)
+                        $scope.resumenDPI = result.data;
+                        $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
+                    }
+
             }
         });
     }
@@ -65,11 +77,17 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
     $scope.getAbonoBancario = function(idEmpresa, fInicial, fFinal, opcion) {
         conciliacionRepository.getAbonoBancario(idEmpresa, fInicial, fFinal, opcion).then(function(result) {
             if (result.data.length > 0) {
-                $scope.abonosBancarios = result.data;
-                $scope.resumenDPI = result.data;
 
-                for (var i = 0, len = result.data.length; i < len; i++)
-                    $scope.totalAbonoBancario = $scope.totalAbonoBancario + result.data[i].SALDO_ACTUAL;
+                if (opcion == 1) {
+                    $scope.abonosBancarios = result.data;
+
+                    for (var i = 0, len = result.data.length; i < len; i++)
+                        $scope.totalAbonoBancario = $scope.totalAbonoBancario + result.data[i].SALDO_ACTUAL;
+                } else
+                {
+                    $scope.resumenDPI = result.data;
+                    $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
+                }
             }
         });
     }
@@ -77,10 +95,17 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
     $scope.getCargoContable = function(idEmpresa, fInicial, fFinal, opcion) {
         conciliacionRepository.getCargoContable(idEmpresa, fInicial, fFinal, opcion).then(function(result) {
             if (result.data.length > 0) {
-                $scope.cargosContables = result.data;
 
-                for (var i = 0, len = result.data.length; i < len; i++)
-                    $scope.totalCargoContable = $scope.totalCargoContable + result.data[i].SALDO_ACTUAL;
+                if (opcion == 1) {
+                    $scope.cargosContables = result.data;
+
+                    for (var i = 0, len = result.data.length; i < len; i++)
+                        $scope.totalCargoContable = $scope.totalCargoContable + result.data[i].SALDO_ACTUAL;
+                } else
+                {
+                    $scope.resumenDPI = result.data;
+                    $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
+                }
             }
         });
     }
@@ -88,10 +113,28 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
     $scope.getCargoBancario = function(idEmpresa, fInicial, fFinal, opcion) {
         conciliacionRepository.getCargoBancario(idEmpresa, fInicial, fFinal, opcion).then(function(result) {
             if (result.data.length > 0) {
-                $scope.cargosBancarios = result.data;
 
-                for (var i = 0, len = result.data.length; i < len; i++)
-                    $scope.totalCargoBancario = $scope.totalCargoBancario + result.data[i].SALDO_ACTUAL;                
+                if (opcion == 1) {
+                    $scope.cargosBancarios = result.data;
+
+                    for (var i = 0, len = result.data.length; i < len; i++)
+                        $scope.totalCargoBancario = $scope.totalCargoBancario + result.data[i].SALDO_ACTUAL;
+                } else
+                {
+                    $scope.resumenDPI = result.data;
+                    $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
+                }
+            }
+        });
+    }
+
+    $scope.getDepositosPendientes = function(idUsuario, idEstatus, idTipoAuxiliar) {
+        //console.log(idTipoAuxiliar)        
+        conciliacionRepository.getDepositosPendientes(idUsuario, idEstatus, idTipoAuxiliar).then(function(result) {
+            if (result.data.length > 0) {
+
+                console.log('entro a datos: ')
+                console.log(result.data)
             }
         });
     }

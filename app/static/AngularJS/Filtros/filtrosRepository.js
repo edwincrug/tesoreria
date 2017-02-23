@@ -153,6 +153,26 @@ registrationModule.factory('filtrosRepository', function($http) {
                 }
 
             });
+        },
+
+        getCartera: function(cliente,empresa,sucursal,departamento,fechaIni,fechaFin) {
+            return $http({
+                url: filtrosURL + 'cartera/',
+                method: "GET",
+                params: {
+                    cliente: cliente,
+                    empresa: empresa,
+                    sucursal: sucursal,
+                    departamento: departamento,
+                    fechaIni: fechaIni,
+                    fechaFin: fechaFin
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
         }
+
     }
 });

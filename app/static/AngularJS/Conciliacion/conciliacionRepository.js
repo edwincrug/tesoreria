@@ -65,6 +65,21 @@ registrationModule.factory('conciliacionRepository', function($http) {
                 }
 
             });
+        },
+        getDepositosPendientes: function(idUsuario, idEstatus, idTipoAuxiliar) {
+            return $http({
+                url: conciliacionURL + 'depositosPendientes/',
+                method: "GET",
+                params: {                    
+                    idUsuario: idUsuario,                    
+                    idEstatus: idEstatus,
+                    idTipoAuxiliar: idTipoAuxiliar
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
         }
     }
 });

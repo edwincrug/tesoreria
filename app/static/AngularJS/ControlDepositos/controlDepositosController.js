@@ -9,8 +9,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.getSucursales(15,4);
         $scope.calendario();
         $scope.dato = "0000";
-        $scope.getDepositosBancos(4,1,'10/11/2015','31/12/2015');
-        $scope.getAuxiliarContable('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
+        $scope.getDepositosBancos(1,1,'10/11/2015','31/12/2015');
+        $scope.getCarteraVencida('192.168.20.9','GAZM_ZARAGOZA','10/11/2015','31/12/2015');
     }
     $scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
@@ -56,8 +56,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
-    $scope.getAuxiliarContable = function(server,database,fechaIni,fechaFin){
-      filtrosRepository.getAuxiliar(server,database,fechaIni,fechaFin).then(function(result) {
+    $scope.getCarteraVencida = function(cliente,empresa,sucursal,departamento,fechaIni,fechaFin){
+      filtrosRepository.getCartera(cliente,empresa,sucursal,departamento,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 //$scope.listAuxiliarContable = result.data;
                 $scope.gridAuxiliar.data = result.data;
@@ -68,14 +68,13 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
      $scope.getDepositosBancos = function(empresa,cuenta,fechaIni,fechaFin){
       filtrosRepository.getDepositos(empresa,cuenta,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
-                //$scope.listAuxiliarContable = result.data;
-                $scope.gridDocumentos.data = result.data;
+               $scope.gridDocumentos.data = result.data;
             }
         });
     }
 
 
-    $scope.gridAuxiliar = {
+    $scope.gridCartera = {
       enableRowSelection: true,
       enableSelectAll: true,
       selectionRowHeaderWidth: 35,
@@ -151,13 +150,34 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     };
 
 
-  $scope.gridDocumentos = { enableRowSelection: true, enableRowHeaderSelection: false };
+  $scope.gridDocumentos = { 
+    enableColumnResize: true,
+                enableRowSelection: true,
+                enableGridMenu: true,
+                enableFiltering: true,
+                enableGroupHeaderSelection: false,
+                treeRowHeaderAlwaysVisible: true,
+                showColumnFooter: true,
+                showGridFooter: true,
+                height: 900,
+                cellEditableCondition: function($scope) {
+                    return $scope.row.entity.seleccionable;
+                }
+     };
 
   $scope.gridDocumentos.columnDefs = [
-    { name: 'banco',displayName: 'Banco', width: '20%' },
-    { name: 'concepto',displayName: 'Concepto', width: '20%'},
-    { name: 'importe',displayName: 'Importe', width: '20%' },
-    { name: 'fechaOperacion' ,displayName: 'Fecha', width: '20%'}
+    { name: 'banco',displayName: 'Banco', width: '10%' },
+    { name: 'idBmer',displayName: 'Cons', width: '5%'},
+    { name: 'referencia',displayName: 'Referencia', width: '15%' },
+    { name: 'concepto' ,displayName: 'Concepto', width: '15%'},
+    { name: 'fechaOperacion',displayName: 'Fecha', width: '10%',type: 'date', cellFilter: 'date:"dd/MM/yyyy"'},
+    { name: 'cargo',displayName: 'Cargo', width: '10%', cellFilter: 'currency' },
+    { name: 'abono' ,displayName: 'Abono', width: '10%', cellFilter: 'currency'},
+    { name: 'observaciones'
+    ,displayName: 'Observaciones'
+    ,width: '25%'
+    ,cellEditableCondition:true
+    }
   ];
 
   $scope.gridDocumentos.multiSelect = false;
