@@ -27,8 +27,8 @@ Filtros.prototype.get_empresas = function(req, res, next) {
     var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }];
 
     this.model.query('SEL_EMPRESA_BY_USUARIO_SP', params, function(error, result) {
-        console.log(error, 'soy el resultado');
-        console.log(result, 'soy el error');
+        //console.log(error, 'soy el resultado');
+        //console.log(result, 'soy el error');
         self.view.expositor(res, {
             error: error,
             result: result
@@ -87,7 +87,7 @@ Filtros.prototype.get_bancos = function(req, res, next) {
 Filtros.prototype.get_cuentabanco = function(req, res, next) {
 
     var self = this;
-    console.log('Cuenta Bancaria', req.query.idBanco, req.query.idEmpresa)
+    //console.log('Cuenta Bancaria', req.query.idBanco, req.query.idEmpresa)
     var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
         { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }
     ];

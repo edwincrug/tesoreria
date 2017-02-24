@@ -22,7 +22,7 @@ var conciliacionInicio = function(conf) {
 conciliacionInicio.prototype.post_insertPuntoDeposito = function(req, res, next) {
 
     var self = this;
-    console.log(req.body.idDepositoBanco, req.body.idAuxiliarContable, req.body.descripcion, req.body.idEstatus, req.body.idPadre)
+    
 
     var params = [{ name: 'idDepositoBanco', value: req.body.idDepositoBanco, type: self.model.types.INT },
         { name: 'idAuxiliarContable', value: req.body.idAuxiliarContable, type: self.model.types.INT },
