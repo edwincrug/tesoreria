@@ -60,7 +60,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         //$scope.calendario();
         $scope.getEmpresa(15);
         $scope.getBancos(1);
-        $scope.getCuentaBanco(1)
+        $scope.getCuentaBanco(1, 1)
         $scope.getClaveBanco(1)
         $scope.getCuentacontable(1)
         $scope.getDepositosBancos(1, 1);
@@ -79,7 +79,8 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     }
 
     $scope.getEmpresa = function(idUsuario) {
-        filtrosRepository.getEmpresas(idUsuario).then(function(result) {
+        filtrosRepository.getEmpresas(idUsuario).then(
+            function(result) {
             if (result.data.length > 0) {
                 $scope.empresaUsuario = result.data;
             }
@@ -94,10 +95,11 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         });
     }
 
-    $scope.getCuentaBanco = function(idCuentaBanco) {
-        filtrosRepository.getCuentaBanco(idCuentaBanco).then(function(result) {
+    $scope.getCuentaBanco = function(idCuentaBanco, idempresa) {
+        filtrosRepository.getCuentaBanco(idCuentaBanco, idempresa).then(function(result) {
             if (result.data.length > 0) {
                 $scope.bancoCuenta = result.data;
+                console.log(result.data, 'hola')
             }
         });
     }
@@ -106,6 +108,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         filtrosRepository.getClaveBanco(idClaveBanco).then(function(result) {
             if (result.data.length > 0) {
                 $scope.bancoClave = result.data;
+                //console.log(result.data)
             }
         });
     }
@@ -581,7 +584,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     $scope.getAuxiliarPunteo = function(idempresa) {
         conciliacionInicioRepository.getAuxiliarPunteo(idempresa).then(function(result) {
             $scope.auxiliarPadre = result.data;
-            
+
         });
     };
     //****************************************************************************************************
@@ -590,7 +593,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     $scope.getBancoPunteo = function(idempresa) {
         conciliacionInicioRepository.getBancoPunteo(idempresa).then(function(result) {
             $scope.bancoPadre = result.data;
-            
+
         });
     };
     //****************************************************************************************************

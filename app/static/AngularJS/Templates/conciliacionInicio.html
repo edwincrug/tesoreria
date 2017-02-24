@@ -19,13 +19,13 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="form-label text-main">Banco:</label>
-                                <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.descripcion for banco in bancoEmpresa" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
+                                <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.Nombre for banco in bancoEmpresa" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
                                     <option value="">Seleccioné Banco</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="form-label text-main">Cuenta:</label>
-                                <select class="form-control" ng-model="filtros.idCuenta" ng-options="bancoCuenta.idBancoCuenta as bancoCuenta.descripcion for bancoCuenta in bancoCuenta" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
+                                <select class="form-control" ng-model="filtros.idCuenta" ng-options="bancoCuenta.IdCuenta as bancoCuenta.Cuenta for bancoCuenta in bancoCuenta" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
                                     <option value="">Seleccioné Cuenta</option>
                                 </select>
                             </div>

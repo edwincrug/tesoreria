@@ -27,6 +27,8 @@ Filtros.prototype.get_empresas = function(req, res, next) {
     var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }];
 
     this.model.query('SEL_EMPRESA_BY_USUARIO_SP', params, function(error, result) {
+        console.log(error, 'soy el resultado');
+        console.log(result, 'soy el error');
         self.view.expositor(res, {
             error: error,
             result: result
@@ -85,10 +87,12 @@ Filtros.prototype.get_bancos = function(req, res, next) {
 Filtros.prototype.get_cuentabanco = function(req, res, next) {
 
     var self = this;
+    console.log('Cuenta Bancaria', req.query.idBanco, req.query.idEmpresa)
+    var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
+        { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }
+    ];
 
-    var params = [{ name: 'idCuentabanco', value: req.query.idCuentabanco, type: self.model.types.INT }];
-
-    this.model.query('SEL_CUENTA_BANCO_SP', params, function(error, result) {
+    this.model.query('SEL_CUENTA_CLAVE_BANCO_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
@@ -182,7 +186,8 @@ Filtros.prototype.get_depositos = function(req, res, next) {
     var self = this;
 
     var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
-                    { name: 'idEstatus', value: req.query.idEstatus, type: self.model.types.INT }];
+        { name: 'idEstatus', value: req.query.idEstatus, type: self.model.types.INT }
+    ];
 
     this.model.query('SEL_DEPOSITOS_REFERENCIADOS_SP', params, function(error, result) {
         self.view.expositor(res, {
@@ -197,12 +202,12 @@ Filtros.prototype.get_cartera = function(req, res, next) {
     var self = this;
 
     var params = [{ name: 'idCliente', value: req.query.cliente, type: self.model.types.INT },
-                  { name: 'idEmpresas', value: req.query.empresa, type: self.model.types.INT },
-                  { name: 'idSucursales', value: req.query.sucursal, type: self.model.types.INT },
-                  { name: 'idDepartamentos', value: req.query.departamento, type: self.model.types.INT },
-                  { name: 'fechaInicio', value: req.query.fechaIni, type: self.model.types.STRING },
-                  { name: 'fechaFin', value: req.query.fechaFin, type: self.model.types.STRING }
-                  ];
+        { name: 'idEmpresas', value: req.query.empresa, type: self.model.types.INT },
+        { name: 'idSucursales', value: req.query.sucursal, type: self.model.types.INT },
+        { name: 'idDepartamentos', value: req.query.departamento, type: self.model.types.INT },
+        { name: 'fechaInicio', value: req.query.fechaIni, type: self.model.types.STRING },
+        { name: 'fechaFin', value: req.query.fechaFin, type: self.model.types.STRING }
+    ];
 
     this.model.query('SEL_CARTERA_VENCIDA_SP', params, function(error, result) {
         self.view.expositor(res, {

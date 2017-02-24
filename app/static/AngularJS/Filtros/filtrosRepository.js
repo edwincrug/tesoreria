@@ -56,12 +56,13 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        getCuentaBanco: function(idCuentaBanco) {
+        getCuentaBanco: function(idCuentaBanco, idempresa) {
             return $http({
                 url: filtrosURL + 'cuentabanco/',
                 method: "GET",
                 params: {
-                    idCuentaBanco: idCuentaBanco
+                    idBanco: idCuentaBanco,
+                    idEmpresa: idempresa
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -155,7 +156,7 @@ registrationModule.factory('filtrosRepository', function($http) {
             });
         },
 
-        getCartera: function(cliente,empresa,sucursal,departamento,fechaIni,fechaFin) {
+        getCartera: function(cliente, empresa, sucursal, departamento, fechaIni, fechaFin) {
             return $http({
                 url: filtrosURL + 'cartera/',
                 method: "GET",
