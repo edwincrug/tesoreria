@@ -32,11 +32,16 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
         $scope.totalCargoContable = 0;
         $scope.totalCargoBancario = 0;
 
+        $scope.obtieneCargosAbonos();
+
+    }
+
+    $scope.obtieneCargosAbonos = function() {
+
         $scope.getAbonoContable(0, 0, 0, 1);
         $scope.getAbonoBancario(0, 0, 0, 1);
         $scope.getCargoContable(0, 0, 0, 1);
         $scope.getCargoBancario(0, 0, 0, 1);
-
     }
 
 
@@ -63,13 +68,17 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
                         $scope.totalAbonoContable = $scope.totalAbonoContable + result.data[i].SALDO_ACTUAL;
                 } else
                     {
-                        console.log('entro a getAbonoContable')
+                        /*console.log('entro a getAbonoContable')
                         console.log(result.data);
-                        console.log(result.data[0].idTipoAuxiliar)
+                        console.log(result.data[0].idTipoAuxiliar)*/
                         $scope.resumenDPI = result.data;
                         $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
                     }
 
+            }
+            else{
+                $scope.abonosContables = [];                
+                $scope.totalAbonoContable = 0;
             }
         });
     }
@@ -107,6 +116,10 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
                     $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
                 }
             }
+            else{
+                $scope.cargosContables = [];
+                $scope.totalCargoContable = 0;
+            }
         });
     }
 
@@ -133,8 +146,10 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
         conciliacionRepository.getDepositosPendientes(idUsuario, idEstatus, idTipoAuxiliar).then(function(result) {
             if (result.data.length > 0) {
 
-                console.log('entro a datos: ')
-                console.log(result.data)
+                /*console.log('entro a datos: ')
+                console.log(result.data)*/
+
+                $scope.obtieneCargosAbonos();
             }
         });
     }
