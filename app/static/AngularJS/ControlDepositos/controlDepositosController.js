@@ -21,8 +21,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.activarBuscarCartera = true;
 
 
-        //$scope.getDepositosBancosNoReferenciados(1,1,'10/11/2015','31/12/2015');
-        //$scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
+        $scope.getDepositosBancosNoReferenciados(1,1,'10/11/2015','31/12/2015');
+        $scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
     }
     $scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
