@@ -156,6 +156,21 @@ registrationModule.factory('filtrosRepository', function($http) {
             });
         },
 
+         getDepositosNoReferenciados: function(idBanco, idestatus) {
+            return $http({
+                url: filtrosURL + 'depositosNoReferenciados/',
+                method: "GET",
+                params: {
+                    idBanco: idBanco,
+                    idEstatus: idestatus
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        },
+
         getCartera: function(cliente, empresa, sucursal, departamento, fechaIni, fechaFin) {
             return $http({
                 url: filtrosURL + 'cartera/',

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-sm-3">
                     <label class="form-label">Empresa:</label>
-                    <select class="form-control" ng-model="filtros.idEmpresa" ng-options="empresa.emp_idempresa as empresa.emp_nombre for empresa in empresaUsuario" name="txtEmpresa" ng-change="" ng-disabled="timbradoPendiente">
+                    <select class="form-control" ng-model="filtros.idEmpresa" ng-options="empresa.emp_idempresa as empresa.emp_nombre for empresa in empresaUsuario" name="txtEmpresa" ng-change="getEmpresa(filtros.idEmpresa)" >
                         <option value="">Seleccioné Empresa</option>
                     </select>
                 </div>
@@ -22,13 +22,13 @@
             </div>
             <div class="form-group col-md-3">
                 <label class="form-label">Banco:</label>
-                <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.Nombre for banco in bancoEmpresa" name="txtBanco" ng-change="" ng-disabled="timbradoPendiente">
+                <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.Nombre for banco in bancoEmpresa" name="txtBanco" ng-change="" ng-disabled="activarBanco">
                     <option value="">Seleccioné Banco</option>
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label class="form-label">Cuenta:</label>
-                <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.Nombre for banco in bancoEmpresa" name="txtBanco" ng-change="" ng-disabled="timbradoPendiente">
+                <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.Nombre for banco in bancoEmpresa" name="txtBanco" ng-change="" ng-disabled="activarCuenta">
                     <option value="">Seleccioné Cuenta</option>
                 </select>
             </div>
@@ -36,14 +36,14 @@
                 <label for="fInicio">Fecha Inicio:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy">
+                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniDeposito">
                 </div>
             </div>
             <div class="form-group col-md-3" id="calendar">
                 <label for="fInicio">Fecha Fin:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy">
+                    <input type="text" class="form-control" id="fin" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinDeposito">
                 </div>
             </div>
             <div class="col-md-3" style="margin-top: 23px">
@@ -90,7 +90,7 @@
             </div>
         </div>
         <div class="col-md-12">
-            <a class="btn btn-primary pull-right" ng-click="GuardarGrid()"><i class="ti-control-shuffle">  </i>Punteo</a>
+            <a class="btn btn-primary pull-right" ng-click="GuardarGrid()"><i class="ti-control-shuffle">  </i>Crear Referencia</a>
             <br>
             <br/> &nbsp;
         </div>

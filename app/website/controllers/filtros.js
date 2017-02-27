@@ -197,6 +197,22 @@ Filtros.prototype.get_depositos = function(req, res, next) {
     });
 };
 
+Filtros.prototype.get_depositosNoReferenciados = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
+        { name: 'idEstatus', value: req.query.idEstatus, type: self.model.types.INT }
+    ];
+
+    this.model.query('SEL_DEPOSITOS_NO_REFERENCIADOS_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 Filtros.prototype.get_cartera = function(req, res, next) {
 
     var self = this;

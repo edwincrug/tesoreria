@@ -6,12 +6,22 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
     $scope.init = function() {
         $scope.getEmpresa($scope.idUsuario);
-        $scope.getSucursales(15,5);
-        $scope.getBancos(1);
+        
         $scope.calendario();
-        $scope.dato = "0000";
-        $scope.getDepositosBancos(1,1,'10/11/2015','31/12/2015');
-        $scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
+
+        $scope.activarBanco = true;
+        $scope.activarCuenta = true;
+        $scope.activarFechaIniDeposito = true;
+        $scope.activarInputAgencia = false;
+        $scope.activarInputAgencia = false;
+        $scope.activarInputAgencia = false;
+        $scope.activarInputAgencia = false;
+        $scope.activarInputAgencia = false;
+        $scope.activarInputAgencia = false;
+
+        
+        //$scope.getDepositosBancosNoReferenciados(1,1,'10/11/2015','31/12/2015');
+        //$scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
     }
     $scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
@@ -32,6 +42,16 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
             }
         });
     }
+
+    $scope.empresaSeleccionada = function(idEmpresa) {
+           
+                $scope.activarBanco = true;
+                $scope.activarSucursal = true;
+                $scope.getSucursales(15,5);
+                $scope.getBancos(idEmpresa);
+
+        }
+
 
     $scope.getSucursales = function(idUsuario, idEmpresa) {
         filtrosRepository.getSucursales(idUsuario,idEmpresa).then(function(result) {
@@ -65,14 +85,17 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
-     $scope.getDepositosBancos = function(empresa,cuenta,fechaIni,fechaFin){
-      filtrosRepository.getDepositos(empresa,cuenta,fechaIni,fechaFin).then(function(result) {
+     $scope.getDepositosBancosNoReferenciados = function(empresa,cuenta,fechaIni,fechaFin){
+      filtrosRepository.getDepositosNoReferenciados(empresa,cuenta,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
                $scope.gridDocumentos.data = result.data;
             }
         });
     }
 
+     var variablesInput = function() {
+            $scope.activarBanco = true;
+        }
 
     $scope.gridCartera = {
       enableColumnResize: true,
