@@ -53,23 +53,8 @@
                                 <i class="demo-pli-view-list">&nbsp; Portal Tesorería</i>
                             </a>
                         </li>
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <!--End Navigation toogle button-->
                     </ul>
                     <ul class="nav navbar-top-links pull-right">
-                        <!--Language selector-->
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <!-- <li class="dropdown">
-                            <a id="demo-lang-switch" class="lang-selector dropdown-toggle" href="#" data-toggle="dropdown">
-                                <span class="lang-selected">
-                                    <img class="lang-flag" src="img/flags/spain.png" alt="Español">
-                                </span>
-                            </a>
-                        </li> -->
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <!--End language selector-->
-                        <!--User dropdown-->
-                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <li id="dropdown-user" class="dropdown">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
                                 <span class="pull-right">
@@ -138,7 +123,7 @@
                                     <!--Category name-->
                                     <li class="list-header">Navegación</li>
                                     <!--Menu list item-->
-                                    <li>
+                                    <li ng-show="controlDepositosAcceso == 1">
                                         <a href="/controlDepositos">
                                             <i class="glyphicon glyphicon-usd"></i>
                                             <span class="menu-title">
@@ -147,7 +132,7 @@
                                         </a>
                                     </li>
                                     <!--Menu list item-->
-                                    <li>
+                                    <li ng-show="controlDepositosAcceso == 3">
                                         <a href="/caja">
                                             <i class="glyphicon glyphicon-briefcase"></i>
                                             <span class="menu-title">
@@ -155,7 +140,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li ng-show="conciliacionAccesso == 1">
                                         <a href="/conciliacionInicio">
                                             <i class="glyphicon glyphicon-sort"></i>
                                             <span class="menu-title">

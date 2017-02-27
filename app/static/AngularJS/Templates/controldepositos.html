@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-sm-3">
                     <label class="form-label">Empresa:</label>
-                    <select class="form-control" ng-model="filtros.idEmpresa" ng-options="empresa.emp_idempresa as empresa.emp_nombre for empresa in empresaUsuario" name="txtEmpresa" ng-change="getEmpresa(filtros.idEmpresa)" >
+                    <select class="form-control" ng-model="filtros.idEmpresa" ng-options="empresa.emp_idempresa as empresa.emp_nombre for empresa in empresaUsuario" name="txtEmpresa" ng-change="getBancos(filtros.idEmpresa);getSucursales(filtros.idEmpresa);empresaVacia()" >
                         <option value="">Seleccioné Empresa</option>
                     </select>
                 </div>
@@ -22,13 +22,13 @@
             </div>
             <div class="form-group col-md-3">
                 <label class="form-label">Banco:</label>
-                <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.Nombre for banco in bancoEmpresa" name="txtBanco" ng-change="" ng-disabled="activarBanco">
+                <select class="form-control" ng-model="filtros.idcuenta" ng-options="cuenta.IdCuenta as cuenta.Cuenta for cuenta in cuentaBancaria" name="txtBanco" ng-change="getCuenta(filtros.idBanco,filtros.idEmpresa)" ng-disabled="activarBanco">
                     <option value="">Seleccioné Banco</option>
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label class="form-label">Cuenta:</label>
-                <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.Nombre for banco in bancoEmpresa" name="txtBanco" ng-change="" ng-disabled="activarCuenta">
+                <select class="form-control" ng-model="filtros.idCuenta" ng-options="banco.idBanco as banco.Nombre for banco in bancoEmpresa" name="txtBanco" ng-change="" ng-disabled="activarCuenta">
                     <option value="">Seleccioné Cuenta</option>
                 </select>
             </div>
@@ -36,18 +36,18 @@
                 <label for="fInicio">Fecha Inicio:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniDeposito">
+                    <input type="text" class="form-control" id="fInicio" ng-model="filtros.fechaInicioDeposito" value={{fechaInicio}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniDeposito">
                 </div>
             </div>
             <div class="form-group col-md-3" id="calendar">
                 <label for="fInicio">Fecha Fin:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fin" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinDeposito">
+                    <input type="text" class="form-control" id="ffin" ng-model="filtros.fechaFinDeposito" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinDeposito">
                 </div>
             </div>
             <div class="col-md-3" style="margin-top: 23px">
-                <button class="btn btn-warning">Buscar</button>
+                <button class="btn btn-warning" ng-disabled="activarBuscarDepositos">Buscar</button>
             </div>
             <div class="panel col-md-12">
                 <br/>
@@ -56,13 +56,13 @@
             </div>
             <div class="form-group col-md-5">
                 <label class="form-label">Sucursal:</label>
-                <select class="form-control" ng-model="filtros.idEmpresa" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
+                <select class="form-control" ng-model="filtros.idSucursal" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtTipoContrato" ng-change="" ng-disabled="activarSucursal">
                     <option value="">Seleccioné Sucursal</option>
                 </select>
             </div>
             <div class="form-group col-md-5">
                 <label class="form-label">Departamento:</label>
-                <select class="form-control" ng-model="filtros.idEmpresa" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
+                <select class="form-control" ng-model="filtros.idDepartamento" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtTipoContrato" ng-change="" ng-disabled="activarDepartamento">
                     <option value="">Seleccioné Departamento</option>
                 </select>
             </div>
@@ -70,18 +70,18 @@
                 <label for="fInicio">Fecha Inicio:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy">
+                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniCartera">
                 </div>
             </div>
             <div class="form-group col-md-3" id="calendar">
                 <label for="fInicio">Fecha Fin:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy">
+                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinCartera">
                 </div>
             </div>
             <div class="form-group col-md-3" style="margin-top: 23px">
-                <button class="btn btn-warning">Buscar</button>
+                <button class="btn btn-warning" ng-disabled="activarBuscarCartera">Buscar</button>
             </div>
             <div class="panel col-md-12">
                 <br/>

@@ -12,14 +12,15 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.activarBanco = true;
         $scope.activarCuenta = true;
         $scope.activarFechaIniDeposito = true;
-        $scope.activarInputAgencia = false;
-        $scope.activarInputAgencia = false;
-        $scope.activarInputAgencia = false;
-        $scope.activarInputAgencia = false;
-        $scope.activarInputAgencia = false;
-        $scope.activarInputAgencia = false;
+        $scope.activarFechaFinDeposito = true;
+        $scope.activarSucursal = true;
+        $scope.activarDepartamento = true;
+        $scope.activarFechaIniCartera = true;
+        $scope.activarFechaFinCartera = true;
+        $scope.activarBuscarDepositos = true;
+        $scope.activarBuscarCartera = true;
 
-        
+
         //$scope.getDepositosBancosNoReferenciados(1,1,'10/11/2015','31/12/2015');
         //$scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
     }
@@ -53,8 +54,10 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         }
 
 
-    $scope.getSucursales = function(idUsuario, idEmpresa) {
-        filtrosRepository.getSucursales(idUsuario,idEmpresa).then(function(result) {
+    $scope.getSucursales = function(idEmpresa) {
+
+        $scope.activarSucursal = false;
+        filtrosRepository.getSucursales($scope.idUsuario,idEmpresa).then(function(result) {
             if (result.data.length > 0) {
                 $scope.sucursalesUsuario = result.data;
             }
@@ -69,10 +72,22 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
-    $scope.getBancos = function(idBanco) {
-        filtrosRepository.getBancos(idBanco).then(function(result) {
+    $scope.getBancos = function(idEmpresa) {
+        $scope.activarBanco = false;
+        
+        filtrosRepository.getBancos(idEmpresa).then(function(result) {
             if (result.data.length > 0) {
                 $scope.bancoEmpresa = result.data;
+            }
+        });
+    }
+
+     $scope.getCuenta = function(idBanco,idEmpresa) {
+        $scope.activarCuenta = false;
+        
+        filtrosRepository.getCuenta(idBanco,idEmpresa).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.cuentaBancaria = result.data;
             }
         });
     }
@@ -95,6 +110,25 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
      var variablesInput = function() {
             $scope.activarBanco = true;
+    }
+
+    $scope.empresaVacia = function() {
+            $scope.filtros.idBanco = null;
+            $scope.filtros.idCuenta = null;
+            $scope.filtros.fechaInicioDeposito = null;
+            $scope.filtros.fechaFinDeposito = null;
+            $scope.filtros.idSucursal = null;
+            $scope.filtros.idDepartamento = null;
+            $scope.filtros.fechaInicioDeposito = null;
+            $scope.filtros.fechaFinDeposito = null;
+            $scope.activarCuenta = true;
+            $scope.activarFechaIniDeposito = true;
+            $scope.activarFechaFinDeposito = true;
+            $scope.activarDepartamento = true;
+            $scope.activarFechaIniCartera = true;
+            $scope.activarFechaFinCartera = true;
+            $scope.activarBuscarDepositos = true;
+            $scope.activarBuscarCartera = true;
         }
 
     $scope.gridCartera = {
