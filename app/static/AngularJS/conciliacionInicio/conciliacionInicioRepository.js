@@ -4,7 +4,7 @@ registrationModule.factory('conciliacionInicioRepository', function($http) {
     return {
         getReportePdf: function(jsondata) {
             return $http({
-                url: 'http://192.168.20.9:5000/api/layout/newpdf/',
+                url: conciliacionInicioURL + 'reportePdf/',
                 method: "POST",
                 data: {
                     values: jsondata
@@ -74,6 +74,18 @@ registrationModule.factory('conciliacionInicioRepository', function($http) {
                 method: "POST",
                 data: {
                     idPunteoAuxiliarBanco: idPunteo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        sendMail: function(filename) {
+            return $http({
+                url: conciliacionInicioURL + 'sendMail/',
+                method: "POST",
+                data: {
+                    nombreArchivo: filename
                 },
                 headers: {
                     'Content-Type': 'application/json'
