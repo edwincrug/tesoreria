@@ -21,9 +21,6 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.activarBuscarCartera = true;
 
 
-
-
-        
         //$scope.getDepositosBancosNoReferenciados(1,1,'10/11/2015','31/12/2015');
         //$scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
     }
@@ -85,6 +82,16 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
+     $scope.getCuenta = function(idBanco,idEmpresa) {
+        $scope.activarCuenta = false;
+        
+        filtrosRepository.getCuenta(idBanco,idEmpresa).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.cuentaBancaria = result.data;
+            }
+        });
+    }
+
     $scope.getCarteraVencida = function(cliente,empresa,sucursal,departamento,fechaIni,fechaFin){
       filtrosRepository.getCartera(cliente,empresa,sucursal,departamento,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
@@ -105,9 +112,13 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
             $scope.activarBanco = true;
     }
 
-    var empresaVacia = function() {
+    $scope.empresaVacia = function() {
             $scope.filtros.idBanco = null;
             $scope.filtros.idCuenta = null;
+            $scope.filtros.fechaInicioDeposito = null;
+            $scope.filtros.fechaFinDeposito = null;
+            $scope.filtros.idSucursal = null;
+            $scope.filtros.idDepartamento = null;
             $scope.filtros.fechaInicioDeposito = null;
             $scope.filtros.fechaFinDeposito = null;
             $scope.activarCuenta = true;
