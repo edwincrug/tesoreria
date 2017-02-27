@@ -188,6 +188,22 @@ registrationModule.factory('filtrosRepository', function($http) {
                 }
 
             });
+        },
+
+        //LQMA 27022017 add obtiene cuenta
+        getCuenta: function(idBanco,idEmpresa) {
+            return $http({
+                url: filtrosURL + 'cuenta/',
+                method: "GET",
+                params: {
+                    idBanco: idBanco,
+                    idEmpresa: idEmpresa
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
         }
 
     }
