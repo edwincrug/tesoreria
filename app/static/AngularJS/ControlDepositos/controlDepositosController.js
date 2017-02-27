@@ -108,9 +108,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
-     var variablesInput = function() {
-            $scope.activarBanco = true;
-    }
+     
 
     $scope.empresaVacia = function() {
             $scope.filtros.idBanco = null;
