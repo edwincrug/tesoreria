@@ -14,6 +14,7 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
         $scope.calendario();
 
         $scope.dato = "llllll";
+        $scope.dpiSelected = false;
 
         $scope.totalAboContaBanco = 0;
         $scope.totalAboBancoConta = 0;
@@ -34,6 +35,8 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
 
         $scope.obtieneCargosAbonos();
 
+        $scope.resumenDPI = [];
+
     }
 
     $scope.obtieneCargosAbonos = function() {
@@ -44,6 +47,30 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
         $scope.getCargoBancario(0, 0, 0, 1);
     }
 
+
+    //****************************************************************************************************
+    // INICIA las variables para el GRID BANCOS
+    //****************************************************************************************************
+    $scope.gridDepositosBancos = {
+        enableRowSelection: true,
+        enableSelectAll: false,
+        selectionRowHeaderWidth: 35,
+        rowHeight: 35,
+        showGridFooter: true,
+        enableFiltering: true
+    };
+
+    $scope.gridDepositosBancos.columnDefs = [
+        { name: 'idDepositoBanco', displayName: '', width: 20},
+        { name: 'BANCO', displayName: 'Banco', width: 150 },
+        { name: 'FECHA', displayName: 'Fecha', width: 100 },
+        { name: "SALDO_ACTUAL", displayName: "Importe", width: 200, cellTemplate: '<div class="text-right text-success text-semibold"><div class="text-right">{{row.entity.SALDO_ACTUAL | currency}}</div></div>'},
+        { name: 'TIPO', displayName: 'Tipo', width: 200 },
+        { name: 'POLIZA', displayName: 'Polioza', width: 200 },
+        { name: 'CONCEPTO', displayName: 'Concepto', width: 300 }
+    ];
+
+    $scope.gridDepositosBancos.multiSelect = false;
 
     $scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
@@ -56,6 +83,9 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
             format: "dd/mm/yyyy"
         });
     }
+    //*****************************************************************
+    //FIN
+    //*****************************************************************
 
     $scope.getAbonoContable = function(idEmpresa, fInicial, fFinal, opcion) {
         conciliacionRepository.getAbonoContable(idEmpresa, fInicial, fFinal, opcion).then(function(result) {
@@ -66,18 +96,16 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
 
                     for (var i = 0, len = result.data.length; i < len; i++)
                         $scope.totalAbonoContable = $scope.totalAbonoContable + result.data[i].SALDO_ACTUAL;
-                } else
-                    {
-                        /*console.log('entro a getAbonoContable')
-                        console.log(result.data);
-                        console.log(result.data[0].idTipoAuxiliar)*/
-                        $scope.resumenDPI = result.data;
-                        $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
-                    }
+                } else {
+                    /*console.log('entro a getAbonoContable')
+                    console.log(result.data);
+                    console.log(result.data[0].idTipoAuxiliar)*/
+                    $scope.resumenDPI = result.data;
+                    $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
+                }
 
-            }
-            else{
-                $scope.abonosContables = [];                
+            } else {
+                $scope.abonosContables = [];
                 $scope.totalAbonoContable = 0;
             }
         });
@@ -92,10 +120,20 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
 
                     for (var i = 0, len = result.data.length; i < len; i++)
                         $scope.totalAbonoBancario = $scope.totalAbonoBancario + result.data[i].SALDO_ACTUAL;
-                } else
-                {
-                    $scope.resumenDPI = result.data;
-                    $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
+
+                    $scope.gridDepositosBancos.data = result.data;
+
+                } else {
+                    
+                    //console.log('abono bancario')
+                    //console.log($scope.resumenDPI)
+                    /*$scope.resumenDPI = result.data;
+
+                    console.log($scope.resumenDPI)
+                    $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;*/
+                     //$scope.resumenDPI = $scope.gridApi.selection.selectRow();
+                    //console.log($scope.resumenDPI);                     
+
                 }
             }
         });
@@ -110,13 +148,11 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
 
                     for (var i = 0, len = result.data.length; i < len; i++)
                         $scope.totalCargoContable = $scope.totalCargoContable + result.data[i].SALDO_ACTUAL;
-                } else
-                {
+                } else {
                     $scope.resumenDPI = result.data;
                     $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
                 }
-            }
-            else{
+            } else {
                 $scope.cargosContables = [];
                 $scope.totalCargoContable = 0;
             }
@@ -132,8 +168,7 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
 
                     for (var i = 0, len = result.data.length; i < len; i++)
                         $scope.totalCargoBancario = $scope.totalCargoBancario + result.data[i].SALDO_ACTUAL;
-                } else
-                {
+                } else {
                     $scope.resumenDPI = result.data;
                     $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
                 }
@@ -143,16 +178,45 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
 
     $scope.getDepositosPendientes = function(idUsuario, idEstatus, idTipoAuxiliar) {
         //console.log(idTipoAuxiliar)        
-        conciliacionRepository.getDepositosPendientes(idUsuario, idEstatus, idTipoAuxiliar).then(function(result) {
+        conciliacionRepository.getDepositosPendientes(idUsuario, idEstatus, idTipoAuxiliar,$scope.resumenDPI.idDepositoBanco).then(function(result) {
             if (result.data.length > 0) {
 
                 /*console.log('entro a datos: ')
                 console.log(result.data)*/
-
+                $scope.dpiSelected = false;
+                $scope.resumenDPI = [];    
                 $scope.obtieneCargosAbonos();
             }
         });
     }
+
+    $scope.gridDepositosBancos.onRegisterApi = function(gridApi) {
+        //set gridApi on scope
+        $scope.gridApiBancos = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+            var msg = 'row selected ' + row.isSelected;
+
+            if (row.isSelected == true) {
+                $scope.dpiSelected = true;
+                //console.log(row.entity)
+                $scope.resumenDPI = row.entity;//{"BANCO":row.entity.BANCO,"FECHA":row.entity.FECHA,"SALDO_ACTUAL":row.entity.SALDO_ACTUAL,"POLIZA": row.entity.POLIZA,"CONCEPTO": row.entity.CONCEPTO };
+                //console.log('sss')
+                //console.log($scope.resumenDPI)                
+            } else if (row.isSelected == false) {
+                $scope.dpiSelected = false;
+            }
+            //console.log(msg, 'Estoy en rowSelectionChanged');
+
+        }); //Este me dice cuales van siendo seleccionadas
+
+        gridApi.selection.on.rowSelectionChangedBatch($scope, function(rows) {
+            var msg = 'rows changed ' + rows.length;
+            //console.log(msg, 'Estoy en rowSelectionChangedBatch', rows);
+            /*angular.forEach(rows, function(value, key) {
+                $scope.punteoBanco[key] = value.entity;
+            });*/
+        });
+    };
 
     //   $scope.setActiveClass = function(currentTab) {
     //      console.log(currentTab)

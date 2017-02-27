@@ -66,14 +66,15 @@ registrationModule.factory('conciliacionRepository', function($http) {
 
             });
         },
-        getDepositosPendientes: function(idUsuario, idEstatus, idTipoAuxiliar) {
+        getDepositosPendientes: function(idUsuario, idEstatus, idTipoAuxiliar,idDepositoBanco) {
             return $http({
                 url: conciliacionURL + 'depositosPendientes/',
                 method: "GET",
                 params: {                    
                     idUsuario: idUsuario,                    
                     idEstatus: idEstatus,
-                    idTipoAuxiliar: idTipoAuxiliar
+                    idTipoAuxiliar: idTipoAuxiliar,
+                    idDepositoBanco: idDepositoBanco
                 },
                 headers: {
                     'Content-Type': 'application/json'
