@@ -8,7 +8,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.abonoBanco = 0;
     $scope.cargoBanco = 0;
     $scope.auxiliarPadre = '';
-    $scope.bancoPadre = '';
+    //$scope.bancoPadre = '';
     $scope.bancoDetalle = '';
     $scope.auxiliarDetalle = '';
     i18nService.setCurrentLang('es'); //Para seleccionar el idioma
@@ -409,7 +409,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                 $scope.ruta = fileName.data;
                 //console.log(fileName.data);
                 //$("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
-                $("<object id='objReportePdf' class='filesInvoce' data='http://localhost:5200/api/conciliacionInicio/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
+                $("<object id='objReportePdf' class='filesInvoce' data='http://localhost:5200/api/conciliacionDetalleRegistro/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
                 $('#loading').modal('hide');
                 $('#reproteModalPdf').modal('show');
             }, 5000);
@@ -691,6 +691,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA Se genera modal de alerta para que el usuario acepte o rechace generar el punteo definitivo
     //****************************************************************************************************
     $scope.generaAlertaPunteo = function() {
+        $scope.envioMail();
         if ($scope.bancoPadre.length > 0 || $scope.auxiliarPadre.length > 0) {
             $('#alertaPunteo').modal('show');
         } else {

@@ -1,4 +1,4 @@
-var conciliacionDetalleRegistroURL = global_settings.urlCORS + 'api/conciliacionDetalleResgitro/';
+var conciliacionDetalleRegistroURL = global_settings.urlCORS + 'api/conciliacionDetalleRegistro/';
 
 registrationModule.factory('conciliacionDetalleRegistroRepository', function($http) {
     return {
