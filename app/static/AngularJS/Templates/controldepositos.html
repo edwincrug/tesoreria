@@ -22,13 +22,13 @@
             </div>
             <div class="form-group col-md-3">
                 <label class="form-label">Banco:</label>
-                <select class="form-control" ng-model="filtros.idcuenta" ng-options="cuenta.IdCuenta as cuenta.Cuenta for cuenta in cuentaBancaria" name="txtBanco" ng-change="getCuenta(filtros.idBanco,filtros.idEmpresa)" ng-disabled="activarBanco">
+                <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.IdBanco as banco.Nombre for banco in bancoEmpresa" name="txtBanco" ng-change="getCuentas(filtros.idBanco,filtros.idEmpresa)" ng-disabled="activarBanco">
                     <option value="">Seleccioné Banco</option>
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label class="form-label">Cuenta:</label>
-                <select class="form-control" ng-model="filtros.idCuenta" ng-options="banco.idBanco as banco.Nombre for banco in bancoEmpresa" name="txtBanco" ng-change="" ng-disabled="activarCuenta">
+                <select class="form-control" ng-model="filtros.idCuenta" ng-options="cuenta.IdCuenta as cuenta.Cuenta for cuenta in cuentaBancaria" name="txtCuenta" ng-change="" ng-disabled="activarCuenta">
                     <option value="">Seleccioné Cuenta</option>
                 </select>
             </div>
@@ -56,13 +56,13 @@
             </div>
             <div class="form-group col-md-5">
                 <label class="form-label">Sucursal:</label>
-                <select class="form-control" ng-model="filtros.idSucursal" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtTipoContrato" ng-change="" ng-disabled="activarSucursal">
+                <select class="form-control" ng-model="filtros.idSucursal" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtSucursal" ng-change="" ng-disabled="activarSucursal">
                     <option value="">Seleccioné Sucursal</option>
                 </select>
             </div>
             <div class="form-group col-md-5">
                 <label class="form-label">Departamento:</label>
-                <select class="form-control" ng-model="filtros.idDepartamento" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtTipoContrato" ng-change="" ng-disabled="activarDepartamento">
+                <select class="form-control" ng-model="filtros.idDepartamento" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtdepartamento" ng-change="" ng-disabled="activarDepartamento">
                     <option value="">Seleccioné Departamento</option>
                 </select>
             </div>
@@ -70,14 +70,14 @@
                 <label for="fInicio">Fecha Inicio:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniCartera">
+                    <input type="text" class="form-control" id="fInicioCartera" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniCartera">
                 </div>
             </div>
             <div class="form-group col-md-3" id="calendar">
                 <label for="fInicio">Fecha Fin:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinCartera">
+                    <input type="text" class="form-control" id="ffincartera" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinCartera">
                 </div>
             </div>
             <div class="form-group col-md-3" style="margin-top: 23px">
