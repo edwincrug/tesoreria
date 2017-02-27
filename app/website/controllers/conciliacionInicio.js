@@ -25,4 +25,22 @@ var conciliacionInicio = function(conf) {
 };
 
 
+//LQMA 27022017 add obtiene totales de abonos y cargos no relacionados
+conciliacionInicio.prototype.get_totalAbonoCargo = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
+                  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },
+                  { name: 'noCuenta', value: req.query.noCuenta, type: self.model.types.STRING }];
+
+    this.model.query('SEL_TOTAL_ABONOCARGO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
 module.exports = conciliacionInicio;
