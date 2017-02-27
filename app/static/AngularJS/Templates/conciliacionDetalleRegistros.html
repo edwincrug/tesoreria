@@ -113,10 +113,10 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="auxiliar in auxiliarPadre">
-                                <td>{{auxiliar.fecha}}</td>
-                                <td>{{auxiliar.tipo}}</td>
-                                <td>{{auxiliar.poliza}}</td>
-                                <td>{{auxiliar.concepto}}</td>
+                                <td>{{auxiliar.polFecha}}</td>
+                                <td>{{auxiliar.polTipo}}</td>
+                                <td>{{auxiliar.polReferencia2}}</td>
+                                <td>{{auxiliar.movConcepto}}</td>
                                 <td class="text-right" ng-class="{'text-success text-semibold' : auxiliar.cargo > 0}">{{auxiliar.cargo | currency}}</td>
                                 <td class="text-right" ng-class="{'text-success text-semibold' : auxiliar.abono > 0}">{{auxiliar.abono | currency}}</td>
                                 <td>
@@ -192,10 +192,10 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="auxiliarD in auxiliarDetalle">
-                            <td>{{auxiliarD.fecha}}</td>
-                            <td>{{auxiliarD.tipo}}</td>
-                            <td>{{auxiliarD.poliza}}</td>
-                            <td>{{auxiliarD.concepto}}</td>
+                            <td>{{auxiliarD.polFecha}}</td>
+                            <td>{{auxiliarD.polTipo}}</td>
+                            <td>{{auxiliarD.polReferencia2}}</td>
+                            <td>{{auxiliarD.movConcepto}}</td>
                             <td class="text-right" ng-class="{'text-success text-semibold' : auxiliarD.cargo > 0}">{{auxiliarD.cargo | currency}}</td>
                             <td class="text-right" ng-class="{'text-success text-semibold' : auxiliarD.abono > 0}">{{auxiliarD.abono | currency}}</td>
                         </tr>
