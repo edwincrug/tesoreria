@@ -239,7 +239,7 @@ Filtros.prototype.get_cuenta = function(req, res, next) {
     var self = this;
 
     var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
-                  { name: 'idEmpresas', value: req.query.idEmpresa, type: self.model.types.INT }];
+                  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
 
     this.model.query('SEL_CUENTA_BANCARIA_SP', params, function(error, result) {
         self.view.expositor(res, {
