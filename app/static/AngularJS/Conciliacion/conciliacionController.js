@@ -61,7 +61,7 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
     };
 
     $scope.gridDepositosBancos.columnDefs = [
-        { name: 'idDepositoBanco', displayName: '', width: 20},
+        { name: 'idDepositoBanco', displayName: '', width: 20, visible: false},
         { name: 'BANCO', displayName: 'Banco', width: 150 },
         { name: 'FECHA', displayName: 'Fecha', width: 100 },
         { name: "SALDO_ACTUAL", displayName: "Importe", width: 200, cellTemplate: '<div class="text-right text-success text-semibold"><div class="text-right">{{row.entity.SALDO_ACTUAL | currency}}</div></div>'},
