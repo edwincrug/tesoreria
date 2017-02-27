@@ -82,7 +82,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
-     $scope.getCuenta = function(idBanco,idEmpresa) {
+     $scope.getCuentas = function(idBanco,idEmpresa) {
+        
         $scope.activarCuenta = false;
         
         filtrosRepository.getCuenta(idBanco,idEmpresa).then(function(result) {
@@ -111,11 +112,11 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
      
 
     $scope.empresaVacia = function() {
-            $scope.filtros.idBanco = null;
+            
             $scope.filtros.idCuenta = null;
             $scope.filtros.fechaInicioDeposito = null;
             $scope.filtros.fechaFinDeposito = null;
-            $scope.filtros.idSucursal = null;
+            
             $scope.filtros.idDepartamento = null;
             $scope.filtros.fechaInicioDeposito = null;
             $scope.filtros.fechaFinDeposito = null;
