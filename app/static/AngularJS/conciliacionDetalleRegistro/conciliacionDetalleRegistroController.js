@@ -1,4 +1,4 @@
-registrationModule.controller('conciliacionDetalleRegistroController', function($scope, $rootScope, $location, $timeout, $log, localStorageService, filtrosRepository, conciliacionDetalleRegistroRepository, alertFactory, uiGridConstants, i18nService, uiGridGroupingConstants) {
+registrationModule.controller('conciliacionDetalleRegistroController', function($scope, $rootScope, $location, $timeout, $log, localStorageService, filtrosRepository, conciliacionDetalleRegistroRepository, alertFactory, uiGridConstants, i18nService, uiGridGroupingConstants, conciliacionRepository) {
 
     // ****************** Se guarda la información del usuario en variable userData
     $rootScope.userData = localStorageService.get('userData');
@@ -12,6 +12,9 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.bancoDetalle = '';
     $scope.auxiliarDetalle = '';
     i18nService.setCurrentLang('es'); //Para seleccionar el idioma
+    $scope.idEmpresa = 4;
+    $scope.cuenta = '1100-0020-0001-0001';
+    $scope.idBanco = 1;
     //**********************Mientras estan los SP se genera esta información para poder 
     //**********************probar y mostrar el funcionamiento del reporte 
     $scope.infReporte = '';
@@ -299,10 +302,11 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         $scope.getCuentaBanco(1, 1)
         $scope.getClaveBanco(1)
         $scope.getCuentacontable(1)
-        $scope.getDepositosBancos(1, 1);
-        $scope.getAuxiliarContable(4, '1100-0020-0001-0001', 1);
-        $scope.getAuxiliarPunteo(4);
-        $scope.getBancoPunteo(4);
+        $scope.getDepositosBancos($scope.idBanco, 1);
+        $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
+        $scope.getAuxiliarPunteo($scope.idEmpresa);
+        $scope.getBancoPunteo($scope.idEmpresa);
+        console.log($scope.infReporte, 'Soy la primera información de el informe del reporte ')
 
         // if($rootScope.userData == null){
         //  location.href = '/';
@@ -584,10 +588,10 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     //****************************************************************************************************
     $scope.getGridTablas = function() {
         $scope.limpiaVariables();
-        $scope.getDepositosBancos(1, 1);
-        $scope.getAuxiliarContable(4, '1100-0020-0001-0001', 1);
-        $scope.getAuxiliarPunteo(4);
-        $scope.getBancoPunteo(4);
+        $scope.getDepositosBancos($scope.idBanco, 1);
+        $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
+        $scope.getAuxiliarPunteo($scope.idEmpresa);
+        $scope.getBancoPunteo($scope.idEmpresa);
     };
     //****************************************************************************************************
     // INICIA Obtengo los padres del Auxiliar contable punteado
@@ -691,7 +695,8 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA Se genera modal de alerta para que el usuario acepte o rechace generar el punteo definitivo
     //****************************************************************************************************
     $scope.generaAlertaPunteo = function() {
-        $scope.envioMail();
+        //$scope.envioMail();
+
         if ($scope.bancoPadre.length > 0 || $scope.auxiliarPadre.length > 0) {
             $('#alertaPunteo').modal('show');
         } else {
@@ -702,6 +707,54 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA Se guarda el punteo que ya no podra ser modificado
     //****************************************************************************************************
     $scope.generaPunteo = function() {
-
+         $('#alertaPunteo').modal('hide');
+        $scope.generaInfoReport();
+    };
+    //****************************************************************************************************
+    // INICIA Se genera el json para el reporte 
+    //****************************************************************************************************
+    $scope.generaInfoReport = function() {
+        conciliacionRepository.getAbonoContable('', '', '', 1).then(function(result) {
+            console.log(result, 'soy el Abono Contable');
+            $scope.abonoContable = result.data;
+            conciliacionRepository.getCargoContable('', '', '', 1).then(function(result) {
+                console.log(result, 'Soy el cargo contable');
+                $scope.cargoContable = result.data;
+                conciliacionRepository.getCargoBancario('', '', '', 1).then(function(result) {
+                    console.log(result, 'Soy el cargo bancario');
+                    $scope.cargoBancario = result.data;
+                    conciliacionRepository.getAbonoBancario('', '', '', 1).then(function(result) {
+                        console.log(result, 'Soy el abono bancario');
+                        $scope.abonoBancario = result.data;
+                        $scope.infReporte = {
+                            "titulo": "CONCILIACIÓN BANCARIA",
+                            "titulo2": "BANCOS",
+                            "titulo3": "FA04",
+                            "empresa": "ANDRADE UNIVERSIDAD, S.A DE C.V.",
+                            "fechaElaboracion": "31/12/2016",
+                            "conciliacionBancaria": "BANCOMER",
+                            "chequera": "31/12/2016",
+                            "bancoCuenta": "195334667",
+                            "clabe": "01218000 195334667",
+                            "cuentaContable": "1100-0020-0001-0001",
+                            "estadoCuenta": "407480.53",
+                            "aCB": "35525.00",
+                            "aBC": "-",
+                            "cBC": "-",
+                            "cCB": "64009.63",
+                            "saldoConciliacion": "435965.15",
+                            "saldoContabilidad": "435965.15",
+                            "diferencia": "0.00",
+                            "menosBanco": $scope.abonoBancario,
+                            "masContabilidad": $scope.cargoContable,
+                            "menosContabilidad": $scope.abonoContable,
+                            "masBanco": $scope.cargoBancario
+                        }
+                        console.log($scope.infReporte, 'Es el información del reporte')
+                        $scope.generarReporte();
+                    })
+                });
+            });
+        })
     };
 });

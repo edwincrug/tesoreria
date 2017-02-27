@@ -157,8 +157,7 @@ conciliacionDetalleRegistro.prototype.get_viewpdf = function(req, res, next) {
 };
 conciliacionDetalleRegistro.prototype.post_sendMail = function(req, res, next) {
 
-    //req.body.nombreArchivo
-    console.log(req.body.nombreArchivo, 'Soy el nombre del archivo') //Objeto que almacena la respuesta
+    //req.body.nombreArchivo    
     var  nombreArchivo = req.body.nombreArchivo;
     var object = {};   //Objeto que envía los parámetros
     var params = [];   //Referencia a la clase para callback
@@ -182,36 +181,30 @@ conciliacionDetalleRegistro.prototype.post_sendMail = function(req, res, next) {
     var mailOptions = {
         from: '<grupoandrade.reportes@grupoandrade.com.mx>', // sender address 
         to: 'lgordillo@bism.com.mx', // list of receivers 
-        subject: 'Recibos Timbrados GA', // Subject line 
-        text: 'Se envían adjuntos los archivos timbrados ', // plaintext body 
-        html: '<b>Se envían adjuntos los archivos timbrados </b>' // html body 
-            // attachments: [{ // file on disk as an attachment
-            //     filename: req.body.nombreArchivo + '.pdf',
-            //     path: "./pdf/" + req.body.nombreArchivo + ".pdf" // stream this file
-            // }]
+        subject: 'Conciliación Bancaria', // Subject line 
+        text: 'Se envían adjuntos la Conciliación Bancaria', // plaintext body 
+        html: '<b>Se envían adjuntos la Conciliación Bancaria </b>', // html body 
+        attachments: [{ // file on disk as an attachment
+            filename: req.body.nombreArchivo + '.pdf',
+            path: 'C:\\Tesoreria\\tesoreria\\pdf\\' + nombreArchivo + '.pdf' // stream this file
+        }]
     };
-    console.log(mailOptions, 'Es el json mailOptions')
-    transporter.sendMail(mailOptions, function(error, info) {
+    setTimeout(function() {
+        transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                res.send(500);
+                console.log(error);
+            } else {
+                res.send(200);
+                fs.stat('C:\\Tesoreria\\tesoreria\\pdf\\' + nombreArchivo + '.pdf', function(err, stats) {
+                    if (err) {
+                        return console.error(err);
+                    }
+                });
+            }
+        });
+    }, 3000)
 
-        if (error) {
-            res.send(500);
-            console.log(error, 'Soy el ERROR');
-        } else {
-            res.send(200);
-            console.log('Message sent: ' + info.response);
-            console.log(nombreArchivo,'Soy el nombre del archivo')
-            fs.stat('C:\\Tesoreria\\tesoreria\\pdf\\' + nombreArchivo+ '.pdf', function(err, stats) {
-                console.log(stats, 'stats')
-                if (err) {
-                    return console.error(err, 'Soy el segundo ERROR');
-                }
-
-
-            });
-        }
-
-
-    });
 
     transporter.close;
     object.error = null;            
