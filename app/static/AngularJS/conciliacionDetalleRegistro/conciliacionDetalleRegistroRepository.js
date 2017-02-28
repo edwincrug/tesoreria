@@ -91,6 +91,21 @@ registrationModule.factory('conciliacionDetalleRegistroRepository', function($ht
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        generaPunteo: function(idempresa, idbanco, cuentacontable, cuentabancaria) {
+            return $http({
+                url: conciliacionDetalleRegistroURL + 'generaPunteo/',
+                method: "POST",
+                data: {
+                    idEmpresa: idempresa,
+                    idBanco: idbanco,
+                    cuentaContable: cuentacontable,
+                    cuentaBancaria: cuentabancaria
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

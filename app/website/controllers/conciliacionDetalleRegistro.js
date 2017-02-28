@@ -203,7 +203,7 @@ conciliacionDetalleRegistro.prototype.post_sendMail = function(req, res, next) {
                 });
             }
         });
-    }, 3000)
+    }, 3500)
 
 
     transporter.close;
@@ -211,6 +211,23 @@ conciliacionDetalleRegistro.prototype.post_sendMail = function(req, res, next) {
     object.result = 1; 
     console.log(object.result)
     req.body = []; 
-}
+};
+conciliacionDetalleRegistro.prototype.post_generaPunteo = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.INT },
+        { name: 'idBanco', value: req.body.idBanco, type: self.model.types.INT },
+        { name: 'cuentaContable', value: req.body.cuentaContable, type: self.model.types.STRING },
+        { name: 'cuentaBancaria', value: req.body.cuentaBancaria, type: self.model.types.STRING }
+    ];
+
+    this.model.query('UPD_GUARDAR_PUNTEO_FINAL_MES_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 
 module.exports = conciliacionDetalleRegistro;
