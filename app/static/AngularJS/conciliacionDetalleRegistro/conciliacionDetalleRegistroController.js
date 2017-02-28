@@ -128,6 +128,8 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                 if (result.data.length > 0) {
                     $scope.auxiliarContable = result.data;
                     $scope.gridAuxiliarContable.data = result.data;
+                } else {
+                    $scope.gridAuxiliarContable.data = '';
                 }
             });
         } else if (idestatus == 2) { //consigo los datos el Auxiliar Contable Punteado
@@ -138,12 +140,14 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
             });
         }
     };
-    $scope.getDepositosBancos = function(idBanco, idestatus,cuentaBancaria) {
+    $scope.getDepositosBancos = function(idBanco, idestatus, cuentaBancaria) {
         if (idestatus == 1) { //Consigo los datos del Banco sin Puntear
             filtrosRepository.getDepositos(idBanco, idestatus, cuentaBancaria).then(function(result) {
                 if (result.data.length > 0) {
                     $scope.depositosBancos = result.data;
                     $scope.gridDepositosBancos.data = result.data;
+                } else {
+                    $scope.gridDepositosBancos.data = '';
                 }
             });
         } else if (idestatus == 2) { //Consigo los datos del banco Punteado
@@ -324,7 +328,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA funcion que consigue los valores para los grids y las tablas
     //****************************************************************************************************
     $scope.getGridTablas = function() {
-        $scope.limpiaVariables();
+        //$scope.limpiaVariables();
         $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
         $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
         $scope.getAuxiliarPunteo($scope.idEmpresa);
