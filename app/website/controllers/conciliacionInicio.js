@@ -26,19 +26,44 @@ var conciliacionInicio = function(conf) {
 
 
 //LQMA 27022017 add obtiene totales de abonos y cargos no relacionados
-conciliacionInicio.prototype.get_totalAbonoCargo = function(req, res, next) {
+conciliacionInicio.prototype.post_totalAbonoCargo = function(req, res, next) {
 
-    console.log('entro a get_totalAbonoCargo')
+    console.log('entro a post_totalAbonoCargo')
+    console.log(req.body)
+
+    var self = this;
+
+    var params = [{ name: 'idBanco', value: req.body.idBanco, type: self.model.types.INT },
+                  { name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.STRING },
+                  { name: 'noCuenta', value: req.body.noCuenta, type: self.model.types.STRING },
+                  { name: 'cuentaContable', value: req.body.cuentaContable, type: self.model.types.STRING},
+                  { name: 'opcion', value: req.body.opcion, type: self.model.types.INT}];
+
+    this.model.query('SEL_TOTAL_ABONOCARGO_SP', params, function(error, result) {
+
+        console.log('error')
+            console.log(error)
+        console.log(result)    
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+//LQMA 27022017 add obtiene totales de abonos y cargos no relacionados
+conciliacionInicio.prototype.get_gerenteContador = function(req, res, next) {
+
+    console.log('entro a get_gerenteContador')
     console.log(req.query)
 
     var self = this;
 
-    var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
-                  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },
-                  { name: 'noCuenta', value: req.query.noCuenta, type: self.model.types.STRING },
-                  { name: 'cuentaContable', value: req.query.cuentaContable, type: self.model.types.STRING }];
+    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }];
 
-    this.model.query('SEL_TOTAL_ABONOCARGO_SP', params, function(error, result) {
+    this.model.query('SEL_GERENTE_CONTADOR_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

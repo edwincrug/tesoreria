@@ -20,7 +20,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         //  alertFactory.success('Bienvenido '+ $rootScope.userData.nombreUsuario)
         // }
         $rootScope.mostrarMenu = 1;
-        $scope.paramBusqueda = [];
+        $scope.paramBusqueda = [];        
     }
 
     $scope.getEmpresa = function(idUsuario) {
@@ -98,7 +98,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         console.log('$scope.cuentaActual')
         console.log($scope.cuentaActual)
 
-        conciliacionInicioRepository.getTotalAbonoCargo($scope.bancoEmpresa.IdBanco, $scope.bancoEmpresa.IdEmpresa, $scope.bancoEmpresa.Cuenta, $scope.bancoEmpresa.CuentaContable).then(function(result) {
+        conciliacionInicioRepository.getTotalAbonoCargo($scope.bancoEmpresa.IdBanco, $scope.bancoEmpresa.IdEmpresa, $scope.bancoEmpresa.Cuenta, $scope.bancoEmpresa.CuentaContable,2).then(function(result) {
             if (result.data.length > 0) {
                 //console.log('entra')                
                 $scope.totalesAbonosCargos = result.data;
@@ -118,12 +118,20 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
             }
         });
 
-        setTimeout(function() {
+        /*setTimeout(function() {
             $scope.fresh = JSON.parse(localStorage.getItem('paramBusqueda'))
 
             console.log($scope.fresh)
             //console.log(JSON.parse($scope.fresh))
-        }, 1000);
+        }, 1000);*/
+        conciliacionInicioRepository.getGerenteContador($rootScope.userData.idUsuario).then(function(result) {
+            if (result.data.length > 0) {
+                //console.log('entra')                
+                $scope.contadorGerente = result.data;
+                console.log($scope.contadorGerente)
+            }
+        });
+
     }
 
     /*$scope.setCuenta = function() {
