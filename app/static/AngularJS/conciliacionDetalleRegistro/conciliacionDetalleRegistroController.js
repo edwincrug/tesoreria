@@ -76,6 +76,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         $scope.getBancoPunteo($scope.idEmpresa);
         console.log($scope.infReporte, 'Soy la primera información de el informe del reporte ')
         $rootScope.mostrarMenu = 1;
+        console.log($rootScope.userData.nombreUsuario, 'Soy el usuario yoju');
     };
     $scope.getEmpresa = function(idUsuario) {
         filtrosRepository.getEmpresas(idUsuario).then(
@@ -157,9 +158,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         conciliacionDetalleRegistroRepository.getReportePdf($scope.jsonData).then(function(fileName) {
             setTimeout(function() {
                 $("#objReportePdf").remove();
-                //window.open("http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + fileName.data);
                 $scope.ruta = fileName.data;
-                //console.log(fileName.data);
                 //$("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
                 $("<object id='objReportePdf' class='filesInvoce' data='http://localhost:5200/api/conciliacionDetalleRegistro/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
                 $('#loading').modal('hide');
@@ -176,20 +175,6 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
             conciliacionDetalleRegistroRepository.sendMail(fileName.data).then(function(result) {
                 console.log(result, 'Estoy en el envio de mail')
             });
-        });
-    };
-    $scope.setTablePaging = function(idTable) {
-        $('#' + idTable).DataTable({
-            dom: '<"html5buttons"B>lTfgitp',
-            buttons: [{
-                // customize: function(win) {
-                //     $(win.document.body).addClass('white-bg');
-                //     $(win.document.body).css('font-size', '10px');
-                //     $(win.document.body).find('table')
-                //         .addClass('compact')
-                //         .css('font-size', 'inherit');
-                // }
-            }]
         });
     };
     //****************************************************************************************************
@@ -451,9 +436,10 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA Se guarda el punteo que ya no podra ser modificado
     //****************************************************************************************************
     $scope.generaPunteo = function() {
-        conciliacionDetalleRegistroRepository.generaPunteo(4,1,'1100-0020-0001-0001','000000000190701289').then(function(result){
-            console.log(result,'Si hizo el punteo jejeje');
+        conciliacionDetalleRegistroRepository.generaPunteo(4, 1, '1100-0020-0001-0001', '000000000190701289').then(function(result) {
             $('#alertaPunteo').modal('hide');
+            $scope.getGridTablas();
+            $scope.generaInfoReport(2);
         });
     };
     //****************************************************************************************************
@@ -500,7 +486,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                                 "masBanco": $scope.cargoBancario,
                                 "firmas": [{
                                     "titulo": "ELABORÓ",
-                                    "nombre": "CARLA HERNÁNDEZ RODRÍGUEZ",
+                                    "nombre": $rootScope.userData.nombreUsuario,
                                     "fecha": ""
                                 }, {
                                     "titulo": "GERENTE ADMINISTRATIVO",
