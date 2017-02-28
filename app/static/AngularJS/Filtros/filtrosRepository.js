@@ -141,13 +141,14 @@ registrationModule.factory('filtrosRepository', function($http) {
 
             });
         },
-        getDepositos: function(idBanco, idestatus) {
+        getDepositos: function(idBanco, idestatus, cuentaBancaria) {
             return $http({
                 url: filtrosURL + 'depositos/',
                 method: "GET",
                 params: {
                     idBanco: idBanco,
-                    idEstatus: idestatus
+                    idEstatus: idestatus,
+                    cuentaBancaria: cuentaBancaria
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -156,7 +157,7 @@ registrationModule.factory('filtrosRepository', function($http) {
             });
         },
 
-         getDepositosNoReferenciados: function(idBanco, idestatus) {
+        getDepositosNoReferenciados: function(idBanco, idestatus) {
             return $http({
                 url: filtrosURL + 'depositosNoReferenciados/',
                 method: "GET",
@@ -191,7 +192,7 @@ registrationModule.factory('filtrosRepository', function($http) {
         },
 
         //LQMA 27022017 add obtiene cuenta
-        getCuenta: function(idBanco,idEmpresa) {
+        getCuenta: function(idBanco, idEmpresa) {
             return $http({
                 url: filtrosURL + 'cuenta/',
                 method: "GET",
