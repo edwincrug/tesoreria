@@ -63,12 +63,6 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA 
     //****************************************************************************************************
     $scope.init = function() {
-        $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
-        $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
-        $scope.getAuxiliarPunteo($scope.idEmpresa, $scope.cuenta);
-        $scope.getBancoPunteo($scope.idEmpresa, $scope.cuentaBanco);
-        $rootScope.mostrarMenu = 1;
-        console.log($scope.busqueda);
         $scope.idEmpresa = $scope.busqueda.idEmpresa;
         $scope.cuenta = $scope.busqueda.cuentaContable;
         $scope.idBanco = $scope.busqueda.idBanco;
@@ -77,6 +71,12 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         $scope.nombreBanco = $scope.busqueda.Banco;
         $scope.nombreGerente = $scope.busqueda.gerente;
         $scope.nombreContador = $scope.busqueda.contador;
+        $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
+        $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
+        $scope.getAuxiliarPunteo($scope.idEmpresa, $scope.cuenta);
+        $scope.getBancoPunteo($scope.idEmpresa, $scope.cuentaBanco);
+        $rootScope.mostrarMenu = 1;
+        console.log($scope.busqueda);
     };
     $scope.getAuxiliarContable = function(idEmpresa, numero_cuenta, idestatus) {
         if (idestatus == 1) { //Consigo los datos del Auxiliar Contable sin puntear
