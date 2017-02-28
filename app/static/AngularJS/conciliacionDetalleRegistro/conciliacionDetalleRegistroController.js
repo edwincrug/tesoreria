@@ -466,7 +466,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                     conciliacionRepository.getAbonoBancario('', '', '', 1).then(function(result) {
                         console.log(result, 'Soy el abono bancario');
                         $scope.abonoBancario = result.data;
-                        conciliacionInicioRepository.getTotalAbonoCargo(null, '', '').then(function(result) {
+                        conciliacionInicioRepository.getTotalAbonoCargo(null, '', '','',2).then(function(result) {
                             console.log(result.data, 'Soy el total de todo esto');
                             var date = new Date();
                             $scope.fecha = date.getDate() + "/" + (date.getFullMonth() + 1) + "/" + date.getFullYear();
