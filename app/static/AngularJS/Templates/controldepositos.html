@@ -114,7 +114,7 @@
                 <p class="text-2x mar-no text-semibold">{{carteraTotal | currency}}</p>
                 <p class="text-muted mar-no">Cartera</p>
             </td>
-            <td width="20%"><a class="btn btn-primary pull-right" ng-click="guardarGrid()"><i class="ti-control-shuffle">  </i>Aplicar Referencias</a></td>
+            <td width="20%"><a class="btn btn-primary pull-right" ng-click="guardarGrid()" ng-show="userData.idPerfil>2"><i class="ti-control-shuffle">  </i>Aplicar Referencias</a></td>
             <td width="20%" class="text-right" ng-class="{'text-success text-semibold' : auxiliar.cargo > 0}"><a class="btn btn-primary pull-right" ng-click="guardarGrid()" ng-disabled="carteraTotal > depositoTotal"><i class="ti-control-shuffle">  </i>Crear Referencias Temporal</a></td>
         </tr>
     </thead>
