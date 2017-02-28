@@ -29,7 +29,11 @@ var conciliacionInicio = function(conf) {
 conciliacionInicio.prototype.post_totalAbonoCargo = function(req, res, next) {
 
     console.log('entro a post_totalAbonoCargo')
-    console.log(req.body)
+    console.log('idBanco',req.body.idBanco)
+    console.log('idEmpresa',req.body.idEmpresa)
+    console.log('noCuenta',req.body.noCuenta)
+    console.log('cuentaContable',req.body.cuentaContable)
+    console.log('opcion',req.body.opcion)
 
     var self = this;
 

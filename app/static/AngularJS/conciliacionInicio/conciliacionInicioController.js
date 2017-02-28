@@ -101,8 +101,9 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
 
         console.log('$scope.cuentaActual')
         console.log($scope.cuentaActual)
+        
 
-        conciliacionInicioRepository.getTotalAbonoCargo($scope.bancoEmpresa.IdBanco, $scope.bancoEmpresa.IdEmpresa, $scope.bancoEmpresa.Cuenta, $scope.bancoEmpresa.CuentaContable, 2).then(function(result) {
+        conciliacionInicioRepository.getTotalAbonoCargo($scope.cuentaActual.IdBanco, $scope.cuentaActual.IdEmpresa, $scope.cuentaActual.Cuenta, $scope.cuentaActual.CuentaContable, 2).then(function(result) {
             if (result.data.length > 0) {
                 //console.log('entra')                
                 $scope.totalesAbonosCargos = result.data;
