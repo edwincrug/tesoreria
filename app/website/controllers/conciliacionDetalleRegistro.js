@@ -207,7 +207,7 @@ conciliacionDetalleRegistro.prototype.post_sendMail = function(req, res, next) {
                 });
             }
         });
-    }, 3500)
+    }, 4000)
 
 
     transporter.close;

@@ -122,7 +122,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                 $("#objReportePdf").remove();
                 $scope.ruta = fileName.data;
                 //$("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
-                $("<object id='objReportePdf' class='filesInvoce' data='http://localhost:5200/api/conciliacionDetalleRegistro/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
+                $("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5200/api/conciliacionDetalleRegistro/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
                 $('#loading').modal('hide');
                 $('#reproteModalPdf').modal('show');
             }, 5000);
