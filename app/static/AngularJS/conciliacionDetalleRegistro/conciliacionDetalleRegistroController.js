@@ -12,19 +12,13 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.bancoPadre = '';
     $scope.bancoDetalle = '';
     $scope.auxiliarDetalle = '';
-    i18nService.setCurrentLang('es'); //Para seleccionar el idioma
-    $scope.idEmpresa = $scope.busqueda.idEmpresa;
-    $scope.cuenta = $scope.busqueda.cuentaContable;
-    $scope.idBanco = $scope.busqueda.idBanco;
+    i18nService.setCurrentLang('es'); //Para seleccionar el idioma  
     $scope.infReporte = '';
     $scope.jsonData = '';
     $scope.ruta = '';
-    $scope.nombreEmpresa = $scope.busqueda.Empresa;
     $scope.clabe = '';
-    $scope.cuentaBanco = $scope.busqueda.cuenta;
-    $scope.nombreBanco = $scope.busqueda.Banco;
-    $scope.nombreGerente = $scope.busqueda.gerente;
-    $scope.nombreContador = $scope.busqueda.contador;
+
+
     //****************************************************************************************************
     // INICIA las variables para el GRID AUXILIAR CONTABLE
     //****************************************************************************************************
@@ -75,6 +69,14 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         $scope.getBancoPunteo($scope.idEmpresa, $scope.cuentaBanco);
         $rootScope.mostrarMenu = 1;
         console.log($scope.busqueda);
+        $scope.idEmpresa = $scope.busqueda.idEmpresa;
+        $scope.cuenta = $scope.busqueda.cuentaContable;
+        $scope.idBanco = $scope.busqueda.idBanco;
+        $scope.nombreEmpresa = $scope.busqueda.Empresa;
+        $scope.cuentaBanco = $scope.busqueda.cuenta;
+        $scope.nombreBanco = $scope.busqueda.Banco;
+        $scope.nombreGerente = $scope.busqueda.gerente;
+        $scope.nombreContador = $scope.busqueda.contador;
     };
     $scope.getAuxiliarContable = function(idEmpresa, numero_cuenta, idestatus) {
         if (idestatus == 1) { //Consigo los datos del Auxiliar Contable sin puntear
