@@ -28,11 +28,16 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
             function(result) {
                 if (result.data.length > 0) {
                     $scope.empresaUsuario = result.data;
+
+                    //console.log($scope.empresaUsuario)
+
                 }
             });
     }
 
     $scope.getBancos = function(idBanco) {
+
+
         filtrosRepository.getBancos(idBanco).then(function(result) {
             if (result.data.length > 0) {
                 $scope.bancoEmpresa = result.data;
@@ -44,6 +49,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         });
     }
 
+    /*
     $scope.getCuentaBanco = function(idCuentaBanco, idempresa) {
         filtrosRepository.getCuentaBanco(idCuentaBanco, idempresa).then(function(result) {
             if (result.data.length > 0) {
@@ -68,7 +74,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
                 $scope.cuentacontable = result.data;
             }
         });
-    }
+    }*/
 
     //LQMA 27022017 add obtiene datos para llenar filtro de cuenta
     $scope.getCuenta = function(idBanco, idEmpresa) {
@@ -100,7 +106,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
 
                 $scope.paramBusqueda = [];
 
-                $scope.paramBusqueda = { "idBanco": $scope.cuentaActual.IdBanco, "idEmpresa": $scope.cuentaActual.IdEmpresa, "cuenta": $scope.cuentaActual.Cuenta, "cuentaContable": $scope.cuentaActual.CuentaContable };
+                $scope.paramBusqueda = { "idBanco": $scope.cuentaActual.IdBanco, "Banco": $scope.cuentaActual.NOMBRE, "idEmpresa": $scope.cuentaActual.IdEmpresa, "Empresa": $scope.empresaActual.emp_nombre, "cuenta": $scope.cuentaActual.Cuenta, "cuentaContable": $scope.cuentaActual.CuentaContable };
                 localStorage.setItem('paramBusqueda', JSON.stringify($scope.paramBusqueda));
 
 
