@@ -23,6 +23,8 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.clabe = '';
     $scope.cuentaBanco = $scope.busqueda.cuenta;
     $scope.nombreBanco = $scope.busqueda.Banco;
+    $scope.nombreGerente = $scope.busqueda.gerente;
+    $scope.nombreContador = $scope.busqueda.contador;
     //****************************************************************************************************
     // INICIA las variables para el GRID AUXILIAR CONTABLE
     //****************************************************************************************************
@@ -72,14 +74,15 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         $scope.getAuxiliarPunteo($scope.idEmpresa);
         $scope.getBancoPunteo($scope.idEmpresa);
         $rootScope.mostrarMenu = 1;
-    };    
+        console.log($scope.busqueda);
+    };
     $scope.getAuxiliarContable = function(idEmpresa, numero_cuenta, idestatus) {
         if (idestatus == 1) { //Consigo los datos del Auxiliar Contable sin puntear
             filtrosRepository.getAuxiliar(idEmpresa, numero_cuenta, idestatus).then(function(result) {
                 if (result.data.length >= 0) {
                     $scope.auxiliarContable = result.data;
                     $scope.gridAuxiliarContable.data = result.data;
-                } 
+                }
             });
         } else if (idestatus == 2) { //consigo los datos el Auxiliar Contable Punteado
             filtrosRepository.getAuxiliar(idEmpresa, numero_cuenta, idestatus).then(function(result) {
@@ -95,7 +98,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                 if (result.data.length > 0) {
                     $scope.depositosBancos = result.data;
                     $scope.gridDepositosBancos.data = result.data;
-                } 
+                }
             });
         } else if (idestatus == 2) { //Consigo los datos del banco Punteado
             filtrosRepository.getDepositos(idBanco, idestatus).then(function(result) {
@@ -445,11 +448,11 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                                     "fecha": ""
                                 }, {
                                     "titulo": "GERENTE ADMINISTRATIVO",
-                                    "nombre": "GUADALUPE HERNÁNDEZ MEJÍA",
+                                    "nombre": $scope.nombreGerente,
                                     "fecha": ""
                                 }, {
                                     "titulo": "CONTADOR",
-                                    "nombre": "DAVID VÁZQUEZ RICO",
+                                    "nombre": $scope.nombreContador,
                                     "fecha": ""
                                 }]
                             }
