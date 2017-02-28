@@ -13,24 +13,24 @@
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label class="form-label text-main">Empresa:</label>
-                                <select class="form-control" ng-model="filtros.idEmpresa" ng-options="empresa.emp_idempresa as empresa.emp_nombre for empresa in empresaUsuario" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
+                                <select class="form-control" ng-model="filtros.idEmpresa" ng-options="empresa.emp_idempresa as empresa.emp_nombre for empresa in empresaUsuario" name="txtTipoContrato" ng-change="getBancos(filtros.idEmpresa)" ng-disabled="timbradoPendiente">
                                     <option value="">Seleccioné Empresa</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="form-label text-main">Banco:</label>
-                                <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.idBanco as banco.Nombre for banco in bancoEmpresa" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
+                                <select class="form-control" ng-model="filtros.IdBanco" ng-options="banco.IdBanco as banco.Nombre for banco in bancoEmpresa" name="txtTipoContrato" ng-change="getCuenta(filtros.IdBanco,filtros.idEmpresa)">
                                     <option value="">Seleccioné Banco</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="form-label text-main">Cuenta:</label>
-                                <select class="form-control" ng-model="filtros.idCuenta" ng-options="bancoCuenta.IdCuenta as bancoCuenta.Cuenta for bancoCuenta in bancoCuenta" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
+                                <select class="form-control" ng-model="filtros.idCuenta" ng-options="bancoCuenta.CuentaContable as bancoCuenta.Cuenta for bancoCuenta in bancoCuenta" name="txtTipoContrato" ng-change="" ng-disabled="timbradoPendiente">
                                     <option value="">Seleccioné Cuenta</option>
                                 </select>
                             </div>
                             <div class="col-md-1" style="margin-top: 23px">
-                                <button class="btn btn-primary pull-right"><i class="ti-search"></i> Buscar</button>
+                                <button class="btn btn-primary pull-right" ng-click="getTotalesAbonoCargo()"><i class="ti-search"></i> Buscar</button>
                             </div>
                         </div>
                     </div>
@@ -92,19 +92,19 @@
                                     </tr>
                                     <tr>
                                         <td>Abonos en Contabilidad no considerados en Bancos</td>
-                                        <td class="text-right">$0.00</td>
+                                        <td class="text-right">{{ totalesAbonosCargos.tAbonoContable | currency}}</td>
                                     </tr>
                                     <tr>
                                         <td>Abonos en Bancos no considerados en Contabilidad</td>
-                                        <td class="text-right">$0.00</td>
+                                        <td class="text-right">{{ totalesAbonosCargos.tAbonoBancario | currency}}</td>
                                     </tr>
                                     <tr>
                                         <td>Cargos en Contabilidad no considerados en Bancos</td>
-                                        <td class="text-right">$0.00</td>
+                                        <td class="text-right">{{ totalesAbonosCargos.tCargoContable | currency}}</td>
                                     </tr>
                                     <tr>
                                         <td>Cargos Bancos no considerados en Contabilidad</td>
-                                        <td class="text-right">$64009.00</td>
+                                        <td class="text-right">{{ totalesAbonosCargos.tCargoBancario | currency}}</td>
                                     </tr>
                                     <tr>
                                         <td>Saldo segun Conciliacion</td>
@@ -134,9 +134,9 @@
                                     <button class="btn btn-info" style="width:100px;"><i class="ti-printer"></i> Imprimir</button>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <button class="btn btn-success" ng-click="generarReporte()" style="width:100px;"><i class="ti-export"></i> Exportar</button>
+                                    <button class="btn btn-success" ng-click="generarReporte()" style="width:100px;"><i class="ti-export"></i> Ver Reporte</button>
                                 </div>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-3" ng-controller="conciliacionDetalleRegistroController">
                                     <button class="btn btn-mint" ng-click="envioMail()"><i class="ti-email"></i> Enviar Correo</button>
                                 </div>
                                 <div class="panel-body">
