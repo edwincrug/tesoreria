@@ -67,74 +67,23 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA 
     //****************************************************************************************************
     $scope.init = function() {
-        $scope.getEmpresa(15);
-        $scope.getBancos(1);
-        $scope.getCuentaBanco(1, 1)
-        $scope.getClaveBanco(1)
-        $scope.getCuentacontable(1)
         $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
         $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
         $scope.getAuxiliarPunteo($scope.idEmpresa);
         $scope.getBancoPunteo($scope.idEmpresa);
-        console.log($scope.infReporte, 'Soy la primera información de el informe del reporte ')
         $rootScope.mostrarMenu = 1;
-        console.log($rootScope.userData.nombreUsuario, 'Soy el usuario yoju');
-        console.log($scope.busqueda, 'Soy el resultado de la busqueda de conciliacion Inicio');
-        console.log($scope.cuentaBanco, 'Soy el numero de la cuenta del banco ');
-    };
-    $scope.getEmpresa = function(idUsuario) {
-        filtrosRepository.getEmpresas(idUsuario).then(
-            function(result) {
-                if (result.data.length > 0) {
-                    $scope.empresaUsuario = result.data;
-                    console.log('Empresa', result.data)
-                }
-            });
-    };
-    $scope.getBancos = function(idBanco) {
-        filtrosRepository.getBancos(idBanco).then(function(result) {
-            if (result.data.length > 0) {
-                $scope.bancoEmpresa = result.data;
-            }
-        });
-    };
-    $scope.getCuentaBanco = function(idCuentaBanco, idempresa) {
-        filtrosRepository.getCuentaBanco(idCuentaBanco, idempresa).then(function(result) {
-            if (result.data.length > 0) {
-                $scope.bancoCuenta = result.data;
-                console.log(result.data, 'hola')
-            }
-        });
-    };
-    $scope.getClaveBanco = function(idClaveBanco) {
-        filtrosRepository.getClaveBanco(idClaveBanco).then(function(result) {
-            if (result.data.length > 0) {
-                $scope.bancoClave = result.data;
-                //console.log(result.data)
-            }
-        });
-    };
-    $scope.getCuentacontable = function(idCuentacontable) {
-        filtrosRepository.getCuentacontable(idCuentacontable).then(function(result) {
-            if (result.data.length > 0) {
-                $scope.cuentacontable = result.data;
-            }
-        });
-    };
+    };    
     $scope.getAuxiliarContable = function(idEmpresa, numero_cuenta, idestatus) {
         if (idestatus == 1) { //Consigo los datos del Auxiliar Contable sin puntear
-            console.log('Si llegue aqui')
             filtrosRepository.getAuxiliar(idEmpresa, numero_cuenta, idestatus).then(function(result) {
-                if (result.data.length > 0) {
+                if (result.data.length >= 0) {
                     $scope.auxiliarContable = result.data;
                     $scope.gridAuxiliarContable.data = result.data;
-                } else {
-                    $scope.gridAuxiliarContable.data = '';
-                }
+                } 
             });
         } else if (idestatus == 2) { //consigo los datos el Auxiliar Contable Punteado
             filtrosRepository.getAuxiliar(idEmpresa, numero_cuenta, idestatus).then(function(result) {
-                if (result.data.length > 0) {
+                if (result.data.length >= 0) {
                     $scope.auxiliarContable = result.data;
                 }
             });
@@ -146,9 +95,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                 if (result.data.length > 0) {
                     $scope.depositosBancos = result.data;
                     $scope.gridDepositosBancos.data = result.data;
-                } else {
-                    $scope.gridDepositosBancos.data = '';
-                }
+                } 
             });
         } else if (idestatus == 2) { //Consigo los datos del banco Punteado
             filtrosRepository.getDepositos(idBanco, idestatus).then(function(result) {
@@ -328,7 +275,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA funcion que consigue los valores para los grids y las tablas
     //****************************************************************************************************
     $scope.getGridTablas = function() {
-        //$scope.limpiaVariables();
+        $scope.limpiaVariables();
         $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
         $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
         $scope.getAuxiliarPunteo($scope.idEmpresa);
@@ -340,7 +287,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.getAuxiliarPunteo = function(idempresa) {
         $scope.tabla('auxiliarPunteo');
         conciliacionDetalleRegistroRepository.getAuxiliarPunteo(idempresa).then(function(result) {
-            console.log(result.data, 'soy el auxilear punteado')
+            //console.log(result.data, 'soy el auxilear punteado')
             $scope.auxiliarPadre = result.data;
 
         });
@@ -351,7 +298,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.getBancoPunteo = function(idempresa) {
         $scope.tabla('bancoPunteo');
         conciliacionDetalleRegistroRepository.getBancoPunteo(idempresa).then(function(result) {
-            console.log(result.data, 'soy el banco punteado')
+            //console.log(result.data, 'soy el banco punteado')
             $scope.bancoPadre = result.data;
 
         });
@@ -386,7 +333,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     //****************************************************************************************************
     $scope.eliminarPunteo = function(punteo) {
         conciliacionDetalleRegistroRepository.eliminarPunteo(punteo.idPunteoAuxiliarBanco).then(function(result) {
-            console.log(result, 'Resultado cuando elimino');
+            //console.log(result, 'Resultado cuando elimino');
             $scope.getGridTablas();
         });
     };
@@ -420,14 +367,10 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         angular.forEach(bancodetalle, function(value, key) {
             $scope.abonoTotalBanco += value.abono;
             $scope.cargoTotalBanco += value.cargo;
-            console.log($scope.abonoTotalBanco, 'Soy el abono total Banco')
-            console.log($scope.cargoTotalBanco, 'Soy el cargo total Banco')
         });
         angular.forEach(auxiliardetalle, function(value, key) {
             $scope.abonoTotalAuxiliar += value.abono;
             $scope.cargoTotalAuxiliar += value.cargo;
-            console.log($scope.abonoTotalAuxiliar, 'Soy el abono total Auxiliar')
-            console.log($scope.cargoTotalAuxiliar, 'Soy el cargo total Auxiliar')
         });
     };
     //****************************************************************************************************
@@ -444,7 +387,8 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA Se guarda el punteo que ya no podra ser modificado
     //****************************************************************************************************
     $scope.generaPunteo = function() {
-        conciliacionDetalleRegistroRepository.generaPunteo(4, 1, '1100-0020-0001-0001', '000000000190701289').then(function(result) {
+        conciliacionDetalleRegistroRepository.generaPunteo($scope.idEmpresa, $scope.idBanco, $scope.cuenta, $scope.cuentaBanco).then(function(result) {
+            console.log(result, 'Soy el resultado del punteo GIBI')
             $('#alertaPunteo').modal('hide');
             $scope.getGridTablas();
             $scope.generaInfoReport(2);
@@ -466,10 +410,10 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                     conciliacionRepository.getAbonoBancario('', '', '', 1).then(function(result) {
                         console.log(result, 'Soy el abono bancario');
                         $scope.abonoBancario = result.data;
-                        conciliacionInicioRepository.getTotalAbonoCargo(null, '', '','',2).then(function(result) {
+                        conciliacionInicioRepository.getTotalAbonoCargo(null, '', '', '', 2).then(function(result) {
                             console.log(result.data, 'Soy el total de todo esto');
                             var date = new Date();
-                            $scope.fecha = date.getDate() + "/" + (date.getFullMonth() + 1) + "/" + date.getFullYear();
+                            $scope.fecha = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
                             console.log($scope.fecha, 'Soy la fecha');
                             $scope.totalReporte = result.data;
                             $scope.infReporte = {
