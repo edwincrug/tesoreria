@@ -13,15 +13,16 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.bancoDetalle = '';
     $scope.auxiliarDetalle = '';
     i18nService.setCurrentLang('es'); //Para seleccionar el idioma
-    $scope.idEmpresa = 4;
-    $scope.cuenta = '1100-0020-0001-0001';
-    $scope.idBanco = 1;
+    $scope.idEmpresa = $scope.busqueda.idEmpresa;
+    $scope.cuenta = $scope.busqueda.cuentaContable;
+    $scope.idBanco = $scope.busqueda.idBanco;
     $scope.infReporte = '';
     $scope.jsonData = '';
     $scope.ruta = '';
-    $scope.nombreEmpresa = 'ANDRADE UNIVERSIDAD SA DE CV';
-    $scope.clabe = '01218000 195334667';
-    $scope.cuentaBanco = '1111111111';
+    $scope.nombreEmpresa = $scope.busqueda.Empresa;
+    $scope.clabe = '';
+    $scope.cuentaBanco = $scope.busqueda.cuenta;
+    $scope.nombreBanco = $scope.busqueda.Banco;
     //****************************************************************************************************
     // INICIA las variables para el GRID AUXILIAR CONTABLE
     //****************************************************************************************************
@@ -71,7 +72,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         $scope.getCuentaBanco(1, 1)
         $scope.getClaveBanco(1)
         $scope.getCuentacontable(1)
-        $scope.getDepositosBancos($scope.idBanco, 1);
+        $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
         $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
         $scope.getAuxiliarPunteo($scope.idEmpresa);
         $scope.getBancoPunteo($scope.idEmpresa);
@@ -79,6 +80,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         $rootScope.mostrarMenu = 1;
         console.log($rootScope.userData.nombreUsuario, 'Soy el usuario yoju');
         console.log($scope.busqueda, 'Soy el resultado de la busqueda de conciliacion Inicio');
+        console.log($scope.cuentaBanco, 'Soy el numero de la cuenta del banco ');
     };
     $scope.getEmpresa = function(idUsuario) {
         filtrosRepository.getEmpresas(idUsuario).then(
@@ -136,9 +138,9 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
             });
         }
     };
-    $scope.getDepositosBancos = function(idBanco, idestatus) {
+    $scope.getDepositosBancos = function(idBanco, idestatus,cuentaBancaria) {
         if (idestatus == 1) { //Consigo los datos del Banco sin Puntear
-            filtrosRepository.getDepositos(idBanco, idestatus).then(function(result) {
+            filtrosRepository.getDepositos(idBanco, idestatus, cuentaBancaria).then(function(result) {
                 if (result.data.length > 0) {
                     $scope.depositosBancos = result.data;
                     $scope.gridDepositosBancos.data = result.data;
@@ -323,7 +325,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     //****************************************************************************************************
     $scope.getGridTablas = function() {
         $scope.limpiaVariables();
-        $scope.getDepositosBancos($scope.idBanco, 1);
+        $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
         $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
         $scope.getAuxiliarPunteo($scope.idEmpresa);
         $scope.getBancoPunteo($scope.idEmpresa);
