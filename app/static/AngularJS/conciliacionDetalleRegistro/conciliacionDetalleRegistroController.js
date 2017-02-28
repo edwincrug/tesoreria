@@ -2,6 +2,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
 
     // ****************** Se guarda la información del usuario en variable userData
     $rootScope.userData = localStorageService.get('userData');
+    $scope.busqueda = JSON.parse(localStorage.getItem('paramBusqueda'));
     $scope.nodoPadre = [];
     $scope.abonoAuxiliar = 0;
     $scope.cargoAuxiliar = 0;
@@ -77,6 +78,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         console.log($scope.infReporte, 'Soy la primera información de el informe del reporte ')
         $rootScope.mostrarMenu = 1;
         console.log($rootScope.userData.nombreUsuario, 'Soy el usuario yoju');
+        console.log($scope.busqueda, 'Soy el resultado de la busqueda de conciliacion Inicio');
     };
     $scope.getEmpresa = function(idUsuario) {
         filtrosRepository.getEmpresas(idUsuario).then(
@@ -460,15 +462,18 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                         $scope.abonoBancario = result.data;
                         conciliacionInicioRepository.getTotalAbonoCargo(null, '', '').then(function(result) {
                             console.log(result.data, 'Soy el total de todo esto');
+                            var date = new Date();
+                            $scope.fecha = date.getDate() + "/" + (date.getFullMonth() + 1) + "/" + date.getFullYear();
+                            console.log($scope.fecha, 'Soy la fecha');
                             $scope.totalReporte = result.data;
                             $scope.infReporte = {
                                 "titulo": "CONCILIACIÓN BANCARIA",
                                 "titulo2": "BANCOS",
                                 "titulo3": "FA04",
                                 "empresa": $scope.nombreEmpresa,
-                                "fechaElaboracion": "31/12/2016",
+                                "fechaElaboracion": $scope.fecha,
                                 "conciliacionBancaria": "BANCOMER",
-                                "chequera": "31/12/2016",
+                                "chequera": $scope.fecha,
                                 "bancoCuenta": $scope.cuentaBanco,
                                 "clabe": $scope.clabe,
                                 "cuentaContable": $scope.cuenta,
