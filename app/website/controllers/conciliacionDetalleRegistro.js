@@ -163,7 +163,7 @@ conciliacionDetalleRegistro.prototype.post_sendMail = function(req, res, next) {
     var params = [];   //Referencia a la clase para callback
     var self = this;
     var files = [];
-    var ruta = "./pdf/";
+    var ruta = path.dirname(require.main.filename) + "\\pdf\\" + nombreArchivo + ".pdf";
     var extension = '.pdf';
     var carpeta = 'pdf'; 
     var nodemailer = require('nodemailer');
@@ -186,7 +186,7 @@ conciliacionDetalleRegistro.prototype.post_sendMail = function(req, res, next) {
         html: '<b>Se envían adjuntos la Conciliación Bancaria </b>', // html body 
         attachments: [{ // file on disk as an attachment
             filename: req.body.nombreArchivo + '.pdf',
-            path: 'C:\\Tesoreria\\tesoreria\\pdf\\' + nombreArchivo + '.pdf' // stream this file
+            path: ruta // stream this file
         }]
     };
     setTimeout(function() {
@@ -196,7 +196,7 @@ conciliacionDetalleRegistro.prototype.post_sendMail = function(req, res, next) {
                 console.log(error);
             } else {
                 res.send(200);
-                fs.stat('C:\\Tesoreria\\tesoreria\\pdf\\' + nombreArchivo + '.pdf', function(err, stats) {
+                fs.stat(ruta, function(err, stats) {
                     if (err) {
                         return console.error(err);
                     }
