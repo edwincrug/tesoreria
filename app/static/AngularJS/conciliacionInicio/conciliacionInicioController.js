@@ -3,7 +3,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     // ****************** Se guarda la información del usuario en variable userData
     $rootScope.userData = localStorageService.get('userData');
     $scope.nodoPadre = [];
-   
+
 
     $scope.init = function() {
         //$scope.calendario();
@@ -20,6 +20,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         //  alertFactory.success('Bienvenido '+ $rootScope.userData.nombreUsuario)
         // }
         $rootScope.mostrarMenu = 1;
+        $scope.paramBusqueda = [];
     }
 
     $scope.getEmpresa = function(idUsuario) {
@@ -35,10 +36,8 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         filtrosRepository.getBancos(idBanco).then(function(result) {
             if (result.data.length > 0) {
                 $scope.bancoEmpresa = result.data;
-                console.log($scope.bancoEmpresa)
-            }
-            else
-            {
+                //console.log($scope.bancoEmpresa)
+            } else {
                 $scope.bancoCuenta = [];
                 $scope.bancoEmpresa = [];
             }
@@ -49,7 +48,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         filtrosRepository.getCuentaBanco(idCuentaBanco, idempresa).then(function(result) {
             if (result.data.length > 0) {
                 $scope.bancoCuenta = result.data;
-                console.log(result.data)
+                //console.log(result.data)
             }
         });
     }
@@ -72,38 +71,59 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     }
 
     //LQMA 27022017 add obtiene datos para llenar filtro de cuenta
-    $scope.getCuenta = function(idBanco,idEmpresa) {
+    $scope.getCuenta = function(idBanco, idEmpresa) {
         //console.log('sdsdsd')
         //console.log(idBanco,idEmpresa)
-        filtrosRepository.getCuenta(idBanco,idEmpresa).then(function(result) {
+        $scope.paramBusqueda = [];
+        filtrosRepository.getCuenta(idBanco, idEmpresa).then(function(result) {
             if (result.data.length > 0) {
 
-                console.log(result.data)
+                //console.log('$scope.bancoCuenta')
+                //console.log(result.data)
                 $scope.bancoCuenta = result.data;
-            }
-            else
-             $scope.bancoCuenta = [];   
+            } else
+                $scope.bancoCuenta = [];
         });
-    }   
-    
+    }
+
 
     $scope.getTotalesAbonoCargo = function() {
 
-        conciliacionInicioRepository.getTotalAbonoCargo($scope.bancoCuenta.IdBanco,$scope.bancoCuenta.IdEmpresa,$scope.bancoCuenta.Cuenta,$scope.bancoCuenta.CuentaContable).then(function(result){
-           if (result.data.length > 0) {
+        console.log('$scope.cuentaActual')
+        console.log($scope.cuentaActual)
 
-                console.log('entra')
-                console.log(result.data)
+        conciliacionInicioRepository.getTotalAbonoCargo($scope.bancoEmpresa.IdBanco, $scope.bancoEmpresa.IdEmpresa, $scope.bancoEmpresa.Cuenta, $scope.bancoEmpresa.CuentaContable).then(function(result) {
+            if (result.data.length > 0) {
+                //console.log('entra')                
                 $scope.totalesAbonosCargos = result.data;
+                //console.log($scope.totalesAbonosCargos)
 
-            }
-            else
-            {
-                console.log('no hay nada')
-                $scope.totalesAbonosCargos = []; 
-            }
+                $scope.paramBusqueda = [];
 
+                $scope.paramBusqueda = { "idBanco": $scope.cuentaActual.IdBanco, "idEmpresa": $scope.cuentaActual.IdEmpresa, "cuenta": $scope.cuentaActual.Cuenta, "cuentaContable": $scope.cuentaActual.CuentaContable };
+                localStorage.setItem('paramBusqueda', JSON.stringify($scope.paramBusqueda));
+
+
+                //console.log('$scope.paramBusqueda')
+                //console.log($scope.paramBusqueda)
+            } else {
+                //console.log('no hay nada')
+                $scope.totalesAbonosCargos = [];
+            }
         });
+
+        setTimeout(function() {
+            $scope.fresh = JSON.parse(localStorage.getItem('paramBusqueda'))
+
+            console.log($scope.fresh)
+            //console.log(JSON.parse($scope.fresh))
+        }, 1000);
     }
-    
+
+    /*$scope.setCuenta = function() {
+
+
+        console.log($scope.cuentaActual)
+    }*/
+
 });
