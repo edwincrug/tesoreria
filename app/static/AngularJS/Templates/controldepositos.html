@@ -96,12 +96,33 @@
                 <div ui-grid="gridCartera" ui-grid-grouping ui-grid-edit ui-grid-selection ui-grid-cellNav class="grid"></div>
                 <br/>
             </div>
-        </div>
+         </div>
+
         <div class="col-md-12">
-            <a class="btn btn-primary pull-right" ng-click="GuardarGrid()"><i class="ti-control-shuffle">  </i>Crear Referencia</a>
-            <br>
-            <br/> &nbsp;
+            
+            <table cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <td width="20%">
+                &nbsp;
+            </td>
+            <td width="20%">
+                <p class="text-2x mar-no text-semibold">{{depositoTotal | currency}}</p>
+                <p class="text-muted mar-no">Depositos</p>
+            </td>
+            <td width="20%">
+                <p class="text-2x mar-no text-semibold">{{carteraTotal | currency}}</p>
+                <p class="text-muted mar-no">Depositos</p>
+            </td>
+            <td width="20%"><a class="btn btn-primary pull-right" ng-click="GuardarGrid()"><i class="ti-control-shuffle">  </i>Aplicar Referencias</a></td>
+            <td width="20%" class="text-right" ng-class="{'text-success text-semibold' : auxiliar.cargo > 0}"><a class="btn btn-primary pull-right" ng-click="GuardarGrid()" ng-disabled="depositoTotal>=carteraTotal"><i class="ti-control-shuffle">  </i>Crear Referencias Temporal</a></td>
+        </tr>
+    </thead>
+</table>
+
         </div>
+
+
         <div class="col-md-12">
             <div class="text-main">
                 <h4>Depositos</h4>

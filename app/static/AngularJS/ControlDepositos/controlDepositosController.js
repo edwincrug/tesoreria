@@ -6,9 +6,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
     $scope.init = function() {
         $scope.getEmpresa($scope.idUsuario);
-        
         $scope.calendario();
-
         $scope.activarBanco = true;
         $scope.activarCuenta = true;
         $scope.activarFechaIniDeposito = true;
@@ -20,7 +18,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.activarBuscarDepositos = true;
         $scope.activarBuscarCartera = true;
         $scope.activarBuscarCliente = true;
-        
+        $scope.depositoTotal = 0;
+        $scope.carteraTotal = 0;
         //$scope.getDepositosBancosNoReferenciados(1,1,'10/11/2015','31/12/2015');
         //$scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
         $scope.filtroscheck = {cargo : 1 };
@@ -77,7 +76,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
     $scope.getBancos = function(idEmpresa) {
         $scope.activarBanco = false;
-        
+        $scope.cuentaBancaria = 
         filtrosRepository.getBancos(idEmpresa).then(function(result) {
             if (result.data.length > 0) {
                 $scope.bancoEmpresa = result.data;
@@ -88,7 +87,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
      $scope.getCuentas = function(idBanco,idEmpresa) {
         
         $scope.activarCuenta = false;
-        
+        $scope.cuentaBancaria = [];
         filtrosRepository.getCuenta(idBanco,idEmpresa).then(function(result) {
             if (result.data.length > 0) {
                 $scope.cuentaBancaria = result.data;
@@ -217,27 +216,50 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
   };
 
- //FAL diferente de pipus
 
  $scope.activa_calendariosDepositos = function() {
-           
             $scope.activarFechaIniDeposito = false;
             $scope.activarFechaFinDeposito = false;
             $scope.activarBuscarDepositos = false;
         }
 
  $scope.activa_calendariosCartera = function() {
-           
             $scope.activarFechaIniCartera = false;
             $scope.activarFechaFinCartera = false;
             $scope.activarBuscarCliente = false;
             $scope.activarBuscarCartera = false;
         }
 
-$scope.activa_BuscarCartera = function() {
+ $scope.activa_BuscarCartera = function() {
              $scope.activarBuscarCartera = false;
         }
 
+$scope.gridDocumentos.onRegisterApi = function(gridApi) {
+        $scope.gridApiDocumentos = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+            //var msg = 'row selected ' + row.isSelected;
+            if (row.isSelected == true) {
+                $scope.depositoTotal = row.entity.abono;
+                
+            } 
+        }); //Este me dice cuales van siendo seleccionadas
 
+      
+    };
 
+$scope.gridCartera.onRegisterApi = function(gridApi) {
+        //set gridApi on scope
+        $scope.gridApiCartera = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+            var msg = 'row selected ' + row.isSelected;
+            if (row.isSelected == true) {
+                $scope.carteraTotal = $scope.carteraTotal + parseFloat(row.entity.importe);
+            } else if (row.isSelected == false) {
+                $scope.carteraTotal = $scope.carteraTotal - parseFloat(row.entity.importe);
+            }
+            //console.log(msg, 'Estoy en rowSelectionChanged');
+        }); //Este me dice cuales van siendo seleccionadas
+    };
+
+ 
 });
