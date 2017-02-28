@@ -46,7 +46,9 @@ conciliacionDetalleRegistro.prototype.get_auxiliarPunteo = function(req, res, ne
 
     var self = this;
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
+        { name: 'cuentaContable', value: req.query.cuentaContable, type: self.model.types.STRING }
+    ];
 
     this.model.query('SEL_PUNTEO_AUXILIAR_PADRES_SP', params, function(error, result) {
         self.view.expositor(res, {
@@ -60,7 +62,9 @@ conciliacionDetalleRegistro.prototype.get_bancoPunteo = function(req, res, next)
     var self = this;
 
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
+        { name: 'cuentaBancaria', value: req.query.cuentaBancaria, type: self.model.types.STRING }
+    ];
 
     this.model.query('SEL_PUNTEO_DEPOSITOS_PADRES_SP', params, function(error, result) {
 

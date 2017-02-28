@@ -40,7 +40,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         { name: 'polFecha', displayName: 'Fecha', width: 100, type: 'date', cellFilter: 'date:\'dd-MM-yyyy\'' },
         { name: 'polTipo', displayName: 'Tipo Pol', width: 200 },
         { name: 'polReferencia2', displayName: 'No Pol', width: 100 },
-        { name: 'polReferencia1', displayName: 'CHQ', width: 300 },
+        //{ name: 'polReferencia1', displayName: 'CHQ', width: 300 },
         { name: 'movConcepto', displayName: 'Concepto', width: 600 },
         { name: 'cargo', displayName: 'Cargo', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.cargo > 0">{{row.entity.cargo | currency}}</span></div><div class="text-right"><span ng-if="row.entity.cargo == 0">{{row.entity.cargo | currency}}</span></div>' },
         { name: 'abono', displayName: 'Abono', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.abono > 0">{{row.entity.abono | currency}}</span></div><div class="text-right"><span ng-if="row.entity.abono == 0">{{row.entity.abono | currency}}</span></div>' }
@@ -71,8 +71,8 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.init = function() {
         $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
         $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
-        $scope.getAuxiliarPunteo($scope.idEmpresa);
-        $scope.getBancoPunteo($scope.idEmpresa);
+        $scope.getAuxiliarPunteo($scope.idEmpresa, $scope.cuenta);
+        $scope.getBancoPunteo($scope.idEmpresa, $scope.cuentaBanco);
         $rootScope.mostrarMenu = 1;
         console.log($scope.busqueda);
     };
@@ -82,6 +82,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                 if (result.data.length >= 0) {
                     $scope.auxiliarContable = result.data;
                     $scope.gridAuxiliarContable.data = result.data;
+                    console.log($scope.gridAuxiliarContable.data, 'Auxiliar Contable')
                 }
             });
         } else if (idestatus == 2) { //consigo los datos el Auxiliar Contable Punteado
@@ -95,9 +96,10 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.getDepositosBancos = function(idBanco, idestatus, cuentaBancaria) {
         if (idestatus == 1) { //Consigo los datos del Banco sin Puntear
             filtrosRepository.getDepositos(idBanco, idestatus, cuentaBancaria).then(function(result) {
-                if (result.data.length > 0) {
+                if (result.data.length >= 0) {
                     $scope.depositosBancos = result.data;
                     $scope.gridDepositosBancos.data = result.data;
+                    console.log($scope.gridDepositosBancos.data, 'Desposito Bancario')
                 }
             });
         } else if (idestatus == 2) { //Consigo los datos del banco Punteado
@@ -281,15 +283,15 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         $scope.limpiaVariables();
         $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
         $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
-        $scope.getAuxiliarPunteo($scope.idEmpresa);
-        $scope.getBancoPunteo($scope.idEmpresa);
+        $scope.getAuxiliarPunteo($scope.idEmpresa, $scope.cuenta);
+        $scope.getBancoPunteo($scope.idEmpresa, $scope.cuentaBanco);
     };
     //****************************************************************************************************
     // INICIA Obtengo los padres del Auxiliar contable punteado
     //****************************************************************************************************
-    $scope.getAuxiliarPunteo = function(idempresa) {
+    $scope.getAuxiliarPunteo = function(idempresa, cuenta) {
         $scope.tabla('auxiliarPunteo');
-        conciliacionDetalleRegistroRepository.getAuxiliarPunteo(idempresa).then(function(result) {
+        conciliacionDetalleRegistroRepository.getAuxiliarPunteo(idempresa, cuenta).then(function(result) {
             //console.log(result.data, 'soy el auxilear punteado')
             $scope.auxiliarPadre = result.data;
 
@@ -298,9 +300,9 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     //****************************************************************************************************
     // INICIA Obtengo los padres del Banco punteado
     //****************************************************************************************************
-    $scope.getBancoPunteo = function(idempresa) {
+    $scope.getBancoPunteo = function(idempresa, cuentaBanco) {
         $scope.tabla('bancoPunteo');
-        conciliacionDetalleRegistroRepository.getBancoPunteo(idempresa).then(function(result) {
+        conciliacionDetalleRegistroRepository.getBancoPunteo(idempresa, cuentaBanco).then(function(result) {
             //console.log(result.data, 'soy el banco punteado')
             $scope.bancoPadre = result.data;
 
