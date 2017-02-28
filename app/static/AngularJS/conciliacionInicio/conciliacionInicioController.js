@@ -4,6 +4,10 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     $rootScope.userData = localStorageService.get('userData');
     $scope.nodoPadre = [];
 
+    $scope.fechaCorte = new Date();
+
+    $scope.fechaElaboracion = new Date($scope.fechaCorte.getFullYear(), $scope.fechaCorte.getMonth(), 1);
+
 
     $scope.init = function() {
         //$scope.calendario();
@@ -20,7 +24,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         //  alertFactory.success('Bienvenido '+ $rootScope.userData.nombreUsuario)
         // }
         $rootScope.mostrarMenu = 1;
-        $scope.paramBusqueda = [];        
+        $scope.paramBusqueda = [];
     }
 
     $scope.getEmpresa = function(idUsuario) {
@@ -98,7 +102,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
         console.log('$scope.cuentaActual')
         console.log($scope.cuentaActual)
 
-        conciliacionInicioRepository.getTotalAbonoCargo($scope.bancoEmpresa.IdBanco, $scope.bancoEmpresa.IdEmpresa, $scope.bancoEmpresa.Cuenta, $scope.bancoEmpresa.CuentaContable,2).then(function(result) {
+        conciliacionInicioRepository.getTotalAbonoCargo($scope.bancoEmpresa.IdBanco, $scope.bancoEmpresa.IdEmpresa, $scope.bancoEmpresa.Cuenta, $scope.bancoEmpresa.CuentaContable, 2).then(function(result) {
             if (result.data.length > 0) {
                 //console.log('entra')                
                 $scope.totalesAbonosCargos = result.data;
@@ -106,12 +110,16 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
 
                 $scope.paramBusqueda = [];
 
-                $scope.paramBusqueda = { "idBanco": $scope.cuentaActual.IdBanco, "Banco": $scope.cuentaActual.NOMBRE, "idEmpresa": $scope.cuentaActual.IdEmpresa, "Empresa": $scope.empresaActual.emp_nombre, "cuenta": $scope.cuentaActual.Cuenta, "cuentaContable": $scope.cuentaActual.CuentaContable };
-                localStorage.setItem('paramBusqueda', JSON.stringify($scope.paramBusqueda));
+                setTimeout(function() {
+                    $scope.paramBusqueda = { "idBanco": $scope.cuentaActual.IdBanco, "Banco": $scope.cuentaActual.NOMBRE, "idEmpresa": $scope.cuentaActual.IdEmpresa, "Empresa": $scope.empresaActual.emp_nombre, "cuenta": $scope.cuentaActual.Cuenta, "cuentaContable": $scope.cuentaActual.CuentaContable, "contador": $scope.contadorGerente[0].NombreGerente, "gerente": $scope.contadorGerente[0].NombreContador };
+                    localStorage.setItem('paramBusqueda', JSON.stringify($scope.paramBusqueda));
+
+                    console.log('$scope.paramBusqueda')
+                    console.log($scope.paramBusqueda)
+
+                }, 1000);                
 
 
-                //console.log('$scope.paramBusqueda')
-                //console.log($scope.paramBusqueda)
             } else {
                 //console.log('no hay nada')
                 $scope.totalesAbonosCargos = [];
@@ -128,7 +136,8 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
             if (result.data.length > 0) {
                 //console.log('entra')                
                 $scope.contadorGerente = result.data;
-                console.log($scope.contadorGerente)
+                //console.log('$scope.contadorGerente')
+                //console.log($scope.contadorGerente[0].NombreGerente)
             }
         });
 
