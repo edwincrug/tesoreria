@@ -12,7 +12,8 @@
                 <div class="col-sm-6"></div>
                 <div class="col-sm-3">
                     <div class="pull-right">
-                        <input id="demo-show-off-contact-checkbox" class="toggle-switch" type="checkbox" checked="">
+                        <input id="demo-show-off-contact-checkbox" class="toggle-switch" type="checkbox" ng-model="filtroscheck.cargo"
+           ng-true-value="1" ng-false-value="0">
                         <label for="demo-show-off-contact-checkbox">cargos</label>
                     </div>
                 </div>
@@ -20,15 +21,15 @@
             <div class="ibox-title" style="text-align:center">
                 <h3>Control de Depositos</h3>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-5">
                 <label class="form-label">Banco:</label>
                 <select class="form-control" ng-model="filtros.idBanco" ng-options="banco.IdBanco as banco.Nombre for banco in bancoEmpresa" name="txtBanco" ng-change="getCuentas(filtros.idBanco,filtros.idEmpresa)" ng-disabled="activarBanco">
                     <option value="">Seleccioné Banco</option>
                 </select>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-5">
                 <label class="form-label">Cuenta:</label>
-                <select class="form-control" ng-model="filtros.idCuenta" ng-options="cuenta.IdCuenta as cuenta.Cuenta for cuenta in cuentaBancaria" name="txtCuenta" ng-change="" ng-disabled="activarCuenta">
+                <select class="form-control" ng-model="filtros.idCuenta" ng-options="cuenta.IdCuenta as cuenta.Cuenta for cuenta in cuentaBancaria" name="txtCuenta" ng-change="activa_calendariosDepositos()" ng-disabled="activarCuenta">
                     <option value="">Seleccioné Cuenta</option>
                 </select>
             </div>
@@ -46,8 +47,8 @@
                     <input type="text" class="form-control" id="ffin" ng-model="filtros.fechaFinDeposito" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinDeposito">
                 </div>
             </div>
-            <div class="col-md-3" style="margin-top: 23px">
-                <button class="btn btn-warning" ng-disabled="activarBuscarDepositos">Buscar</button>
+            <div class="form-group col-md-3" style="margin-top: 23px">
+                <button class="btn btn-warning" ng-disabled="activarBuscarDepositos" ng-click="getDepositosBancosNoReferenciados(filtros.idBanco,filtroscheck.cargo,'10/11/2015','31/12/2015')">Buscar</button>
             </div>
             <div class="panel col-md-12">
                 <br/>
@@ -56,13 +57,13 @@
             </div>
             <div class="form-group col-md-5">
                 <label class="form-label">Sucursal:</label>
-                <select class="form-control" ng-model="filtros.idSucursal" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtSucursal" ng-change="" ng-disabled="activarSucursal">
+                <select class="form-control" ng-model="filtros.idSucursal" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtSucursal" ng-change="getDepartamentos(filtros.idSucursal)" ng-disabled="activarSucursal">
                     <option value="">Seleccioné Sucursal</option>
                 </select>
             </div>
             <div class="form-group col-md-5">
                 <label class="form-label">Departamento:</label>
-                <select class="form-control" ng-model="filtros.idDepartamento" ng-options="sucursalesUsuario.suc_idsucursal as sucursalesUsuario.suc_nombre for sucursalesUsuario in sucursalesUsuario" name="txtdepartamento" ng-change="" ng-disabled="activarDepartamento">
+                <select class="form-control" ng-model="filtros.idDepartamento" ng-options="departamento.dep_iddepartamento as departamento.dep_nombre for departamento in departamentosUsuario" name="txtdepartamento" ng-change="activa_calendariosCartera()" ng-disabled="activarDepartamento">
                     <option value="">Seleccioné Departamento</option>
                 </select>
             </div>
@@ -70,18 +71,25 @@
                 <label for="fInicio">Fecha Inicio:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fInicioCartera" ng-model="esquema.fechaInicio" value={{fechaInicio}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniCartera">
+                    <input type="text" class="form-control" id="fInicioCartera" ng-model="filtros.fechaInicioCartera" value={{fechaInicio}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniCartera">
                 </div>
             </div>
             <div class="form-group col-md-3" id="calendar">
                 <label for="fInicio">Fecha Fin:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="ffincartera" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinCartera">
+                    <input type="text" class="form-control" id="ffincartera" ng-model="filtros.fechaFinCartera" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinCartera">
+                </div>
+            </div>
+            <div class="form-group col-md-3" id="calendar">
+                <label>Id Cliente:</label>
+                <div class="input-group">
+                    <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> -->
+                    <input type="text" class="form-control"  ng-model="filtros.idCliente" placeholder="Numero de cliente" ng-disabled="activarBuscarCliente" ng-change="activa_BuscarCartera">
                 </div>
             </div>
             <div class="form-group col-md-3" style="margin-top: 23px">
-                <button class="btn btn-warning" ng-disabled="activarBuscarCartera">Buscar</button>
+                <button class="btn btn-warning" ng-disabled="activarBuscarCartera" ng-click="getCarteraVencida(filtros.idCliente,filtros.idTipoEmpresa,12,67,filtros.fechaInicioCartera,filtros.fechaFinCartera)">Buscar</button>
             </div>
             <div class="panel col-md-12">
                 <br/>

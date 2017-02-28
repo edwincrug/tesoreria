@@ -19,11 +19,13 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.activarFechaFinCartera = true;
         $scope.activarBuscarDepositos = true;
         $scope.activarBuscarCartera = true;
-
-
-        $scope.getDepositosBancosNoReferenciados(1,1,'10/11/2015','31/12/2015');
-        $scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
+        $scope.activarBuscarCliente = true;
+        
+        //$scope.getDepositosBancosNoReferenciados(1,1,'10/11/2015','31/12/2015');
+        //$scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
+        $scope.filtroscheck = {cargo : 1 };
     }
+
     $scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
             todayBtn: "linked",
@@ -64,8 +66,9 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
-    $scope.getDepartamentos = function(idUsuario,idSucursal) {
-        filtrosRepository.getDepartamentos(idUsuario,idSucursal).then(function(result) {
+    $scope.getDepartamentos = function(idSucursal) {
+        $scope.activarDepartamento = false;
+        filtrosRepository.getDepartamentos($scope.idUsuario,idSucursal).then(function(result) {
             if (result.data.length > 0) {
                 $scope.departamentosUsuario = result.data;
             }
@@ -94,6 +97,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     }
 
     $scope.getCarteraVencida = function(cliente,empresa,sucursal,departamento,fechaIni,fechaFin){
+        $scope.gridCartera.data = [];
+
       filtrosRepository.getCartera(cliente,empresa,sucursal,departamento,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 $scope.gridCartera.data = result.data;
@@ -102,6 +107,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     }
 
      $scope.getDepositosBancosNoReferenciados = function(empresa,cuenta,fechaIni,fechaFin){
+        $scope.gridDocumentos.data = [];
       filtrosRepository.getDepositosNoReferenciados(empresa,cuenta,fechaIni,fechaFin).then(function(result) {
             if (result.data.length > 0) {
                $scope.gridDocumentos.data = result.data;
@@ -109,14 +115,22 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         });
     }
 
-     
+     $scope.getCalendartios = function(idBanco,idEmpresa) {
+        
+        $scope.activarCuenta = false;
+        
+        filtrosRepository.getCuenta(idBanco,idEmpresa).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.cuentaBancaria = result.data;
+            }
+        });
+    }
 
     $scope.empresaVacia = function() {
             
             $scope.filtros.idCuenta = null;
             $scope.filtros.fechaInicioDeposito = null;
             $scope.filtros.fechaFinDeposito = null;
-            
             $scope.filtros.idDepartamento = null;
             $scope.filtros.fechaInicioDeposito = null;
             $scope.filtros.fechaFinDeposito = null;
@@ -128,6 +142,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
             $scope.activarFechaFinCartera = true;
             $scope.activarBuscarDepositos = true;
             $scope.activarBuscarCartera = true;
+            $scope.gridCartera.data = [];
+        $scope.gridDocumentos.data = [];
         }
 
     $scope.gridCartera = {
@@ -201,6 +217,27 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
   };
 
- 
+ //FAL diferente de pipus
+
+ $scope.activa_calendariosDepositos = function() {
+           
+            $scope.activarFechaIniDeposito = false;
+            $scope.activarFechaFinDeposito = false;
+            $scope.activarBuscarDepositos = false;
+        }
+
+ $scope.activa_calendariosCartera = function() {
+           
+            $scope.activarFechaIniCartera = false;
+            $scope.activarFechaFinCartera = false;
+            $scope.activarBuscarCliente = false;
+            $scope.activarBuscarCartera = false;
+        }
+
+$scope.activa_BuscarCartera = function() {
+             $scope.activarBuscarCartera = false;
+        }
+
+
 
 });
