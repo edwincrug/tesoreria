@@ -11,6 +11,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     };
 
     $scope.init = function() {
+        $scope.loadPendingDocs();
         $scope.getEmpresa($scope.idUsuario);
         $scope.calendario();
         $scope.activarBanco = true;
@@ -241,7 +242,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     }
 
 
-    $scope.selectedDocuments = [];
+    $scope.selectedDocuments = {};
     $scope.selectedCartera = [];
 
     $scope.gridDocumentos.onRegisterApi = function(gridApi) {
@@ -250,12 +251,17 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
             //var msg = 'row selected ' + row.isSelected;
             if (row.isSelected == true) {
                 $scope.depositoTotal = row.entity.abono;
-                $scope.selectedDocuments.shift();
-                $scope.selectedDocuments.push(row.entity);
+                $scope.selectedDocuments = null;
+                $scope.selectedDocuments = row.entity;
             } else if (row.isSelected == false) {
-                $scope.selectedDocuments.shift();
+                $scope.selectedDocuments = null;
             }
-        }); //Este me dice cuales van siendo seleccionadas
+        });
+
+        gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
+            $scope.updateObservation(rowEntity.idDepositoBanco, rowEntity.observaciones);
+            $scope.$apply();
+        });
 
 
     };
@@ -269,64 +275,41 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
                 $scope.selectedCartera.push(row.entity);
             } else if (row.isSelected == false) {
                 $scope.carteraTotal = $scope.carteraTotal - parseFloat(row.entity.importe);
+                $scope.removeByAttr($scope.selectedCartera, 'IDB', row.entity.IDB);
             }
-            //console.log(msg, 'Estoy en rowSelectionChanged');
-        }); //Este me dice cuales van siendo seleccionadas
+
+        });
     };
 
 
 
-
-
-
-
-
     $scope.guardarGrid = function() {
-
-        console.log('dffdsfsd');
-
-        var params = $scope.setParamsCreateReference($scope.selectedCartera[0]);
+        //$('#mdlLoading').modal('show');    
+        var params = $scope.setReferenceParams($scope.selectedCartera[0], 0);
+        if ($scope.selectedCartera.length > 1) params.idTipoReferencia = 4;
         $scope.createReference(params);
 
     };
 
 
-
-    $scope.setParamsCreateReference = function(obj) {
+    $scope.setReferenceParams = function(objCartera, idreferencia) {
 
         var params = {};
 
         params.idEmpresa = $scope.filtros.idEmpresa;
+        params.idReferencia = idreferencia;
         params.idSucursal = $scope.filtros.idSucursal;
-        params.idDepartamento = 1; //$scope.filtros.idDepartamento;
-        params.idTipoDocumento = 1; //siempre es uno segun gibi
-        params.serie = obj.serie;
-        params.folio = obj.idDocumento;
-        params.idCliente = obj.idCliente;
+        params.idDepartamento = $scope.filtros.idDepartamento;
+        params.idTipoDocumento = 1;
+        params.serie = objCartera.serie;
+        params.folio = objCartera.idDocumento;
+        params.idCliente = objCartera.idCliente;
         params.idAlma = 0;
-        params.importeDocumento = obj.importe;
+        params.importeDocumento = objCartera.importe;
         params.idTipoReferencia = 3;
 
         return params;
-    };
 
-
-
-    $scope.setParamsInsertReferenceDetails = function(idreferencia, obj) {
-
-        var params = {};
-
-        params.idReferencia = idreferencia;
-        params.idSucursal = $scope.filtros.idSucursal;
-        params.idDepartamento = 1; //$scope.filtros.idDepartamento;
-        params.idTipoDocumento = 1;
-        params.serie = obj.serie;
-        params.folio = obj.idDocumento;
-        params.idCliente = obj.idCliente;
-        params.idAlma = 0;
-        params.importeDocumento = obj.importe;
-
-        return params;
     };
 
 
@@ -338,7 +321,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
                 var idRef = result.data[0].idReferencia;
 
                 for (var i = 0; i < $scope.selectedCartera.length; i++) {
-                    var params = $scope.setParamsInsertReferenceDetails(idRef, $scope.selectedCartera[i]);
+                    var params = $scope.setReferenceParams($scope.selectedCartera[i], idRef);
                     $scope.insertReferenceDetails(params);
                 };
 
@@ -367,18 +350,87 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     };
 
 
+    $scope.removeByAttr = function(arr, attr, value) {
+        var i = arr.length;
+        while (i--) {
+            if (arr[i] && arr[i].hasOwnProperty(attr) && (arguments.length > 2 && arr[i][attr] === value)) {
+                arr.splice(i, 1);
+            }
+        }
+        return arr;
+    };
+
+    $scope.tblPendientes = [];
+    $scope.tblPendientesDetalle = [];
 
 
+    $scope.loadPendingDocs = function() {
+
+        $scope.promise = controlDepositosRepository.getPendingReference().then(function(result) {
+
+            if (result.data.length > 0) {
+                $scope.tblPendientes = result.data;
+            } else {
+                console.log('no trajo nada');
+            }
+        }, function(error) {
+            console.log('Error');
+        });
+
+    };
+
+    $scope.showReferenceDetails = function(obj) {
+        $scope.tblPendientesDetalle = null;
+        $scope.loadPendingDocsDetails(obj.idReferencia);
+        $('#mdlReferenciaDetalle').modal('show');
+    };
+
+    $scope.loadPendingDocsDetails = function(idReferencia) {
+
+        $scope.promise = controlDepositosRepository.getPendingReferenceDetails(idReferencia).then(function(result) {
+
+            if (result.data.length > 0) {
+                $scope.tblPendientesDetalle = result.data;
+            } else {
+                console.log('no trajo nada');
+            }
+        }, function(error) {
+            console.log('Error');
+        });
+
+    };
+
+    $scope.applyReference = function(idReferencia) {
+
+        $scope.promise = controlDepositosRepository.insApplyReference(idReferencia).then(function(result) {
+
+            if (result.data.length > 0) {
+                console.log('OK');
+
+            } else {
+                console.log('no trajo nada');
+            }
+        }, function(error) {
+            console.log('Error');
+        });
 
 
+    };
 
 
+    $scope.updateObservation = function(idDepositoBanco, observacion) {
 
+        $scope.promise = controlDepositosRepository.updSetObservation(idDepositoBanco, observacion).then(function(result) {
 
-
-
-
-
+            if (result.data.length > 0) {
+                console.log('OK');
+            } else {
+                console.log('no trajo nada');
+            }
+        }, function(error) {
+            console.log('Error');
+        });
+    };
 
 
 });

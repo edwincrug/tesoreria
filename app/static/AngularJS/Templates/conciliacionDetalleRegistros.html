@@ -195,7 +195,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="auxiliarD in auxiliarDetalle">
-                            <td>{{auxiliarD.polFecha}}</td>
+                            <td>{{auxiliarD.polFecha | date:'dd/MM/yyyy'}}</td>
                             <td>{{auxiliarD.polTipo}}</td>
                             <td>{{auxiliarD.polReferencia2}}</td>
                             <td>{{auxiliarD.movConcepto}}</td>

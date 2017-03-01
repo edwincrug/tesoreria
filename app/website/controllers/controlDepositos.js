@@ -51,8 +51,8 @@ controlDepositos.prototype.get_createReference = function(req, res, next) {
 
 controlDepositos.prototype.get_insertReferenceDetails = function(req, res, next) {
 
-console.log("aqui estoy");
-console.log(req.query.idAlma);
+    console.log("aqui estoy");
+    console.log(req.query.idAlma);
     var self = this;
 
     var params = [
@@ -80,7 +80,6 @@ console.log(req.query.idAlma);
 
 
 
-
 controlDepositos.prototype.get_testApi = function(req, res, next) {
 
     //get utiliza params y lo recibe req.query ---> req.query.val1
@@ -101,6 +100,78 @@ controlDepositos.prototype.get_testApi = function(req, res, next) {
     });
 
 };
+
+
+
+controlDepositos.prototype.get_pendingReference = function(req, res, next) {
+
+    var self = this;
+
+    var params = [];
+
+    this.model.query('SEL_CONTROLD_DEPOSITOS_PENDIENTES_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+
+};
+
+
+controlDepositos.prototype.get_pendingReferenceDetails = function(req, res, next) {
+
+
+
+    var self = this;
+
+    var params = [{ name: 'idReferencia', value: req.query.idReferencia, type: self.model.types.INT }];
+
+    this.model.query('SEL_CONTROLD_DEPOSITOS_PENDIENTES_DETALLE_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+
+};
+
+
+controlDepositos.prototype.get_applyReference = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idReferencia', value: req.query.idReferencia, type: self.model.types.INT }];
+
+    this.model.query('INS_APLICA_REFERENCIAS_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+
+};
+
+
+controlDepositos.prototype.get_setObservation = function(req, res, next) {
+
+    var self = this;
+
+
+    var params = [
+        { name: 'idDepositoBanco', value: req.query.idDepositoBanco, type: self.model.types.INT },
+        { name: 'observacion', value: req.query.observacion, type: self.model.types.STRING }
+    ];
+
+    this.model.query('UPD_OBSEVACION_DEPOSITO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+
+};
+
 
 
 module.exports = controlDepositos;
