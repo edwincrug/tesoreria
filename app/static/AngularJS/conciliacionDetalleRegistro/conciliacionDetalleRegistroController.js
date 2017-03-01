@@ -409,16 +409,16 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     //****************************************************************************************************
     $scope.generaInfoReport = function(accion) {
         variablesLocalStorage();
-        conciliacionRepository.getAbonoContable('', '', '', 1).then(function(result) {
+        conciliacionRepository.getAbonoContable($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable).then(function(result) {
             console.log(result, 'soy el Abono Contable');
             $scope.abonoContable = result.data;
-            conciliacionRepository.getCargoContable('', '', '', 1).then(function(result) {
+            conciliacionRepository.getCargoContable($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable).then(function(result) {
                 console.log(result, 'Soy el cargo contable');
                 $scope.cargoContable = result.data;
-                conciliacionRepository.getCargoBancario('', '', '', 1).then(function(result) {
+                conciliacionRepository.getCargoBancario($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable).then(function(result) {
                     console.log(result, 'Soy el cargo bancario');
                     $scope.cargoBancario = result.data;
-                    conciliacionRepository.getAbonoBancario('', '', '', 1).then(function(result) {
+                    conciliacionRepository.getAbonoBancario($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable).then(function(result) {
                         console.log(result, 'Soy el abono bancario');
                         $scope.abonoBancario = result.data;
                         conciliacionInicioRepository.getTotalAbonoCargo(null, '', '', '', 2).then(function(result) {
