@@ -137,7 +137,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     //**************************************************************************************************    
     $scope.envioMail = function() {
         conciliacionDetalleRegistroRepository.getReportePdf($scope.jsonData).then(function(fileName) {
-            conciliacionDetalleRegistroRepository.sendMail(fileName.data).then(function(result) {
+            conciliacionDetalleRegistroRepository.sendMail(fileName.data, $scope.cuenta, $scope.nombreEmpresa, $scope.cuentaBanco, $scope.nombreBanco, $rootScope.userData.nombreUsuario).then(function(result) {
                 console.log(result, 'Estoy en el envio de mail')
             });
         });

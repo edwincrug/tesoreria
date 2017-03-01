@@ -160,61 +160,75 @@ conciliacionDetalleRegistro.prototype.get_viewpdf = function(req, res, next) {
     });
 };
 conciliacionDetalleRegistro.prototype.post_sendMail = function(req, res, next) {
-
-    //req.body.nombreArchivo    
-    var  nombreArchivo = req.body.nombreArchivo;
-    var object = {};   //Objeto que envía los parámetros
-    var params = [];   //Referencia a la clase para callback
     var self = this;
-    var files = [];
-    var ruta = path.dirname(require.main.filename) + "\\pdf\\" + nombreArchivo + ".pdf";
-    var extension = '.pdf';
-    var carpeta = 'pdf'; 
-    var nodemailer = require('nodemailer');
-    var smtpTransport = require('nodemailer-smtp-transport');
-    var transporter = nodemailer.createTransport(smtpTransport({
-        host: '192.168.20.1',
-        port: 25,
-        secure: false,
-        auth: {
-            user: 'sistemas',
-            pass: 's1st3m4s'
-        },
-        tls: { rejectUnauthorized: false }
-    }));
-    var mailOptions = {
-        from: '<grupoandrade.reportes@grupoandrade.com.mx>', // sender address 
-        to: 'lgordillo@bism.com.mx', // list of receivers 
-        subject: 'Conciliación Bancaria', // Subject line 
-        text: 'Se envían adjuntos la Conciliación Bancaria', // plaintext body 
-        html: '<b>Se envían adjuntos la Conciliación Bancaria </b>', // html body 
-        attachments: [{ // file on disk as an attachment
-            filename: req.body.nombreArchivo + '.pdf',
-            path: ruta // stream this file
-        }]
-    };
-    setTimeout(function() {
-        transporter.sendMail(mailOptions, function(error, info) {
-            if (error) {
-                res.send(500);
-                console.log(error);
-            } else {
-                res.send(200);
-                fs.stat(ruta, function(err, stats) {
-                    if (err) {
-                        return console.error(err);
-                    }
-                });
-            }
-        });
-    }, 4000)
+    var params = [{ name: 'tipoParametro', value: 0, type: self.model.types.INT }];
+    this.model.query('SEL_PARAMETROS_SP', params, function(error, result) {
+        console.log(result[0].valor, 'result de ENVIOMAIL')
+        console.log(error, 'error de ENVIOMAIL')
+
+        // self.view.expositor(res, {
+        //     error: error,
+        //     result: result
+        // });
+        //req.body.nombreArchivo    
+        var  nombreArchivo = req.body.nombreArchivo;
+        var cuentaContable = req.body.cuentaContable;
+        var nombreEmpresa = req.body.nombreEmpresa;
+        var cuentaBancaria = req.body.cuentaBancaria;
+        var nombreBanco = req.body.nombreBanco;
+        var responsable = req.body.responsable;
+        var object = {};   //Objeto que envía los parámetros
+        var params = [];   //Referencia a la clase para callback    
+        var files = [];
+        var ruta = path.dirname(require.main.filename) + "\\pdf\\" + nombreArchivo + ".pdf";
+        var extension = '.pdf';
+        var carpeta = 'pdf'; 
+        var nodemailer = require('nodemailer');
+        var smtpTransport = require('nodemailer-smtp-transport');
+        var transporter = nodemailer.createTransport(smtpTransport({
+            host: '192.168.20.1',
+            port: 25,
+            secure: false,
+            auth: {
+                user: 'sistemas',
+                pass: 's1st3m4s'
+            },
+            tls: { rejectUnauthorized: false }
+        }));
+        var mailOptions = {
+            from: '<grupoandrade.reportes@grupoandrade.com.mx>', // sender address 
+            to: result[2].valor, // list of receivers 
+            subject: result[0].valor, // Subject line 
+            text: result[1].valor, // plaintext body 
+            html: '<b>' + result[1].valor + '</b><br/><br/><br/><b>Empresa: </b>' + nombreEmpresa + '<br/><b>Cuenta contable: </b>' + cuentaContable + '<br/><b>Banco: </b>'+ nombreBanco + '<br/><b>Cuenta bancaria: </b>'+ cuentaBancaria + '<br/><br/><b>Realizó: </b>' + responsable, // html body 
+            attachments: [{ // file on disk as an attachment
+                filename: req.body.nombreArchivo + '.pdf',
+                path: ruta // stream this file
+            }]
+        };
+        setTimeout(function() {
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error) {
+                    res.send(500);
+                    console.log(error);
+                } else {
+                    res.send(200);
+                    fs.stat(ruta, function(err, stats) {
+                        if (err) {
+                            return console.error(err);
+                        }
+                    });
+                }
+            });
+        }, 4000)
 
 
-    transporter.close;
-    object.error = null;            
-    object.result = 1; 
-    console.log(object.result)
-    req.body = []; 
+        transporter.close;
+        object.error = null;            
+        object.result = 1; 
+        console.log(object.result)
+        req.body = [];
+    }); 
 };
 conciliacionDetalleRegistro.prototype.post_generaPunteo = function(req, res, next) {
 
