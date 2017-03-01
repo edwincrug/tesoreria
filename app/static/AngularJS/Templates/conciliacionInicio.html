@@ -19,18 +19,18 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="form-label text-main">Banco:</label>
-                                <select class="form-control" ng-model="filtros.IdBanco" ng-options="banco.IdBanco as banco.Nombre for banco in bancoEmpresa" name="txtTipoContrato" ng-change="getCuenta(filtros.IdBanco,empresaActual.emp_idempresa)">
+                                <select class="form-control" ng-model="bancoActual" ng-options="banco.IdBanco as banco.Nombre for banco in bancoEmpresa" name="txtTipoContrato" ng-change="getCuenta(bancoActual,empresaActual.emp_idempresa)" ng-disabled="activaInputBanco">
                                     <option value="">Seleccioné Banco</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="form-label text-main">Cuenta:</label>
-                                <select class="form-control" ng-model="cuentaActual" ng-options="bancoCuenta.Cuenta for bancoCuenta in bancoCuenta track by bancoCuenta.Cuenta" name="txtTipoContrato" ng-change="setCuenta()" ng-disabled="timbradoPendiente">
+                                <select class="form-control" ng-model="cuentaActual" ng-options="bancoCuenta.Cuenta for bancoCuenta in bancoCuenta track by bancoCuenta.Cuenta" name="txtTipoContrato" ng-change="setCuenta(cuentaActual)" ng-disabled="activaInputCuenta">
                                     <option value="">Seleccioné Cuenta</option>
                                 </select>
                             </div>
                             <div class="col-md-1" style="margin-top: 23px">
-                                <button class="btn btn-primary pull-right" ng-click="getTotalesAbonoCargo()"><i class="ti-search"></i> Buscar</button>
+                                <button class="btn btn-primary pull-right" ng-click="getTotalesAbonoCargo()" ng-disabled="activaBotones"><i class="ti-search"></i> Buscar</button>
                             </div>
                         </div>
                     </div>
@@ -128,16 +128,16 @@
                         <div class="col-sm-5">
                             <form>
                                 <div class="form-group col-md-3">
-                                    <button class="btn btn-primary" style="width:100px;"><i class="ti-save"></i> Guardar</button>
+                                    <button class="btn btn-primary" style="width:100px;" ng-disabled="activaBotonesReporte"><i class="ti-save"></i> Guardar</button>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <button class="btn btn-info" style="width:100px;"><i class="ti-printer"></i> Imprimir</button>
+                                    <button class="btn btn-info" style="width:100px;" ng-disabled="activaBotonesReporte"><i class="ti-printer"></i> Imprimir</button>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <button class="btn btn-success" ng-controller="conciliacionDetalleRegistroController" ng-click="generaInfoReport(1)"><i class="ti-export"></i> Ver Reporte</button>
+                                    <button class="btn btn-success" ng-controller="conciliacionDetalleRegistroController" ng-click="generaInfoReport(1)" ng-disabled="activaBotonesReporte"><i class="ti-export"></i> Ver Reporte</button>
                                 </div>
                                 <div class="form-group col-md-3" ng-controller="conciliacionDetalleRegistroController">
-                                    <button class="btn btn-mint" ng-click="generaInfoReport(2)"><i class="ti-email"></i> Enviar Correo</button>
+                                    <button class="btn btn-mint" ng-click="generaInfoReport(2)" ng-disabled="activaBotonesReporte"><i class="ti-email"></i> Enviar Correo</button>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
@@ -165,8 +165,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group text-right">
-                                    <a class="btn btn-warning text-right" href="/conciliacionDetalleRegistros"><i class="ti-agenda"></i> Detalle de registros</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a class="btn btn-danger pull-right" href="/conciliacion"><i class="ti-layout-list-thumb"></i> Ver detalle de diferencias</a>
+                                    <a class="btn btn-warning text-right" href="/conciliacionDetalleRegistros" ng-disabled="activaBotonesReporte"><i class="ti-agenda"></i> Detalle de registros</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class="btn btn-danger pull-right" href="/conciliacion" ng-disabled="activaBotonesReporte"><i class="ti-layout-list-thumb"></i> Ver detalle de diferencias</a>
                                 </div>
                             </form>
                         </div>

@@ -2,7 +2,6 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
 
     // ****************** Se guarda la información del usuario en variable userData
     $rootScope.userData = localStorageService.get('userData');
-    $scope.busqueda = JSON.parse(localStorage.getItem('paramBusqueda'));
     $scope.nodoPadre = [];
     $scope.abonoAuxiliar = 0;
     $scope.cargoAuxiliar = 0;
@@ -63,6 +62,16 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA 
     //****************************************************************************************************
     $scope.init = function() {
+        variablesLocalStorage();
+        $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
+        $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
+        $scope.getAuxiliarPunteo($scope.idEmpresa, $scope.cuenta);
+        $scope.getBancoPunteo($scope.idEmpresa, $scope.cuentaBanco);
+        $rootScope.mostrarMenu = 1;
+        console.log($scope.busqueda);
+    };
+    var variablesLocalStorage = function() {
+        $scope.busqueda = JSON.parse(localStorage.getItem('paramBusqueda'));
         $scope.idEmpresa = $scope.busqueda.idEmpresa;
         $scope.cuenta = $scope.busqueda.cuentaContable;
         $scope.idBanco = $scope.busqueda.idBanco;
@@ -71,12 +80,6 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         $scope.nombreBanco = $scope.busqueda.Banco;
         $scope.nombreGerente = $scope.busqueda.gerente;
         $scope.nombreContador = $scope.busqueda.contador;
-        $scope.getDepositosBancos($scope.idBanco, 1, $scope.cuentaBanco);
-        $scope.getAuxiliarContable($scope.idEmpresa, $scope.cuenta, 1);
-        $scope.getAuxiliarPunteo($scope.idEmpresa, $scope.cuenta);
-        $scope.getBancoPunteo($scope.idEmpresa, $scope.cuentaBanco);
-        $rootScope.mostrarMenu = 1;
-        console.log($scope.busqueda);
     };
     $scope.getAuxiliarContable = function(idEmpresa, numero_cuenta, idestatus) {
         if (idestatus == 1) { //Consigo los datos del Auxiliar Contable sin puntear
@@ -122,7 +125,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                 $("#objReportePdf").remove();
                 $scope.ruta = fileName.data;
                 //$("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
-                $("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5200/api/conciliacionDetalleRegistro/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
+                $("<object id='objReportePdf' class='filesInvoce' data='http://localhost:5200/api/conciliacionDetalleRegistro/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
                 $('#loading').modal('hide');
                 $('#reproteModalPdf').modal('show');
             }, 5000);
@@ -405,6 +408,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA Se genera el json para el reporte 
     //****************************************************************************************************
     $scope.generaInfoReport = function(accion) {
+        variablesLocalStorage();
         conciliacionRepository.getAbonoContable('', '', '', 1).then(function(result) {
             console.log(result, 'soy el Abono Contable');
             $scope.abonoContable = result.data;
