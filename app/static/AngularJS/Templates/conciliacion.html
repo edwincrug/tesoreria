@@ -278,8 +278,8 @@
                                     <thead>
                                         <tr>
                                             <th>Fecha</th>
-                                            <th>Tipo Pol</th>
-                                            <th>No Pol</th>
+                                            <th>Tipo Poliza</th>
+                                            <th>No Poliza</th>
                                             <th>Concepto</th>
                                             <th style="width: 10%; text-align: center;">Total</th>
                                         </tr>
@@ -289,11 +289,11 @@
                                     <table class="table">
                                         <tbody>
                                             <tr ng-repeat="row in abonosContables">
-                                                <td>{{row.FECHA}}</td>
-                                                <td>{{row.TIPO}}</td>
-                                                <td>{{row.POLIZA}}</td>
-                                                <td>{{row.CONCEPTO}}</td>
-                                                <td style="text-align: right;">{{row.SALDO_ACTUAL | currency}}</td>
+                                                <td>{{row.movFechaOpe}}</td>
+                                                <td>{{row.polTipo}}</td>
+                                                <td>{{row.numeroCuenta}}</td>
+                                                <td>{{row.movConcepto}}</td>
+                                                <td style="text-align: right;">{{row.abono | currency}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -348,19 +348,19 @@
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
-                                        <th>Tipo Pol</th>
-                                        <th>No Pol</th>
+                                        <th>Tipo Poliza</th>
+                                        <th>No Poliza</th>
                                         <th>Concepto</th>
                                         <th style="width: 10%; text-align: center;">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="row in cargosContables">
-                                        <td>{{row.FECHA}}</td>
-                                        <td>{{row.TIPO}}</td>
-                                        <td>{{row.POLIZA}}</td>
-                                        <td>{{row.CONCEPTO}}</td>
-                                        <td style="text-align: right;">{{row.SALDO_ACTUAL | currency}}</td>
+                                        <td>{{row.movFechaOpe}}</td>
+                                        <td>{{row.polTipo}}</td>
+                                        <td>{{row.numeroCuenta}}</td>
+                                        <td>{{row.movConcepto}}</td>
+                                        <td style="text-align: right;">{{row.abono | currency}}</td>
                                     </tr>
                                 </tbody>
                             </table>

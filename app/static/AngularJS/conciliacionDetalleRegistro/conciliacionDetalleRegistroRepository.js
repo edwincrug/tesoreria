@@ -82,12 +82,17 @@ registrationModule.factory('conciliacionDetalleRegistroRepository', function($ht
                 }
             });
         },
-        sendMail: function(filename) {
+        sendMail: function(filename, cuentaContable, nombreEmpresa, cuentaBancaria, nombreBanco, responsable) {
             return $http({
                 url: conciliacionDetalleRegistroURL + 'sendMail/',
                 method: "POST",
                 data: {
-                    nombreArchivo: filename
+                    nombreArchivo: filename,
+                    cuentaContable: cuentaContable,
+                    nombreEmpresa: nombreEmpresa,
+                    cuentaBancaria: cuentaBancaria,
+                    nombreBanco: nombreBanco,
+                    responsable: responsable
                 },
                 headers: {
                     'Content-Type': 'application/json'
