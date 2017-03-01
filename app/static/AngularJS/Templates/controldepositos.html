@@ -147,7 +147,7 @@
                         <td>{{pendiente.fecha | date:'dd/MM/yyyy'}}</td>
                         <td>{{pendiente.importe | currency}}</td>
                         <td>
-                            <button class="btn btn-success btn-xs" ng-click="applyReference(pendiente.idReferencia)"><i class="ti-check"></i></button>
+                            <button class="btn btn-success btn-xs" ng-click="applyReference(pendiente.idReferencia)" ng-show="userData.idPerfil>2"><i class="ti-check"></i></button>
                         </td>
                         <td>
                             <button class="btn btn-info btn-xs" ng-click="showReferenceDetails(pendiente)"><i class="ti-eye"></i></button>
