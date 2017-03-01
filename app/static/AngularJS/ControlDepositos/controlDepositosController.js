@@ -289,6 +289,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         if ($scope.selectedCartera.length > 1) params.idTipoReferencia = 4;
         $scope.createReference(params);
         alertFactory.success('Referencia generada con exito.');
+        $scope.loadPendingDocs();
     };
 
 
@@ -406,8 +407,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.promise = controlDepositosRepository.insApplyReference(idReferencia).then(function(result) {
 
             if (result.data.length > 0) {
-                console.log('OK');
-
+                $scope.loadPendingDocs(); //aqui debe de estar 
             } else {
                 console.log('no trajo nada');
             }
@@ -431,6 +431,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         }, function(error) {
             console.log('Error');
         });
+
+
     };
 
 
