@@ -125,7 +125,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                 $("#objReportePdf").remove();
                 $scope.ruta = fileName.data;
                 //$("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
-                $("<object id='objReportePdf' class='filesInvoce' data='http://localhost:5200/api/conciliacionDetalleRegistro/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
+                $("<object id='objReportePdf' class='filesInvoce' data='http://192.168.20.9:5200/api/conciliacionDetalleRegistro/viewpdf?fileName=" + $scope.ruta + "' width='100%' height='500px' >").appendTo('#reportePdf');
                 $('#loading').modal('hide');
                 $('#reproteModalPdf').modal('show');
             }, 5000);
@@ -138,6 +138,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.envioMail = function() {
         conciliacionDetalleRegistroRepository.getReportePdf($scope.jsonData).then(function(fileName) {
             conciliacionDetalleRegistroRepository.sendMail(fileName.data, $scope.cuenta, $scope.nombreEmpresa, $scope.cuentaBanco, $scope.nombreBanco, $rootScope.userData.nombreUsuario).then(function(result) {
+                alertFactory.success('Envio de correo con exito');
                 console.log(result, 'Estoy en el envio de mail')
             });
         });
