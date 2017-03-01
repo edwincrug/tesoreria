@@ -174,4 +174,25 @@ controlDepositos.prototype.get_setObservation = function(req, res, next) {
 
 
 
+controlDepositos.prototype.get_setReferencia = function(req, res, next) {
+
+    var self = this;
+
+
+    var params = [
+        { name: 'idDepositoBanco', value: req.query.idDepositoBanco, type: self.model.types.INT },
+        { name: 'idReferencia ', value: req.query.idReferencia, type: self.model.types.INT }
+    ];
+
+    this.model.query('UPD_DEPOSITO_REFERENCIA', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+
+};
+
+
+
 module.exports = controlDepositos;

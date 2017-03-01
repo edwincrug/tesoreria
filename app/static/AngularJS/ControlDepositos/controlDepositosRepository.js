@@ -67,6 +67,17 @@ registrationModule.factory('controlDepositosRepository', function($http) {
             });
         },
 
+        updSetReferencia: function(idDepositoBanco, idReferencia) {
+            return $http({
+                url: controlDepositosURL + 'setReferencia/',
+                method: "GET",
+                params: { idDepositoBanco: idDepositoBanco, idReferencia: idReferencia },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+
 
 
 

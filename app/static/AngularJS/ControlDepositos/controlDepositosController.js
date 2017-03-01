@@ -288,7 +288,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         var params = $scope.setReferenceParams($scope.selectedCartera[0], 0);
         if ($scope.selectedCartera.length > 1) params.idTipoReferencia = 4;
         $scope.createReference(params);
-
+        alertFactory.success('Referencia generada con exito.');
     };
 
 
@@ -319,6 +319,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
             if (result.data.length > 0) {
 
                 var idRef = result.data[0].idReferencia;
+                $scope.updateReference($scope.selectedDocuments.idDepositoBanco, idRef);
 
                 for (var i = 0; i < $scope.selectedCartera.length; i++) {
                     var params = $scope.setReferenceParams($scope.selectedCartera[i], idRef);
@@ -421,6 +422,21 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     $scope.updateObservation = function(idDepositoBanco, observacion) {
 
         $scope.promise = controlDepositosRepository.updSetObservation(idDepositoBanco, observacion).then(function(result) {
+
+            if (result.data.length > 0) {
+                console.log('OK');
+            } else {
+                console.log('no trajo nada');
+            }
+        }, function(error) {
+            console.log('Error');
+        });
+    };
+
+
+    $scope.updateReference = function(idDepositoBanco, idReferencia) {
+
+        $scope.promise = controlDepositosRepository.updSetReferencia(idDepositoBanco, idReferencia).then(function(result) {
 
             if (result.data.length > 0) {
                 console.log('OK');
