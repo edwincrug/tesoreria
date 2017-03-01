@@ -24,10 +24,16 @@ Conciliacion.prototype.get_abonoContable = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
+    var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
+                  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
+                  { name: 'noCuenta', value: req.query.noCuenta, type: self.model.types.STRING },
+                  { name: 'cuentaContable', value: req.query.cuentaContable, type: self.model.types.STRING },
+                  { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];
+
+    /*var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
                   { name: 'fInicial', value: req.query.fInicial, type: self.model.types.STRING },
                   { name: 'fFinal', value: req.query.fFinal, type: self.model.types.STRING },
-                  { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];
+                  { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];*/
 
     this.model.query('SEL_ABONO_CONTABLE_SP', params, function(error, result) {
         self.view.expositor(res, {
@@ -41,10 +47,17 @@ Conciliacion.prototype.get_cargoContable = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
-                  { name: 'fInicial', value: req.query.fInicial, type: self.model.types.STRING },
-                  { name: 'fFinal', value: req.query.fFinal, type: self.model.types.STRING },
+    var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
+                  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
+                  { name: 'noCuenta', value: req.query.noCuenta, type: self.model.types.STRING },
+                  { name: 'cuentaContable', value: req.query.cuentaContable, type: self.model.types.STRING },
                   { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];
+
+    /*var params = [{ name: 'idBanco', value: req.body.idBanco, type: self.model.types.INT },
+                  { name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.STRING },
+                  { name: 'noCuenta', value: req.body.noCuenta, type: self.model.types.STRING },
+                  { name: 'cuentaContable', value: req.body.cuentaContable, type: self.model.types.STRING},
+                  { name: 'opcion', value: req.body.opcion, type: self.model.types.INT}];              */
 
     this.model.query('SEL_CARGO_CONTABLE_SP', params, function(error, result) {
         self.view.expositor(res, {
@@ -58,10 +71,16 @@ Conciliacion.prototype.get_abonoBancario = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
+    var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
+                  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
+                  { name: 'noCuenta', value: req.query.noCuenta, type: self.model.types.STRING },
+                  { name: 'cuentaContable', value: req.query.cuentaContable, type: self.model.types.STRING },
+                  { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];
+
+    /*var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
                   { name: 'fInicial', value: req.query.fInicial, type: self.model.types.STRING },
                   { name: 'fFinal', value: req.query.fFinal, type: self.model.types.STRING },
-                  { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];
+                  { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];*/
 
     this.model.query('SEL_ABONO_BANCARIO_SP', params, function(error, result) {
         self.view.expositor(res, {
@@ -75,10 +94,16 @@ Conciliacion.prototype.get_cargoBancario = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
+    var params = [{ name: 'idBanco', value: req.query.idBanco, type: self.model.types.INT },
+                  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
+                  { name: 'noCuenta', value: req.query.noCuenta, type: self.model.types.STRING },
+                  { name: 'cuentaContable', value: req.query.cuentaContable, type: self.model.types.STRING },
+                  { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];
+
+    /*var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING },                  
                   { name: 'fInicial', value: req.query.fInicial, type: self.model.types.STRING },
                   { name: 'fFinal', value: req.query.fFinal, type: self.model.types.STRING },
-                  { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];
+                  { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];*/
 
     this.model.query('SEL_CARGO_BANCARIO_SP', params, function(error, result) {
         self.view.expositor(res, {

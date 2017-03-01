@@ -10,8 +10,17 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
     //        { name: 'Cargo Bancario', active: false, className: '' }
     //    ];
 
+    $scope.paramBusqueda = JSON.parse(localStorage.getItem('paramBusqueda'));
+
     $scope.init = function() {
         $scope.calendario();
+
+        $scope.busqueda = JSON.parse(localStorage.getItem('paramBusqueda'));
+        $scope.idEmpresa = $scope.busqueda.idEmpresa;
+        $scope.cuenta = $scope.busqueda.cuentaContable;
+        $scope.idBanco = $scope.busqueda.idBanco;        
+        $scope.cuentaBanco = $scope.busqueda.cuenta;
+
 
         $scope.dato = "llllll";
         $scope.dpiSelected = false;
@@ -41,10 +50,10 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
 
     $scope.obtieneCargosAbonos = function() {
 
-        $scope.getAbonoContable(0, 0, 0, 1);
-        $scope.getAbonoBancario(0, 0, 0, 1);
-        $scope.getCargoContable(0, 0, 0, 1);
-        $scope.getCargoBancario(0, 0, 0, 1);
+        $scope.getAbonoContable($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable);
+        $scope.getAbonoBancario($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable);
+        $scope.getCargoContable($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable);
+        $scope.getCargoBancario($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable);
     }
 
 
@@ -84,14 +93,16 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
         });
     }
     //*****************************************************************
-    //FIN
+    //FIN  
     //*****************************************************************
 
-    $scope.getAbonoContable = function(idEmpresa, fInicial, fFinal, opcion) {
-        conciliacionRepository.getAbonoContable(idEmpresa, fInicial, fFinal, opcion).then(function(result) {
+    $scope.getAbonoContable = function(idEmpresa, fInicial, fFinal, opcion,idBanco,noCuenta,cuentaContable) {
+        conciliacionRepository.getAbonoContable(idEmpresa, fInicial, fFinal, opcion,idBanco,noCuenta,cuentaContable).then(function(result) {
             if (result.data.length > 0) {
 
                 if (opcion == 1) {
+
+                    //console.log(result.data)
                     $scope.abonosContables = result.data;
 
                     for (var i = 0, len = result.data.length; i < len; i++)
@@ -111,8 +122,8 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
         });
     }
 
-    $scope.getAbonoBancario = function(idEmpresa, fInicial, fFinal, opcion) {
-        conciliacionRepository.getAbonoBancario(idEmpresa, fInicial, fFinal, opcion).then(function(result) {
+    $scope.getAbonoBancario = function(idEmpresa, fInicial, fFinal, opcion,idBanco,noCuenta,cuentaContable) {
+        conciliacionRepository.getAbonoBancario(idEmpresa, fInicial, fFinal, opcion,idBanco,noCuenta,cuentaContable).then(function(result) {
             if (result.data.length > 0) {
 
                 if (opcion == 1) {
@@ -139,8 +150,8 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
         });
     }
 
-    $scope.getCargoContable = function(idEmpresa, fInicial, fFinal, opcion) {
-        conciliacionRepository.getCargoContable(idEmpresa, fInicial, fFinal, opcion).then(function(result) {
+    $scope.getCargoContable = function(idEmpresa, fInicial, fFinal, opcion,idBanco,noCuenta,cuentaContable) {
+        conciliacionRepository.getCargoContable(idEmpresa, fInicial, fFinal, opcion,idBanco,noCuenta,cuentaContable).then(function(result) {
             if (result.data.length > 0) {
 
                 if (opcion == 1) {
@@ -159,8 +170,8 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
         });
     }
 
-    $scope.getCargoBancario = function(idEmpresa, fInicial, fFinal, opcion) {
-        conciliacionRepository.getCargoBancario(idEmpresa, fInicial, fFinal, opcion).then(function(result) {
+    $scope.getCargoBancario = function(idEmpresa, fInicial, fFinal, opcion,idBanco,noCuenta,cuentaContable) {
+        conciliacionRepository.getCargoBancario(idEmpresa, fInicial, fFinal, opcion,idBanco,noCuenta,cuentaContable).then(function(result) {
             if (result.data.length > 0) {
 
                 if (opcion == 1) {
