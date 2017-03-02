@@ -62,7 +62,7 @@
                                     <!--<img class="img-circle img-user media-object" src="img/profile-photos/1.png" alt="Profile Picture">-->
                                     <i class="demo-pli-male ic-user"></i>
                                 </span>
-                                <div class="username hidden-xs"> {{userData.nombreUsuario}}</div>
+                                <div class="username hidden-xs"> {{datosUsuario[0].nombre}}</div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-md dropdown-menu-right panel-default">
                                 <!-- Dropdown footer -->
@@ -115,8 +115,8 @@
                                         <a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
                                             <span class="pull-right dropdown-toggle">
                                             </span>
-                                            <p class="mnp-name"> {{userData.nombreUsuario}}</p>
-                                            <span class="mnp-desc">{{correo}}</span>
+                                            <p class="mnp-name"> {{datosUsuario[0].nombre}}</p>
+                                            <span class="mnp-desc">{{datosUsuario[0].correo}}</span>
                                         </a>
                                     </div>
                                 </div>
