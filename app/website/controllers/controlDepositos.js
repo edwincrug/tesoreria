@@ -50,9 +50,7 @@ controlDepositos.prototype.get_createReference = function(req, res, next) {
 
 
 controlDepositos.prototype.get_insertReferenceDetails = function(req, res, next) {
-
-    console.log("aqui estoy");
-    console.log(req.query.idAlma);
+    
     var self = this;
 
     var params = [
@@ -177,6 +175,10 @@ controlDepositos.prototype.get_setObservation = function(req, res, next) {
 controlDepositos.prototype.get_setReferencia = function(req, res, next) {
 
     var self = this;
+
+    console.log('test');
+    console.log(req.query.idDepositoBanco);
+    console.log(req.query.idReferencia);
 
 
     var params = [

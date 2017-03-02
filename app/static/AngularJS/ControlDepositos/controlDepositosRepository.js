@@ -78,9 +78,6 @@ registrationModule.factory('controlDepositosRepository', function($http) {
             });
         },
 
-
-
-
         testApi: function(objData) {
 
             console.log(objData);

@@ -320,6 +320,10 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
             if (result.data.length > 0) {
 
                 var idRef = result.data[0].idReferencia;
+                
+                console.log(idRef);
+                console.log($scope.selectedDocuments.idDepositoBanco);
+
                 $scope.updateReference($scope.selectedDocuments.idDepositoBanco, idRef);
 
                 for (var i = 0; i < $scope.selectedCartera.length; i++) {
