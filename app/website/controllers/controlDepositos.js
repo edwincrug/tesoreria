@@ -183,7 +183,7 @@ controlDepositos.prototype.get_setReferencia = function(req, res, next) {
 
     var params = [
         { name: 'idDepositoBanco', value: req.query.idDepositoBanco, type: self.model.types.INT },
-        { name: 'idReferencia ', value: req.query.idReferencia, type: self.model.types.INT }
+        { name: 'idReferencia', value: req.query.idReferencia, type: self.model.types.INT }
     ];
 
     this.model.query('UPD_DEPOSITO_REFERENCIA', params, function(error, result) {
