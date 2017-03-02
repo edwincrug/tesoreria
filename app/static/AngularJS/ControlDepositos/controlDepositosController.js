@@ -325,8 +325,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
                     var params = $scope.setReferenceParams($scope.selectedCartera[i], idRef);
                     $scope.insertReferenceDetails(params);
                 };
-                
-                $scope.updateReference($scope.selectedDocuments.idDepositoBanco, idRef);
+
+                //$scope.updateReference($scope.selectedDocuments.idDepositoBanco, idRef);
 
             } else {
                 console.log('no trajo nada');
