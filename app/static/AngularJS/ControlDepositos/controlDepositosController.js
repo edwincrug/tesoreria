@@ -319,17 +319,14 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.promise = controlDepositosRepository.createReference(objData).then(function(result) {
             if (result.data.length > 0) {
 
-                var idRef = result.data[0].idReferencia;
-                
-                console.log(idRef);
-                console.log($scope.selectedDocuments.idDepositoBanco);
-
-                $scope.updateReference($scope.selectedDocuments.idDepositoBanco, idRef);
+                var idRef = result.data[0].idReferencia;                                    
 
                 for (var i = 0; i < $scope.selectedCartera.length; i++) {
                     var params = $scope.setReferenceParams($scope.selectedCartera[i], idRef);
                     $scope.insertReferenceDetails(params);
                 };
+                
+                $scope.updateReference($scope.selectedDocuments.idDepositoBanco, idRef);
 
             } else {
                 console.log('no trajo nada');
