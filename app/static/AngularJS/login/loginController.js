@@ -4,6 +4,23 @@ registrationModule.controller('loginController', function($scope, $rootScope, $l
     $scope.init = function() {
         $rootScope.mostrarMenu = 0;
         localStorageService.clearAll('userData');
+        if (!($('#lgnUser').val().indexOf('[') > -1)) {
+                localStorageService.set('lgnUser', $('#lgnUser').val());
+                //$scope.getEmpleado();
+                location.href = '/conciliacionInicio';
+            } else {
+                if (($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')) {
+                    if (getParameterByName('employee') != '') {
+                        $rootScope.currentEmployee = getParameterByName('employee');
+                        location.href = '/conciliacionInicio';
+                    } else {
+                        alert('Inicie sesión desde panel de aplicaciones o desde el login.');
+                    }
+
+                }
+            }
+        $rootScope.currentEmployee = localStorageService.get('lgnUser');
+        console.log( $rootScope.currentEmployee)
     }
 
     // *************************** Función para logueo de portal *****************
