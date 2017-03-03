@@ -10,6 +10,9 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     $scope.activaInputCuenta = true;
     $scope.activaBotonBuscar = true;
     $scope.activaBotonesReporte = true;
+    $scope.empresaActual = '';
+    $scope.bancoActual = '';
+    $scope.cuentaActual = '';
     //***************************************************************
 
     $scope.init = function() {
@@ -33,6 +36,9 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     $scope.getEmpresa = function(idUsuario) {
         filtrosRepository.getEmpresas(idUsuario).then(
             function(result) {
+                $scope.activaInputCuenta = true;
+                $scope.activaBotonBuscar = true;
+                $scope.activaBotonesReporte = true;
                 if (result.data.length > 0) {
                     $scope.empresaUsuario = result.data;
 
@@ -43,13 +49,18 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
     }
 
     $scope.getBancos = function(idBanco) {
+        $scope.activaInputCuenta = true;
+        $scope.activaBotonBuscar = true;
+        $scope.activaBotonesReporte = true;
+        $scope.bancoActual = '';
+        $scope.cuentaActual = '';
         if (idBanco == undefined || idBanco == null || idBanco == '') {
             alertFactory.warning('Seleccione una Empresa');
             $scope.activaInputBanco = true;
         } else {
-            $scope.activaInputBanco = false;
             filtrosRepository.getBancos(idBanco).then(function(result) {
                 if (result.data.length > 0) {
+                    $scope.activaInputBanco = false;
                     $scope.bancoEmpresa = result.data;
                     //console.log($scope.bancoEmpresa)
                 } else {
@@ -89,6 +100,8 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
 
     //LQMA 27022017 add obtiene datos para llenar filtro de cuenta
     $scope.getCuenta = function(idBanco, idEmpresa) {
+        $scope.activaBotonBuscar = true;
+        $scope.activaBotonesReporte = true;
         //console.log('sdsdsd')
         //console.log(idBanco,idEmpresa)
         if (idBanco == undefined || idBanco == null || idBanco == '') {
@@ -99,6 +112,7 @@ registrationModule.controller('conciliacionInicioController', function($scope, $
             filtrosRepository.getCuenta(idBanco, idEmpresa).then(function(result) {
                 if (result.data.length > 0) {
                     $scope.activaInputCuenta = false;
+                    $scope.activaBotonBuscar = false;
                     //console.log('$scope.bancoCuenta')
                     //console.log(result.data)
                     $scope.bancoCuenta = result.data;
