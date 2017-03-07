@@ -104,19 +104,22 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
     $scope.getCarteraVencida = function(cliente, empresa, sucursal, departamento, fechaIni, fechaFin) {
         $scope.gridCartera.data = [];
-
+        $('#mdlLoading').modal('show');
         filtrosRepository.getCartera(cliente, empresa, sucursal, departamento, fechaIni, fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 $scope.gridCartera.data = result.data;
+                $('#mdlLoading').modal('hide');
             }
         });
     }
 
     $scope.getDepositosBancosNoReferenciados = function(empresa, cuenta, fechaIni, fechaFin) {
+        $('#mdlLoading').modal('show');
         $scope.gridDocumentos.data = [];
         filtrosRepository.getDepositosNoReferenciados(empresa, cuenta, fechaIni, fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 $scope.gridDocumentos.data = result.data;
+                $('#mdlLoading').modal('hide');
             }
         });
     }
@@ -289,7 +292,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         if ($scope.selectedCartera.length > 1) params.idTipoReferencia = 4;
         $scope.createReference(params);
         alertFactory.success('Referencia generada con exito.');
-        
+
     };
 
 
@@ -316,24 +319,33 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
     $scope.createReference = function(objData) {
 
+        $('#mdlLoading').modal('show');
+
         $scope.promise = controlDepositosRepository.createReference(objData).then(function(result) {
             if (result.data.length > 0) {
-
-                var idRef = result.data[0].idReferencia;                                    
+                var idRef = result.data[0].idReferencia;
 
                 for (var i = 0; i < $scope.selectedCartera.length; i++) {
+
                     var params = $scope.setReferenceParams($scope.selectedCartera[i], idRef);
                     $scope.insertReferenceDetails(params);
-                };
-                
-                $scope.updateReference($scope.selectedDocuments.idDepositoBanco, idRef);                
+                }
+
+                $scope.updateReference($scope.selectedDocuments.idDepositoBanco, idRef);
+                $scope.updateCarteraVencida(idRef);
+
+                $scope.getDepositosBancosNoReferenciados($scope.filtros.idBanco, $scope.filtroscheck.cargo, '10/11/2015', '31/12/2015');
+                $scope.getCarteraVencida($scope.filtros.idCliente, $scope.filtros.idTipoEmpresa, 12, 67, $scope.filtros.fechaInicioCartera, $scope.filtros.fechaFinCartera);
                 $scope.loadPendingDocs();
+                $('#mdlLoading').modal('hide');
 
             } else {
-                console.log('no trajo nada');
+                console.log('no trajo nada createReference');
+                $('#mdlLoading').modal('hide');
             }
         }, function(error) {
             console.log('Error');
+            $('#mdlLoading').modal('hide');
         });
     };
 
@@ -346,7 +358,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
             if (result.data.length > 0) {
                 console.log('ok');
             } else {
-                console.log('no trajo nada');
+                console.log('no trajo nada insertReferenceDetails');
             }
         }, function(error) {
             console.log('Error');
@@ -373,9 +385,9 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.promise = controlDepositosRepository.getPendingReference().then(function(result) {
 
             if (result.data.length > 0) {
-                $scope.tblPendientes = result.data;                
+                $scope.tblPendientes = result.data;
             } else {
-                console.log('no trajo nada');
+                console.log('no trajo nada loadPendingDocs');
             }
         }, function(error) {
             console.log('Error');
@@ -396,7 +408,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
             if (result.data.length > 0) {
                 $scope.tblPendientesDetalle = result.data;
             } else {
-                console.log('no trajo nada');
+                console.log('no trajo nada loadPendingDocsDetails');
             }
         }, function(error) {
             console.log('Error');
@@ -409,9 +421,9 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.promise = controlDepositosRepository.insApplyReference(idReferencia).then(function(result) {
 
             if (result.data.length > 0) {
-                $scope.loadPendingDocs(); //aqui debe de estar 
+                $scope.loadPendingDocs();
             } else {
-                console.log('no trajo nada');
+                console.log('no trajo nada applyReference');
             }
         }, function(error) {
             console.log('Error');
@@ -428,7 +440,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
             if (result.data.length > 0) {
                 console.log('OK');
             } else {
-                console.log('no trajo nada');
+                console.log('no trajo nada updateObservation');
             }
         }, function(error) {
             console.log('Error');
@@ -443,15 +455,73 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         $scope.promise = controlDepositosRepository.updSetReferencia(idDepositoBanco, idReferencia).then(function(result) {
 
             if (result.data.length > 0) {
-                
                 console.log('OKKKKKKKKKKKKKK');
             } else {
-                console.log('no trajo nada');
+                console.log('no trajo nada updateReference');
             }
         }, function(error) {
             console.log('Error');
         });
     };
+
+
+
+
+
+
+    $scope.updateCarteraVencida = function(idReferencia) {
+
+        $scope.promise = controlDepositosRepository.updCarteraVencidaReferencia(idReferencia).then(function(result) {
+
+            if (result.data.length > 0) {
+                console.log('ok cartera vencida');
+            } else {
+                console.log('no trajo nada updateCarteraVencida');
+            }
+        }, function(error) {
+            console.log('Error');
+        });
+    };
+
+
+    $scope.deleteReferenciaGenerada = function(idReferencia) {
+
+        $scope.promise = controlDepositosRepository.delReferenciaGenerada(idReferencia).then(function(result) {
+
+            if (result.data.length > 0) {
+                console.log('Ref Eliminada');
+            } else {
+                console.log('no trajo nada deleteReferenciaGenerada');
+            }
+        }, function(error) {
+            console.log('Error');
+        });
+    };
+
+
+    $scope.testApi = function() {
+
+        $scope.promise = controlDepositosRepository.testApi({ val1: 1, val2: 'valor' }).then(function(result) {
+
+            if (result.data.length > 0) {
+                console.log(result.data);
+            } else {
+                console.log('no trajo nada deleteReferenciaGenerada');
+            }
+        }, function(error) {
+            console.log('Error');
+        });
+    };
+
+
+
+
+
+
+
+
+
+
 
 
 });

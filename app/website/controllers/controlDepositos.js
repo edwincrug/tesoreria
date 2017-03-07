@@ -50,7 +50,7 @@ controlDepositos.prototype.get_createReference = function(req, res, next) {
 
 
 controlDepositos.prototype.get_insertReferenceDetails = function(req, res, next) {
-    
+
     var self = this;
 
     var params = [
@@ -176,11 +176,6 @@ controlDepositos.prototype.get_setReferencia = function(req, res, next) {
 
     var self = this;
 
-    console.log('test');
-    console.log(req.query.idDepositoBanco);
-    console.log(req.query.idReferencia);
-
-
     var params = [
         { name: 'idDepositoBanco', value: req.query.idDepositoBanco, type: self.model.types.INT },
         { name: 'idReferencia', value: req.query.idReferencia, type: self.model.types.INT }
@@ -194,6 +189,41 @@ controlDepositos.prototype.get_setReferencia = function(req, res, next) {
     });
 
 };
+
+
+controlDepositos.prototype.get_updCarteraVencidaReferencia = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idReferencia', value: req.query.idReferencia, type: self.model.types.INT }];
+
+    this.model.query('UPD_CARTERA_VENCIDA_REFERENCIA', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+
+};
+
+controlDepositos.prototype.get_delReferenciaGenerada = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idReferencia', value: req.query.idReferencia, type: self.model.types.INT }];
+
+    this.model.query('DEL_REFERENCIA_GENERADA_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+
+};
+
+
+
+
 
 
 

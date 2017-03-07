@@ -56,6 +56,16 @@ registrationModule.factory('controlDepositosRepository', function($http) {
                 }
             });
         },
+        updCarteraVencidaReferencia: function(idReferencia) {
+            return $http({
+                url: controlDepositosURL + 'updCarteraVencidaReferencia/',
+                method: "GET",
+                params: { idReferencia: idReferencia },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
         updSetObservation: function(idDepositoBanco, observacion) {
             return $http({
                 url: controlDepositosURL + 'setObservation/',
@@ -72,6 +82,17 @@ registrationModule.factory('controlDepositosRepository', function($http) {
                 url: controlDepositosURL + 'setReferencia/',
                 method: "GET",
                 params: { idDepositoBanco: idDepositoBanco, idReferencia: idReferencia },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+
+        delReferenciaGenerada: function(idReferencia) {
+            return $http({
+                url: controlDepositosURL + 'delReferenciaGenerada/',
+                method: "GET",
+                params: { idReferencia: idReferencia },
                 headers: {
                     'Content-Type': 'application/json'
                 }

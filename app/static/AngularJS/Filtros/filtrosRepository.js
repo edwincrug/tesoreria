@@ -157,13 +157,12 @@ registrationModule.factory('filtrosRepository', function($http) {
             });
         },
 
-        getDepositosNoReferenciados: function(idBanco, idestatus) {
+        getDepositosNoReferenciados: function(idBanco) {
             return $http({
                 url: filtrosURL + 'depositosNoReferenciados/',
                 method: "GET",
                 params: {
-                    idBanco: idBanco,
-                    idEstatus: idestatus
+                    idBanco: idBanco
                 },
                 headers: {
                     'Content-Type': 'application/json'
