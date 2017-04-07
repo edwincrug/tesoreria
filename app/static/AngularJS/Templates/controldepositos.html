@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="form-group col-md-3" id="calendar">
-                <label for="fInicio">Fecha Fin:</label>
+                <label for="ffin">Fecha Fin:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     <input type="text" class="form-control" id="ffin" ng-model="filtros.fechaFinDeposito" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinDeposito">
@@ -67,17 +67,17 @@
                 </select>
             </div>
             <div class="form-group col-md-3" id="calendar">
-                <label for="fInicio">Fecha Inicio:</label>
+                <label for="fInicioCartera">Fecha Inicio:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fInicioCartera" ng-model="filtros.fechaInicioCartera" value={{fechaInicio}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniCartera">
+                    <input type="text" class="form-control" id="fInicioCartera" ng-model="filtros.fechaInicioCartera" value={{fechaInicioCartera}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniCartera" />
                 </div>
             </div>
             <div class="form-group col-md-3" id="calendar">
-                <label for="fInicio">Fecha Fin:</label>
+                <label for="ffincartera">Fecha Fin:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="ffincartera" ng-model="filtros.fechaFinCartera" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinCartera">
+                    <input type="text" class="form-control" id="ffincartera" ng-model="filtros.fechaFinCartera" value={{fechaFinCartera}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinCartera" />
                 </div>
             </div>
             <div class="form-group col-md-3" id="calendar">
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="form-group col-md-3" style="margin-top: 23px">
-                <button class="btn btn-warning" ng-disabled="activarBuscarCartera" ng-click="getCarteraVencida(filtros.idCliente,filtros.idTipoEmpresa,12,67,filtros.fechaInicioCartera,filtros.fechaFinCartera)">Buscar</button>
+                <button class="btn btn-warning" ng-disabled="activarBuscarCartera" ng-click="getCarteraVencida(filtros.idCliente,filtros.idEmpresa,filtros.idSucursal,filtros.idDepartamento,filtros.fechaInicioCartera,filtros.fechaFinCartera)">Buscar</button>
             </div>
             <div class="panel col-md-12">
                 <br/>

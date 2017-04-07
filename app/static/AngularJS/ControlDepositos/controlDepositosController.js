@@ -56,7 +56,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
         $scope.activarBanco = true;
         $scope.activarSucursal = true;
-        $scope.getSucursales(15, 5);
+        $scope.getSucursales($scope.idUsuario, idEmpresa); /*optimizar*/
         $scope.getBancos(idEmpresa);
 
     }
@@ -103,14 +103,21 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     }
 
     $scope.getCarteraVencida = function(cliente, empresa, sucursal, departamento, fechaIni, fechaFin) {
+
+        fechaIni = document.getElementById("fInicioCartera").value;
+        fechaFin = document.getElementById("ffincartera").value;
+
         $scope.gridCartera.data = [];
         $('#mdlLoading').modal('show');
         filtrosRepository.getCartera(cliente, empresa, sucursal, departamento, fechaIni, fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 $scope.gridCartera.data = result.data;
                 $('#mdlLoading').modal('hide');
+            } else {
+                $('#mdlLoading').modal('hide');
             }
         });
+
     }
 
     $scope.getDepositosBancosNoReferenciados = function(empresa, cuenta, fechaIni, fechaFin) {
@@ -119,6 +126,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         filtrosRepository.getDepositosNoReferenciados(empresa, cuenta, fechaIni, fechaFin).then(function(result) {
             if (result.data.length > 0) {
                 $scope.gridDocumentos.data = result.data;
+                $('#mdlLoading').modal('hide');
+            } else {
                 $('#mdlLoading').modal('hide');
             }
         });
@@ -288,7 +297,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
     $scope.guardarGrid = function() {
         //$('#mdlLoading').modal('show');    
-        var params = $scope.setReferenceParams($scope.selectedCartera[0], 0);
+        var params = $scope.setReferenceParams($scope.selectedCartera[0], 0);        
         if ($scope.selectedCartera.length > 1) params.idTipoReferencia = 4;
         $scope.createReference(params);
         alertFactory.success('Referencia generada con exito.');
