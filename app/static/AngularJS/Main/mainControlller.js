@@ -36,6 +36,8 @@ registrationModule.controller('mainController', function($scope, $rootScope, $lo
         localStorageService.clearAll('userData');
         localStorageService.clearAll('empleadoDatos');
         localStorageService.clearAll('lgnUser');
+        localStorage.removeItem('paramBusqueda');
+
         location.href = '/';
     }
 });

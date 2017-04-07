@@ -6,6 +6,7 @@ registrationModule.controller('loginController', function($scope, $rootScope, $l
         localStorageService.clearAll('userData');
         localStorageService.clearAll('empleadoDatos');
         localStorageService.clearAll('lgnUser');
+        localStorage.removeItem('paramBusqueda');
         if (!($('#lgnUser').val().indexOf('[') > -1)) {
             localStorageService.set('lgnUser', $('#lgnUser').val());
             //$scope.getEmpleado();
