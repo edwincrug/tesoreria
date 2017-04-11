@@ -217,16 +217,12 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                 } else {
                     $scope.verificaCantidades(2);
                 }
-                $scope.limpiaVariables();
-                $scope.getGridTablas();
             } else if ($scope.punteoBanco.length == 1) {
                 if ($scope.cargoAuxiliar != 0 && $scope.abonoAuxiliar != 0) {
                     alertFactory.warning('No se puede seleccionar abono y cargo al mismo tiempo');
                 } else {
                     $scope.verificaCantidades(1);
                 }
-                $scope.limpiaVariables();
-                $scope.getGridTablas();
             } else {
                 $scope.limpiaVariables();
                 alertFactory.warning('Punteo no valido')
@@ -268,6 +264,8 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                         console.log('Respuesta Incorrecta');
                     } else {
                         console.log('Respuesta Correcta');
+                        $scope.limpiaVariables();
+                        $scope.getGridTablas();
                     }
                 })
             });
@@ -296,22 +294,22 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     // INICIA Obtengo los padres del Auxiliar contable punteado
     //****************************************************************************************************
     $scope.getAuxiliarPunteo = function(idempresa, cuenta) {
-        $scope.tabla('auxiliarPunteo');
+
         conciliacionDetalleRegistroRepository.getAuxiliarPunteo(idempresa, cuenta).then(function(result) {
             //console.log(result.data, 'soy el auxilear punteado')
             $scope.auxiliarPadre = result.data;
-
+            $scope.tabla('auxiliarPunteo');
         });
     };
     //****************************************************************************************************
     // INICIA Obtengo los padres del Banco punteado
     //****************************************************************************************************
     $scope.getBancoPunteo = function(idempresa, cuentaBanco) {
-        $scope.tabla('bancoPunteo');
+
         conciliacionDetalleRegistroRepository.getBancoPunteo(idempresa, cuentaBanco).then(function(result) {
             //console.log(result.data, 'soy el banco punteado')
             $scope.bancoPadre = result.data;
-
+            $scope.tabla('bancoPunteo');
         });
     };
     //****************************************************************************************************
@@ -410,16 +408,16 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     //****************************************************************************************************
     $scope.generaInfoReport = function(accion) {
         variablesLocalStorage();
-        conciliacionRepository.getAbonoContable($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable).then(function(result) {
+        conciliacionRepository.getAbonoContable($scope.busqueda.idEmpresa, 0, 0, 1, $scope.busqueda.idBanco, $scope.busqueda.cuenta, $scope.busqueda.cuentaContable).then(function(result) {
             console.log(result, 'soy el Abono Contable');
             $scope.abonoContable = result.data;
-            conciliacionRepository.getCargoContable($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable).then(function(result) {
+            conciliacionRepository.getCargoContable($scope.busqueda.idEmpresa, 0, 0, 1, $scope.busqueda.idBanco, $scope.busqueda.cuenta, $scope.busqueda.cuentaContable).then(function(result) {
                 console.log(result, 'Soy el cargo contable');
                 $scope.cargoContable = result.data;
-                conciliacionRepository.getCargoBancario($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable).then(function(result) {
+                conciliacionRepository.getCargoBancario($scope.busqueda.idEmpresa, 0, 0, 1, $scope.busqueda.idBanco, $scope.busqueda.cuenta, $scope.busqueda.cuentaContable).then(function(result) {
                     console.log(result, 'Soy el cargo bancario');
                     $scope.cargoBancario = result.data;
-                    conciliacionRepository.getAbonoBancario($scope.busqueda.idEmpresa,0,0,1,$scope.busqueda.idBanco, $scope.busqueda.cuenta,$scope.busqueda.cuentaContable).then(function(result) {
+                    conciliacionRepository.getAbonoBancario($scope.busqueda.idEmpresa, 0, 0, 1, $scope.busqueda.idBanco, $scope.busqueda.cuenta, $scope.busqueda.cuentaContable).then(function(result) {
                         console.log(result, 'Soy el abono bancario');
                         $scope.abonoBancario = result.data;
                         conciliacionInicioRepository.getTotalAbonoCargo(null, '', '', '', 2).then(function(result) {
