@@ -30,13 +30,13 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         enableFiltering: true
     };
     $scope.gridAuxiliarContable.columnDefs = [
-        { name: 'polFecha', displayName: 'Fecha', width: 100, type: 'date', cellFilter: 'date:\'dd-MM-yyyy\'' },
+        { name: 'polFecha', displayName: 'Fecha', width: 100, type: 'date', cellFilter: 'date:\'dd-MM-yyyy\'' },//, cellFilter: 'date:\'dd-MM-yyyy\''
         { name: 'polTipo', displayName: 'Tipo Pol', width: 200 },
         { name: 'polReferencia2', displayName: 'No Pol', width: 100 },
         //{ name: 'polReferencia1', displayName: 'CHQ', width: 300 },
         { name: 'movConcepto', displayName: 'Concepto', width: 600 },
-        { name: 'cargo', displayName: 'Cargo', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.cargo > 0">{{row.entity.cargo | currency}}</span></div><div class="text-right"><span ng-if="row.entity.cargo == 0">{{row.entity.cargo | currency}}</span></div>' },
-        { name: 'abono', displayName: 'Abono', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.abono > 0">{{row.entity.abono | currency}}</span></div><div class="text-right"><span ng-if="row.entity.abono == 0">{{row.entity.abono | currency}}</span></div>' }
+        { name: 'cargo', displayName: 'Cargo', width: 100, type: 'number', cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.cargo > 0">{{row.entity.cargo | currency}}</span></div><div class="text-right"><span ng-if="row.entity.cargo == 0">{{row.entity.cargo | currency}}</span></div>' },
+        { name: 'abono', displayName: 'Abono', width: 100, type: 'number', cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.abono > 0">{{row.entity.abono | currency}}</span></div><div class="text-right"><span ng-if="row.entity.abono == 0">{{row.entity.abono | currency}}</span></div>' }
     ];
     $scope.gridAuxiliarContable.multiSelect = true;
     //****************************************************************************************************
@@ -54,8 +54,8 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         { name: 'banco', displayName: 'Banco', width: 100 },
         { name: 'referencia', displayName: 'Referencia', width: 200 },
         { name: 'concepto', displayName: 'Concepto', width: 300 },
-        { name: 'cargo', displayName: 'Cargo', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.cargo > 0">{{row.entity.cargo | currency}}</span></div><div class="text-right"><span ng-if="row.entity.cargo == 0">{{row.entity.cargo | currency}}</span></div>' },
-        { name: 'abono', displayName: 'Abono', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.abono > 0">{{row.entity.abono | currency}}</span></div><div class="text-right"><span ng-if="row.entity.abono == 0">{{row.entity.abono | currency}}</span></div>' }
+        { name: 'cargo', displayName: 'Cargo', type: 'number', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.cargo > 0">{{row.entity.cargo | currency}}</span></div><div class="text-right"><span ng-if="row.entity.cargo == 0">{{row.entity.cargo | currency}}</span></div>' },
+        { name: 'abono', displayName: 'Abono', type: 'number', width: 100, cellTemplate: '<div class="text-right text-success text-semibold"><span ng-if="row.entity.abono > 0">{{row.entity.abono | currency}}</span></div><div class="text-right"><span ng-if="row.entity.abono == 0">{{row.entity.abono | currency}}</span></div>' }
     ];
     $scope.gridDepositosBancos.multiSelect = true;
     //****************************************************************************************************
@@ -213,12 +213,14 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
         if ($scope.punteoAuxiliar.length > 0 && $scope.punteoBanco.length > 0) {
             if ($scope.punteoAuxiliar.length == 1) {
                 if ($scope.cargoBanco != 0 && $scope.abonoBanco != 0) {
+                    $scope.limpiaVariables();
                     alertFactory.warning('No se puede seleccionar abono y cargo al mismo tiempo');
                 } else {
                     $scope.verificaCantidades(2);
                 }
             } else if ($scope.punteoBanco.length == 1) {
                 if ($scope.cargoAuxiliar != 0 && $scope.abonoAuxiliar != 0) {
+                    $scope.limpiaVariables();
                     alertFactory.warning('No se puede seleccionar abono y cargo al mismo tiempo');
                 } else {
                     $scope.verificaCantidades(1);
@@ -228,6 +230,7 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
                 alertFactory.warning('Punteo no valido')
             }
         } else {
+            $scope.limpiaVariables();
             alertFactory.warning('No ha seleccionado ninguna relación');
         }
 
@@ -240,15 +243,18 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
             if ((($scope.cargoBanco - 1) <= $scope.abonoAuxiliar && $scope.abonoAuxiliar <= ($scope.cargoBanco + 1)) || (($scope.abonoAuxiliar - 1) <= $scope.cargoBanco && $scope.cargoBanco <= ($scope.abonoAuxiliar + 1))) {
                 $scope.guardaPunteo(tipopunteo);
             } else {
+                $scope.limpiaVariables();
                 alertFactory.error('La cantidad de cargo y abono no coinciden');
             }
         } else if ($scope.abonoBanco != 0 && $scope.cargoAuxiliar != 0) {
             if ((($scope.abonoBanco - 1) <= $scope.cargoAuxiliar && $scope.cargoAuxiliar <= ($scope.abonoBanco + 1)) || (($scope.cargoAuxiliar - 1) <= $scope.abonoBanco && $scope.abonoBanco <= ($scope.cargoAuxiliar + 1))) {
                 $scope.guardaPunteo(tipopunteo);
             } else {
+                $scope.limpiaVariables();
                 alertFactory.error('La cantidad de cargo y abono no coinciden');
             }
         } else {
+            $scope.limpiaVariables();
             alertFactory.warning('No puede relacionar abono con abono o cargo con cargo');
         }
     };
@@ -398,9 +404,15 @@ registrationModule.controller('conciliacionDetalleRegistroController', function(
     $scope.generaPunteo = function() {
         conciliacionDetalleRegistroRepository.generaPunteo($scope.idEmpresa, $scope.idBanco, $scope.cuenta, $scope.cuentaBanco).then(function(result) {
             console.log(result, 'Soy el resultado del punteo GIBI')
+            console.log(result.data[0].idEstatus,'Soy la descripcion de GIBI')
             $('#alertaPunteo').modal('hide');
+            if(result.data[0].idEstatus==1){
+                alertFactory.success(result.data[0].Descripcion)
+            }else if(result.data[0].idEstatus==0){
+                alertFactory.error(result.data[0].Descripcion)
+            }
             $scope.getGridTablas();
-            $scope.generaInfoReport(2);
+            //$scope.generaInfoReport(2);
         });
     };
     //****************************************************************************************************
