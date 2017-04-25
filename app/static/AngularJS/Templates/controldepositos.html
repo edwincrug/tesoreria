@@ -28,7 +28,7 @@
             </div>
             <div class="form-group col-md-5">
                 <label class="form-label">Cuenta:</label>
-                <select class="form-control" ng-model="filtros.idCuenta" ng-options="cuenta.IdCuenta as cuenta.Cuenta for cuenta in cuentaBancaria" name="txtCuenta" ng-change="activa_calendariosDepositos()" ng-disabled="activarCuenta">
+                <select class="form-control" ng-options="Cuenta.Cuenta as Cuenta.Cuenta for Cuenta in cuentaBancaria" ng-model="filtros.idCuenta" name="txtCuenta" ng-change="activa_calendariosDepositos()" ng-disabled="activarCuenta">                    
                     <option value="">Seleccioné Cuenta</option>
                 </select>
             </div>
@@ -36,18 +36,18 @@
                 <label for="fInicio">Fecha Inicio:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="fInicio" ng-model="filtros.fechaInicioDeposito" value={{fechaInicio}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniDeposito">
+                    <input type="text" class="form-control" id="fInicio" ng-model="filtros.fechaInicioDeposito" placeholder="dd/mm/yyyy" ng-disabled="activarFechaIniDeposito">
                 </div>
             </div>
             <div class="form-group col-md-3" id="calendar">
                 <label for="ffin">Fecha Fin:</label>
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input type="text" class="form-control" id="ffin" ng-model="filtros.fechaFinDeposito" value={{fechaFin}} placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinDeposito">
+                    <input type="text" class="form-control" id="ffin" ng-model="filtros.fechaFinDeposito" placeholder="dd/mm/yyyy" ng-disabled="activarFechaFinDeposito">
                 </div>
             </div>
             <div class="form-group col-md-3" style="margin-top: 23px">
-                <button class="btn btn-warning" ng-disabled="activarBuscarDepositos" ng-click="getDepositosBancosNoReferenciados(filtros.idBanco,filtroscheck.cargo,'10/11/2015','31/12/2015')">Buscar</button>
+                <button class="btn btn-warning" ng-disabled="activarBuscarDepositos" ng-click="getDepositosBancosNoReferenciados(filtros)">Buscar</button>
             </div>
             <div class="panel col-md-12">
                 <br/>
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="form-group col-md-3" style="margin-top: 23px">
-                <button class="btn btn-warning" ng-disabled="activarBuscarCartera" ng-click="getCarteraVencida(filtros.idCliente,filtros.idEmpresa,filtros.idSucursal,filtros.idDepartamento,filtros.fechaInicioCartera,filtros.fechaFinCartera)">Buscar</button>
+                <button class="btn btn-warning" ng-disabled="activarBuscarCartera" ng-click="getCarteraVencida(filtros)">Buscar</button>
             </div>
             <div class="panel col-md-12">
                 <br/>
@@ -98,7 +98,6 @@
         </div>
         <div class="col-md-12">
             <table cellspacing="0" width="100%">
-
                 <thead>
                     <tr>
                         <td width="20%">
@@ -112,12 +111,11 @@
                             <p class="text-2x mar-no text-semibold">{{carteraTotal | currency}}</p>
                             <p class="text-muted mar-no">Cartera</p>
                         </td>
-                        <td width="20%"><a class="btn btn-primary pull-right" ng-click="guardarGrid()"><i class="ti-control-shuffle">  </i>Aplicar Referencias</a></td>
+                        <td width="20%"></td>
                         <td width="20%" class="text-right" ng-class="{'text-success text-semibold' : auxiliar.cargo > 0}"><a class="btn btn-primary pull-right" ng-click="guardarGrid()" ng-disabled="carteraTotal > depositoTotal"><i class="ti-control-shuffle">  </i>Crear Referencias Temporal</a></td>
                     </tr>
                 </thead>
             </table>
-
         </div>
         <div class="col-md-12">
             <div class="text-main">
@@ -189,6 +187,10 @@
             </div>
         </div>
         <div class="col-md-12">
+            <a class="btn btn-primary pull-right" ng-click="guardarGrid()"><i class="ti-control-shuffle">  </i>Aplicar Referencias</a>
+            </br>
+            </br>
+            </br>
             </br>
             </br>
             </br>

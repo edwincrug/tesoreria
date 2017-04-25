@@ -157,12 +157,16 @@ registrationModule.factory('filtrosRepository', function($http) {
             });
         },
 
-        getDepositosNoReferenciados: function(idBanco) {
+        getDepositosNoReferenciados: function(idBanco,noCuenta,fechaIni,fechaFin) {
+            //ISSUE_1 modificar los filtros de getDepositosNoReferenciados convertir a objeto getDepositosNoReferenciados
             return $http({
                 url: filtrosURL + 'depositosNoReferenciados/',
                 method: "GET",
                 params: {
-                    idBanco: idBanco
+                    idBanco: idBanco,
+                    noCuenta: noCuenta,
+                    fechaIni: fechaIni,
+                    fechaFin: fechaFin
                 },
                 headers: {
                     'Content-Type': 'application/json'

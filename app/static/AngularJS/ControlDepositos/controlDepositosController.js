@@ -2,7 +2,7 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
     // ****************** Se guarda la información del usuario en variable userData
     $rootScope.userData = localStorageService.get('userData');
-    $scope.idUsuario = 15;
+    $scope.idUsuario = 0;
 
     $scope.filtros = {
         idEmpresa: '',
@@ -11,6 +11,8 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
     };
 
     $scope.init = function() {
+        $scope.idUsuario = $rootScope.userData.idUsuario;
+        console.log($scope.idUsuario);
         $scope.loadPendingDocs();
         $scope.getEmpresa($scope.idUsuario);
         $scope.calendario();
@@ -30,8 +32,9 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         //$scope.getDepositosBancosNoReferenciados(1,1,'10/11/2015','31/12/2015');
         //$scope.getCarteraVencida(31996,4,12,67,'10/11/2015','31/12/2015');
         $scope.filtroscheck = { cargo: 1 };
-        console.log($rootScope.userData);
-    };
+        //console.log($rootScope.userData);
+        
+   };
 
     $scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
@@ -99,15 +102,34 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         filtrosRepository.getCuenta(idBanco, idEmpresa).then(function(result) {
             if (result.data.length > 0) {
                 $scope.cuentaBancaria = result.data;
+                console.log($scope.cuentaBancaria);
             }
         });
     };
 
-    $scope.getCarteraVencida = function(cliente, empresa, sucursal, departamento, fechaIni, fechaFin) {
-        
+    $scope.getCarteraVencida = function(obj) {
+
+        console.log("getCarteraVencida");
+        console.log(obj);
+
+            /*
+    obj.idEmpresa
+    obj.idSucursal
+    obj.idDepartamento
+    obj.idCuenta
+    obj.fechaInicioDeposito
+    obj.fechaFinDeposito
+    obj.idBanco
+    obj.idCliente
+    obj.fechaInicioCartera
+    obj.fechaFinCartera
+
+    */
+    
+        //ISSUE_2 modificar los filtros de getCarteraVencida convertir a objeto getCarteraVencida
         $scope.gridCartera.data = [];
         $('#mdlLoading').modal('show');
-        filtrosRepository.getCartera(cliente, empresa, sucursal, departamento, fechaIni, fechaFin).then(function(result) {
+        filtrosRepository.getCartera(obj.idCliente, obj.idEmpresa, obj.idSucursal, obj.idDepartamento, obj.fechaInicioCartera, obj.fechaFinCartera).then(function(result) {
             if (result.data.length > 0) {
                 $scope.gridCartera.data = result.data;
                 $('#mdlLoading').modal('hide');
@@ -118,13 +140,13 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
 
     };
 
-    $scope.getDepositosBancosNoReferenciados = function(empresa, cuenta, fechaIni, fechaFin) {    
+    $scope.getDepositosBancosNoReferenciados = function(obj) {
 
         $('#mdlLoading').modal('show');
         $scope.gridDocumentos.data = [];
-        filtrosRepository.getDepositosNoReferenciados(empresa, cuenta, fechaIni, fechaFin).then(function(result) {
+        filtrosRepository.getDepositosNoReferenciados(obj.idEmpresa, obj.idCuenta, obj.fechaInicioDeposito, obj.fechaFinDeposito).then(function(result) {
             if (result.data.length > 0) {
-                $scope.gridDocumentos.data = result.data;
+                $scope.gridDocumentos.data = result.data;               
                 $('#mdlLoading').modal('hide');
             } else {
                 $('#mdlLoading').modal('hide');
@@ -524,7 +546,6 @@ registrationModule.controller('controlDepositosController', function($scope, $ro
         console.log("prueba Calendario");
         console.log(obj.fechaFinCartera);
         console.log(obj.fechaInicioCartera);
-        
     };
 
 
