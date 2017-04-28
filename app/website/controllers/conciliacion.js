@@ -52,6 +52,9 @@ Conciliacion.prototype.get_cargoContable = function(req, res, next) {
                   { name: 'noCuenta', value: req.query.noCuenta, type: self.model.types.STRING },
                   { name: 'cuentaContable', value: req.query.cuentaContable, type: self.model.types.STRING },
                   { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];
+    
+    console.log('SEL_CARGO_CONTABLE_SP')
+    console.log(params)
 
     /*var params = [{ name: 'idBanco', value: req.body.idBanco, type: self.model.types.INT },
                   { name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.STRING },

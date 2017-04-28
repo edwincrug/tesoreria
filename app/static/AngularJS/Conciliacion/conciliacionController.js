@@ -106,7 +106,7 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
                     $scope.abonosContables = result.data;
 
                     for (var i = 0, len = result.data.length; i < len; i++)
-                        $scope.totalAbonoContable = $scope.totalAbonoContable + result.data[i].SALDO_ACTUAL;
+                        $scope.totalAbonoContable = $scope.totalAbonoContable + result.data[i].abono;
                 } else {
                     /*console.log('entro a getAbonoContable')
                     console.log(result.data);
@@ -158,7 +158,7 @@ registrationModule.controller('conciliacionController', function($scope, $rootSc
                     $scope.cargosContables = result.data;
 
                     for (var i = 0, len = result.data.length; i < len; i++)
-                        $scope.totalCargoContable = $scope.totalCargoContable + result.data[i].SALDO_ACTUAL;
+                        $scope.totalCargoContable = $scope.totalCargoContable + result.data[i].cargo;
                 } else {
                     $scope.resumenDPI = result.data;
                     $scope.idTipoAuxiliar = result.data[0].idTipoAuxiliar;
