@@ -45,8 +45,8 @@ conciliacionInicio.prototype.post_totalAbonoCargo = function(req, res, next) {
 
     this.model.query('SEL_TOTAL_ABONOCARGO_SP', params, function(error, result) {
 
-        console.log('error')
-            console.log(error)
+        console.log('error SEL_TOTAL_ABONOCARGO_SP: ')
+        console.log(error)
         console.log(result)    
 
         self.view.expositor(res, {

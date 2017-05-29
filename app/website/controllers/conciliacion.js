@@ -35,6 +35,9 @@ Conciliacion.prototype.get_abonoContable = function(req, res, next) {
                   { name: 'fFinal', value: req.query.fFinal, type: self.model.types.STRING },
                   { name: 'opcion', value: req.query.opcion, type: self.model.types.INT }];*/
 
+    console.log('SEL_ABONO_CONTABLE_SP')
+    console.log(params)
+
     this.model.query('SEL_ABONO_CONTABLE_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
